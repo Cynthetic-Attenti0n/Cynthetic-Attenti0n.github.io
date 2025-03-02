@@ -219,7 +219,7 @@ const projectsData = [
         date: '2023-02-10',
         image: 'adventures-python',
         icon: 'fa-book',
-        link: '#'
+        link: 'AJ/Adventures%20of%20Python/'
     },
     {
         id: 3,
