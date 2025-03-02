@@ -1,1 +1,380 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitTrack Pro</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                
+                <h1>愛 Workout</h1>
+            </div>
+            <nav>
+                <button id="dashboard-btn" class="active"><i class="fas fa-home"></i><span>Dashboard</span></button>
+                <button id="exercises-btn"><i class="fas fa-running"></i><span>Exercises</span></button>
+                <button id="workouts-btn"><i class="fas fa-dumbbell"></i><span>Workouts</span></button>
+                <button id="settings-btn"><i class="fas fa-cog"></i><span>Settings</span></button>
+            </nav>
+        </header>
 
+        <main>
+            <section id="dashboard-view" class="view active">
+                <div class="dashboard-header">
+                    <h2>Welcome Back!</h2>
+                    <p class="date-display"></p>
+                </div>
+                
+                <div class="quick-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-fire-alt"></i></div>
+                        <div class="stat-info">
+                            <h3>Weekly Workouts</h3>
+                            <p class="stat-value">4</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                        <div class="stat-info">
+                            <h3>Total Time</h3>
+                            <p class="stat-value">3h 45m</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-dumbbell"></i></div>
+                        <div class="stat-info">
+                            <h3>Weight Lifted</h3>
+                            <p class="stat-value">15,420 kg</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="upcoming-workouts">
+                    <h3>Today's Workout</h3>
+                    <div class="workout-card" id="start-workout-card">
+                        <div class="workout-info">
+                            <h4>Upper Body Strength</h4>
+                            <p><i class="far fa-clock"></i> 45 min • 6 exercises</p>
+                        </div>
+                        <button class="start-workout-btn">Start</button>
+                    </div>
+                </div>
+                
+                <div class="recent-progress">
+                    <h3>Recent Progress</h3>
+                    <div class="progress-chart">
+                        <canvas id="progressChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <section id="exercises-view" class="view">
+                <div class="section-header">
+                    <h2>Exercise Library</h2>
+                    <div class="search-container">
+                        <input type="text" id="exercise-search" placeholder="Search exercises...">
+                        <i class="fas fa-search"></i>
+                    </div>
+                </div>
+
+                <div class="filter-options">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="upper">Upper Body</button>
+                    <button class="filter-btn" data-filter="lower">Lower Body</button>
+                    <button class="filter-btn" data-filter="core">Core</button>
+                    <button class="filter-btn" data-filter="cardio">Cardio</button>
+                </div>
+
+                <div class="exercises-grid" id="exercises-container">
+                    <!-- Exercises will be dynamically populated here -->
+                </div>
+            </section>
+
+            <section id="workouts-view" class="view">
+                <div class="section-header">
+                    <h2>My Workouts</h2>
+                    <button class="create-btn"><i class="fas fa-plus"></i> Create Workout</button>
+                </div>
+
+                <div class="workouts-list" id="workouts-container">
+                    <!-- Workouts will be dynamically populated here -->
+                </div>
+            </section>
+
+            <section id="settings-view" class="view">
+                <h2>Settings</h2>
+                <div class="settings-container">
+                    <div class="setting-group">
+                        <h3>Display</h3>
+                        <div class="setting-item">
+                            <span>Dark Mode</span>
+                            <label class="toggle">
+                                <input type="checkbox" id="dark-mode-toggle">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <span>Animations</span>
+                            <label class="toggle">
+                                <input type="checkbox" id="animations-toggle" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Units</h3>
+                        <div class="setting-item">
+                            <span>Weight Unit</span>
+                            <div class="select-wrapper">
+                                <select id="weight-unit">
+                                    <option value="kg">Kilograms (kg)</option>
+                                    <option value="lb">Pounds (lb)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="setting-item">
+                            <span>Distance Unit</span>
+                            <div class="select-wrapper">
+                                <select id="distance-unit">
+                                    <option value="km">Kilometers (km)</option>
+                                    <option value="mi">Miles (mi)</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Rep Timer Settings</h3>
+                        <div class="setting-item">
+                            <span>Concentric Phase (seconds)</span>
+                            <input type="number" id="concentric-time" min="1" max="10" value="2">
+                        </div>
+                        <div class="setting-item">
+                            <span>Hold Phase (seconds)</span>
+                            <input type="number" id="hold-time" min="0" max="5" value="1">
+                        </div>
+                        <div class="setting-item">
+                            <span>Eccentric Phase (seconds)</span>
+                            <input type="number" id="eccentric-time" min="1" max="10" value="4">
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Voice Guidance</h3>
+                        <div class="setting-item">
+                            <span>No Voice</span>
+                            <input type="radio" name="voice-guidance" value="none" id="voice-none">
+                        </div>
+                        <div class="setting-item">
+                            <span>Basic Guidance (phase changes only)</span>
+                            <input type="radio" name="voice-guidance" value="basic" id="voice-basic" checked>
+                        </div>
+                        <div class="setting-item">
+                            <span>Full Guidance (with counting)</span>
+                            <input type="radio" name="voice-guidance" value="full" id="voice-full">
+                        </div>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Personal Information</h3>
+                        <form id="user-data-form">
+                            <div class="setting-item">
+                                <span>Username</span>
+                                <input type="text" id="username" value="User">
+                            </div>
+                            <div class="setting-item">
+                                <span>Age</span>
+                                <input type="number" id="age" min="16" max="100" value="30">
+                            </div>
+                            <div class="setting-item">
+                                <span>Weight</span>
+                                <div class="input-with-unit">
+                                    <input type="number" id="user-weight-input" min="30" max="300" value="70">
+                                    <span class="weight-unit">kg</span>
+                                </div>
+                            </div>
+                            <div class="setting-item">
+                                <span>Fitness Level</span>
+                                <select id="fitness-level">
+                                    <option value="beginner">Beginner</option>
+                                    <option value="intermediate" selected>Intermediate</option>
+                                    <option value="advanced">Advanced</option>
+                                </select>
+                            </div>
+                            <div class="setting-item">
+                                <span>Fitness Goals</span>
+                                <select id="fitness-goals">
+                                    <option value="strength">Strength</option>
+                                    <option value="hypertrophy">Muscle Building</option>
+                                    <option value="endurance">Endurance</option>
+                                    <option value="weight-loss">Weight Loss</option>
+                                    <option value="general">General Fitness</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="primary-btn">Save Information</button>
+                        </form>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Data Management</h3>
+                        <div class="setting-item">
+                            <span>Export Data</span>
+                            <button class="action-btn" id="export-data-btn"><i class="fas fa-download"></i> Export</button>
+                        </div>
+                        <div class="setting-item">
+                            <span>Import Data</span>
+                            <button class="action-btn" id="import-data-btn"><i class="fas fa-upload"></i> Import</button>
+                            <input type="file" id="import-file" accept=".json" style="display:none;">
+                        </div>
+                        <div class="setting-item">
+                            <span>Clear All Data</span>
+                            <button class="danger-btn" id="clear-data-btn"><i class="fas fa-trash"></i> Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Workout Execution Modal -->
+        <div class="modal" id="workout-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Upper Body Strength</h2>
+                    <button class="close-modal-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="workout-timer">
+                        <div class="timer-display">
+                            <span id="minutes">00</span>:<span id="seconds">00</span>
+                        </div>
+                        <div class="timer-controls">
+                            <button id="start-timer-btn"><i class="fas fa-play"></i></button>
+                            <button id="pause-timer-btn"><i class="fas fa-pause"></i></button>
+                            <button id="reset-timer-btn"><i class="fas fa-redo"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="exercise-display">
+                        <div class="exercise-info">
+                            <h3 id="current-exercise">Bench Press</h3>
+                            <p id="set-info">Set 1 of 3</p>
+                        </div>
+                        
+                        <div class="rep-timer-display">
+                            <div class="phase-indicators">
+                                <div class="phase-indicator" id="concentric-phase">Push</div>
+                                <div class="phase-indicator" id="hold-phase">Hold</div>
+                                <div class="phase-indicator" id="eccentric-phase">Lower</div>
+                                <div class="phase-indicator" id="rest-phase">Rest</div>
+                            </div>
+                            <div class="current-phase">
+                                <span id="rep-phase">Rest</span>: <span id="phase-time">0</span>s
+                            </div>
+                        </div>
+                        
+                        <div class="animation-container" id="exercise-animation">
+                            <!-- SVG animation will be inserted here -->
+                        </div>
+                        
+                        <div class="exercise-guidance">
+                            <p id="exercise-instructions">Lie on a flat bench, grip the bar slightly wider than shoulder-width apart, lower the bar to your chest, then push it back up.</p>
+                        </div>
+                        
+                        <div class="rep-counter">
+                            <button id="decrease-reps-btn">-</button>
+                            <span id="rep-count">0</span>
+                            <button id="increase-reps-btn">+</button>
+                        </div>
+                        
+                        <div class="set-tracker">
+                            <div class="weight-input">
+                                <label for="weight-amount">Weight:</label>
+                                <input type="number" id="weight-amount" value="60">
+                                <span class="weight-unit">kg</span>
+                            </div>
+                            
+                            <div class="rpe-input">
+                                <label for="rpe-value">RPE (1-10):</label>
+                                <select id="rpe-value">
+                                    <option value="5">5 - Light</option>
+                                    <option value="6">6 - Moderate</option>
+                                    <option value="7" selected>7 - Challenging</option>
+                                    <option value="8">8 - Hard</option>
+                                    <option value="9">9 - Very Hard</option>
+                                    <option value="10">10 - Max Effort</option>
+                                </select>
+                            </div>
+                            
+                            <button id="complete-set-btn">Complete Set</button>
+                        </div>
+                    </div>
+                    
+                    <div class="workout-progress">
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="workout-progress-bar"></div>
+                        </div>
+                        <p><span id="completed-exercises">0</span> of <span id="total-exercises">6</span> exercises completed</p>
+                    </div>
+                    
+                    <div class="workout-controls">
+                        <button id="previous-exercise-btn"><i class="fas fa-step-backward"></i> Previous</button>
+                        <button id="next-exercise-btn">Next <i class="fas fa-step-forward"></i></button>
+                        <button id="finish-workout-btn">Finish Workout</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Exercise Detail Modal -->
+        <div class="modal" id="exercise-detail-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 id="detail-exercise-name">Exercise Name</h2>
+                    <button class="close-modal-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <div class="exercise-detail-container">
+                        <div class="exercise-illustration" id="detail-exercise-illustration">
+                            <!-- SVG illustration will be inserted here -->
+                        </div>
+                        
+                        <div class="exercise-details">
+                            <div class="detail-section">
+                                <h3>Instructions</h3>
+                                <p id="detail-instructions"></p>
+                            </div>
+                            
+                            <div class="detail-section">
+                                <h3>Muscles Targeted</h3>
+                                <div class="muscle-tags" id="detail-muscles"></div>
+                            </div>
+                            
+                            <div class="detail-section">
+                                <h3>Benefits</h3>
+                                <p id="detail-benefits"></p>
+                            </div>
+                            
+                            <div class="detail-section">
+                                <h3>Common Mistakes</h3>
+                                <ul id="detail-mistakes"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+    <script src="exercises.js"></script>
+    <script src="workouts.js"></script>
+</body>
+</html>
