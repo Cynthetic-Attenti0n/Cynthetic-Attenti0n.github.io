@@ -367,7 +367,7 @@ const projectsData = [
     },
     {
         id: 15,
-        title: '愛 Workout (AI = \'love\')',
+        title: '愛 Workout',
         description: 'An adaptive workout planner for back rehab or general fitness—offering real-time AI guidance and personalized adjustments.',
         tags: ['Python', 'TypeScript', 'Svelte', 'HTML', 'CSS', 'JS', 'AI'],
         categories: ['Wellness & Health'],
@@ -375,7 +375,7 @@ const projectsData = [
         date: '2023-12-01',
         image: 'ai-workout',
         icon: 'fa-dumbbell',
-        link: '#'
+        link: 'CI/AI-Workout/'
     }
 ];
 
