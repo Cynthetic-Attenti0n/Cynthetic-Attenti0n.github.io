@@ -1,0 +1,203 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DC Shay | Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Dark Mode Toggle -->
+        <button class="theme-toggle" id="theme-toggle">
+            <i class="fas fa-moon"></i>
+        </button>
+        
+        <!-- Particle background -->
+        <div id="particles-js"></div>
+        
+        <!-- Fixed navigation -->
+        <nav class="nav-container">
+            <div class="nav-toggle" id="nav-toggle">
+                <div class="nav-icon"></div>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#hero" class="nav-item active">Home</a>
+                <a href="#about" class="nav-item">About</a>
+                <a href="#projects" class="nav-item">Projects</a>
+                <a href="#contact" class="nav-item">Contact</a>
+            </div>
+        </nav>
+
+        <!-- Hero section -->
+        <section id="hero" class="section hero-section">
+            <div class="hero-content">
+                <div class="logo-container">
+                    <div class="logo">
+                        <span>DC</span>
+                    </div>
+                </div>
+                <h1 class="hero-title">DC Shay</h1>
+                <p class="hero-tagline">cynthetic-attenti0n</p>
+                <div class="hero-cta">
+                    <button class="btn primary-btn" id="explore-btn">
+                        <span>Explore My Work</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About section -->
+        <section id="about" class="section about-section">
+            <div class="section-header">
+                <h2>About Me</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="about-content">
+                <div class="about-avatar">
+                    <div class="avatar-container">
+                        <div class="avatar-placeholder">
+                            <i class="fas fa-user"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-text">
+                    <p>Hi, I'm DC Shay—also known as cynthetic-attenti0n. I combine creative vision with technical expertise to build software that’s not only robust and reliable, but also an absolute pleasure to use.</p> 
+                    <p>My journey as a developer is driven by a passion for merging art and science. I craft solutions that emphasize clean design, intuitive navigation, and user-centered experiences. Every project, whether it’s a cutting-edge web application or a refined user interface, reflects my commitment to transforming complex challenges into elegant, accessible products.</p> 
+                    <p>With a foundation in modern development practices and a dedication to continuous learning, I strive to push boundaries and set new benchmarks in the digital landscape. I believe that technology should empower users, spark creativity, and simplify everyday life, and I work relentlessly to make that vision a reality.</p> 
+                    <p>If you're curious about the tools, techniques, and stories behind my work, or if you're interested in collaborating on innovative projects, I’d love to connect. Let’s build something remarkable together.</p>
+                </div>
+                <div class="skills-container">
+                    <div class="skill-tag">Python</div>
+                    <div class="skill-tag">HTML/CSS/JS</div>
+                    <div class="skill-tag">Mobile Apps</div>
+                    <div class="skill-tag">AI/Machine Learning</div>
+                    <div class="skill-tag">UE Game Development</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects section -->
+        <section id="projects" class="section projects-section">
+            <div class="section-header">
+                <h2>My Projects</h2>
+                <div class="section-divider"></div>
+            </div>
+            
+            <!-- Project filters and sorting -->
+            <div class="projects-controls">
+                <div class="filter-container">
+                    <button class="filter-button" data-target="category-filter">
+                        <span>Category: All</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="filter-menu" id="category-filter">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+                
+                <div class="filter-container">
+                    <button class="filter-button" data-target="audience-filter">
+                        <span>Audience: All</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="filter-menu" id="audience-filter">
+                        <!-- Will be populated by JS -->
+                    </div>
+                </div>
+                
+                <div class="sort-container">
+                    <button class="sort-button">
+                        <span>Sort: Default</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="sort-menu" id="sort-select">
+                        <div class="sort-option active" data-value="default">
+                            <i class="fas fa-sort"></i> Default
+                        </div>
+                        <div class="sort-option" data-value="alphabetical">
+                            <i class="fas fa-sort-alpha-down"></i> Alphabetical
+                        </div>
+                        <div class="sort-option" data-value="date-new">
+                            <i class="fas fa-sort-numeric-down-alt"></i> Newest First
+                        </div>
+                        <div class="sort-option" data-value="date-old">
+                            <i class="fas fa-sort-numeric-down"></i> Oldest First
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="no-results">
+                No projects match your current filters. Try adjusting your criteria.
+            </div>
+            
+            <div class="projects-grid">
+                <!-- Project cards will be populated by JS -->
+            </div>
+        </section>
+
+        <!-- Contact section -->
+        <section id="contact" class="section contact-section">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <div class="section-divider"></div>
+            </div>
+            <div class="contact-content">
+                <div class="social-links">
+                    <a href="#" class="social-link">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="social-link">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="/cdn-cgi/l/email-protection#afcad7cec2dfc3caefcac2cec6c381ccc0c2" class="social-link">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                </div>
+                <button class="btn secondary-btn" id="contact-btn">
+                    <span>Send Message</span>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Project details modal -->
+        <div class="modal" id="project-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 id="modal-title">Project Title</h3>
+                    <button class="modal-close" id="modal-close">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="modal-image" id="modal-image">
+                        <!-- Project image will be set by JS -->
+                    </div>
+                    <div class="modal-description" id="modal-description">
+                        <!-- Project description will be set by JS -->
+                    </div>
+                    <div class="modal-tags" id="modal-tags">
+                        <!-- Project tags will be set by JS -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a href="#" class="btn primary-btn" id="modal-link">
+                        <span>View Project</span>
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
