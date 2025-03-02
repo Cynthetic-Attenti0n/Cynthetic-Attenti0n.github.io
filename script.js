@@ -1,1153 +1,1653 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize particles.js
-    initParticles();
+/* Base styles and variables */
+:root {
+    /* Primary colors */
+    --primary-color: #6c5ce7;
+    --primary-light: #a29bfe;
+    --primary-dark: #4834d4;
     
-    // Initialize dark mode
-    initDarkMode();
+    /* Secondary colors */
+    --secondary-color: #00cec9;
+    --secondary-light: #81ecec;
+    --secondary-dark: #00b894;
     
-    // Navigation functionality
-    initNavigation();
+    /* Accent colors */
+    --accent-color: #fd79a8;
+    --accent-light: #fab1a0;
+    --accent-dark: #e84393;
     
-    // Initialize project filters
-    initProjectFilters();
+    /* Neutral colors */
+    --background: #f9f9f9;
+    --surface: #ffffff;
+    --text-primary: #2d3436;
+    --text-secondary: #636e72;
+    --text-tertiary: #b2bec3;
     
-    // Projects data and rendering
-    populateProjects();
+    /* Dark mode colors */
+    --dark-background: #1e1e2e;
+    --dark-surface: #2d2d3f;
+    --dark-text-primary: #f1f1f2;
+    --dark-text-secondary: #c9d1d6;
+    --dark-text-tertiary: #8b949e;
     
-    // Modal functionality
-    initModal();
+    /* Sizes and spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3rem;
     
-    // Button click events
-    initButtonEvents();
+    /* Border radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
     
-    // Intersection Observer for scroll animations
-    initScrollObserver();
+    /* Animation timing */
+    --transition-fast: 0.2s;
+    --transition-medium: 0.3s;
+    --transition-slow: 0.5s;
     
-    // Initialize typing animation
-    initTypingAnimation();
-    
-    // Initialize the enhanced scrolling
-    enhanceScrolling();
-    
-    // Initialize hero typing effect
-    initHeroTypingEffect();
-});
-
-// Initialize particles background
-function initParticles() {
-    particlesJS('particles-js', {
-        particles: {
-            number: {
-                value: 80,
-                density: {
-                    enable: true,
-                    value_area: 800
-                }
-            },
-            color: {
-                value: '#6c5ce7'
-            },
-            shape: {
-                type: 'circle',
-                stroke: {
-                    width: 0,
-                    color: '#000000'
-                },
-                polygon: {
-                    nb_sides: 5
-                }
-            },
-            opacity: {
-                value: 0.5,
-                random: false,
-                anim: {
-                    enable: false,
-                    speed: 1,
-                    opacity_min: 0.1,
-                    sync: false
-                }
-            },
-            size: {
-                value: 3,
-                random: true,
-                anim: {
-                    enable: false,
-                    speed: 40,
-                    size_min: 0.1,
-                    sync: false
-                }
-            },
-            line_linked: {
-                enable: true,
-                distance: 150,
-                color: '#a29bfe',
-                opacity: 0.4,
-                width: 1
-            },
-            move: {
-                enable: true,
-                speed: 2,
-                direction: 'none',
-                random: false,
-                straight: false,
-                out_mode: 'out',
-                bounce: false,
-                attract: {
-                    enable: false,
-                    rotateX: 600,
-                    rotateY: 1200
-                }
-            }
-        },
-        interactivity: {
-            detect_on: 'canvas',
-            events: {
-                onhover: {
-                    enable: true,
-                    mode: 'grab'
-                },
-                onclick: {
-                    enable: true,
-                    mode: 'push'
-                },
-                resize: true
-            },
-            modes: {
-                grab: {
-                    distance: 140,
-                    line_linked: {
-                        opacity: 1
-                    }
-                },
-                bubble: {
-                    distance: 400,
-                    size: 40,
-                    duration: 2,
-                    opacity: 8,
-                    speed: 3
-                },
-                repulse: {
-                    distance: 200,
-                    duration: 0.4
-                },
-                push: {
-                    particles_nb: 4
-                },
-                remove: {
-                    particles_nb: 2
-                }
-            }
-        },
-        retina_detect: true
-    });
+    /* Shadows */
+    --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 16px 32px rgba(0, 0, 0, 0.1);
 }
 
-// Navigation functionality
-function initNavigation() {
-    const navToggle = document.getElementById('nav-toggle');
-    const navMenu = document.getElementById('nav-menu');
-    const navItems = document.querySelectorAll('.nav-item');
-    
-    // Toggle navigation menu
-    navToggle.addEventListener('click', function() {
-        navToggle.classList.toggle('active');
-        navMenu.classList.toggle('active');
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        const isClickInside = navToggle.contains(event.target) || navMenu.contains(event.target);
-        
-        if (!isClickInside && navMenu.classList.contains('active')) {
-            navToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-        }
-    });
-    
-    // Handle navigation item clicks
-    navItems.forEach(item => {
-        item.addEventListener('click', function() {
-            // Remove active class from all nav items
-            navItems.forEach(navItem => navItem.classList.remove('active'));
-            
-            // Add active class to clicked item
-            this.classList.add('active');
-            
-            // Close the menu
-            navToggle.classList.remove('active');
-            navMenu.classList.remove('active');
-        });
-    });
-    
-    // Update active nav item based on scroll position
-    window.addEventListener('scroll', function() {
-        const sections = document.querySelectorAll('.section');
-        let currentSectionId = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            const sectionHeight = section.offsetHeight;
-            const scrollPosition = window.pageYOffset;
-            
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                currentSectionId = section.id;
-            }
-        });
-        
-        // Update active nav item
-        navItems.forEach(item => {
-            item.classList.remove('active');
-            if (item.getAttribute('href') === `#${currentSectionId}`) {
-                item.classList.add('active');
-            }
-        });
-    });
+/* Reset and global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Project data
-const projectsData = [
-    {
-        id: 1,
-        title: 'TummyTime',
-        description: 'A postpartum recovery companion offering gentle exercises to rebuild core strength and emotional well-being.',
-        tags: ['Python', 'Svelte', 'TypeScript', 'HTML', 'CSS', 'JS'],
-        categories: ['Wellness & Health'],
-        audience: ['Family', 'Personal'],
-        date: '2023-05-15',
-        image: 'tummy-time',
-        icon: 'fa-heart-pulse',
-        link: 'AJ/TummyTime/'
-    },
-    {
-        id: 2,
-        title: 'Adventures of Python',
-        description: 'A children\'s storybook weaving coding concepts into playful animal characters—perfect for inspiring future tech explorers.',
-        tags: ['Python', 'HTML', 'CSS', 'JS'],
-        categories: ['Education & Learning'],
-        audience: ['Family', 'Friends'],
-        date: '2023-02-10',
-        image: 'adventures-python',
-        icon: 'fa-book',
-        link: 'AJ/Adventures%20of%20Python/'
-    },
-    {
-        id: 3,
-        title: 'ThinkMate',
-        description: 'A modern "second brain" that unifies notes, tasks, and projects in one sleek, locally-stored workspace.',
-        tags: ['Svelte', 'TypeScript', 'HTML', 'CSS', 'LocalStorage'],
-        categories: ['Productivity & Growth'],
-        audience: ['Personal', 'Public'],
-        date: '2023-08-22',
-        image: 'think-mate',
-        icon: 'fa-brain',
-        link: '#'
-    },
-    {
-        id: 4,
-        title: 'Mneme',
-        description: 'A life hub that gamifies daily living—track habits, finances, fitness, and mood, all with data stored locally for privacy.',
-        tags: ['Python', 'Svelte', 'TypeScript', 'HTML', 'CSS', 'JS'],
-        categories: ['Productivity & Growth'],
-        audience: ['Personal', 'Public'],
-        date: '2022-11-05',
-        image: 'mneme',
-        icon: 'fa-gamepad',
-        link: '#'
-    },
-    {
-        id: 5,
-        title: 'Enov-1',
-        description: 'A self-improvement app that captures and analyzes personal metrics, turning daily data into actionable insights.',
-        tags: ['Python', 'Svelte', 'TypeScript', 'LocalStorage'],
-        categories: ['Productivity & Growth'],
-        audience: ['Personal', 'Public'],
-        date: '2023-06-18',
-        image: 'enov-1',
-        icon: 'fa-chart-line',
-        link: '#'
-    },
-    {
-        id: 6,
-        title: 'Chasm Beyond Time',
-        description: 'An epic RPG teaching CBT and DBT techniques through a fun, immersive quest—empowering teens to grow emotionally.',
-        tags: ['Unreal Engine', 'Python', 'HTML'],
-        categories: ['Gaming & Personal Development'],
-        audience: ['Family', 'Public'],
-        date: '2022-12-30',
-        image: 'chasm-beyond',
-        icon: 'fa-dragon',
-        link: '#'
-    },
-    {
-        id: 7,
-        title: 'Mind Over Matter',
-        description: 'A 2D Pokémon-style game where real-life tasks replace microtransactions, helping kids with ADHD or Autism stay organized.',
-        tags: ['Godot', 'TypeScript', 'JS', 'LocalStorage'],
-        categories: ['Gaming & Personal Development'],
-        audience: ['Family', 'Public'],
-        date: '2023-01-15',
-        image: 'mind-over-matter',
-        icon: 'fa-puzzle-piece',
-        link: '#'
-    },
-    {
-        id: 8,
-        title: 'InnerPiece',
-        description: 'A calming meditation app guiding adults to discover their "inner piece" through mindfulness and relaxation exercises.',
-        tags: ['Python', 'Svelte', 'TypeScript', 'HTML', 'CSS', 'JS'],
-        categories: ['Wellness & Health'],
-        audience: ['Personal', 'Public'],
-        date: '2023-03-20',
-        image: 'inner-piece',
-        icon: 'fa-spa',
-        link: '#'
-    },
-    {
-        id: 9,
-        title: 'minDCare',
-        description: 'A pocket-sized self-care toolkit offering daily check-ins and gentle reminders to nurture mental well-being.',
-        tags: ['Python', 'Svelte', 'TypeScript', 'HTML', 'CSS'],
-        categories: ['Wellness & Health'],
-        audience: ['Personal'],
-        date: '2023-04-10',
-        image: 'mindcare',
-        icon: 'fa-hand-holding-heart',
-        link: '#'
-    },
-    {
-        id: 10,
-        title: 'Enov-1 (Enhanced)',
-        description: 'An upgraded Enov-1 with AI-driven analytics, perfect for those serious about quantifying every aspect of life.',
-        tags: ['Python', 'Svelte', 'TypeScript', 'LocalStorage', 'AI'],
-        categories: ['Productivity & Growth'],
-        audience: ['Personal', 'Public'],
-        date: '2023-07-05',
-        image: 'enov-enhanced',
-        icon: 'fa-robot',
-        link: '#'
-    },
-    {
-        id: 11,
-        title: 'ThriveMind',
-        description: 'A community-driven platform merging collective wisdom and personal growth—think of it as a hive mind for self-improvement.',
-        tags: ['Python', 'TypeScript', 'HTML', 'CSS', 'JS'],
-        categories: ['Community & Collaboration'],
-        audience: ['Friends', 'Public'],
-        date: '2023-08-15',
-        image: 'thrive-mind',
-        icon: 'fa-people-group',
-        link: '#'
-    },
-    {
-        id: 12,
-        title: 'Psypher',
-        description: 'A unified psychology assessment tool consolidating multiple best-practice evaluations for powerful cross-analysis.',
-        tags: ['Python', 'Svelte', 'TypeScript', 'HTML', 'CSS', 'JS'],
-        categories: ['Wellness & Health'],
-        audience: ['Personal', 'Public'],
-        date: '2023-09-01',
-        image: 'psypher',
-        icon: 'fa-brain',
-        link: '#'
-    },
-    {
-        id: 13,
-        title: 'Insightful.ly',
-        description: 'An automated analytics dashboard that transforms messy startup data into actionable insights in real time.',
-        tags: ['Python', 'Svelte', 'TypeScript', 'HTML', 'CSS', 'JS', 'API'],
-        categories: ['Data & AI'],
-        audience: ['Friends', 'Public'],
-        date: '2023-10-10',
-        image: 'insightfully',
-        icon: 'fa-chart-pie',
-        link: '#'
-    },
-    {
-        id: 14,
-        title: 'KAI',
-        description: 'A dynamic multimodal chat app that picks the best language models and data sources on the fly to solve user queries.',
-        tags: ['Python', 'TypeScript', 'Svelte', 'HTML', 'CSS', 'JS', 'Langchain'],
-        categories: ['Data & AI'],
-        audience: ['Personal', 'Public'],
-        date: '2023-11-05',
-        image: 'kai',
-        icon: 'fa-comments',
-        link: '#'
-    },
-    {
-        id: 15,
-        title: '愛 Workout',
-        description: 'An adaptive workout planner for back rehab or general fitness—offering real-time AI guidance and personalized adjustments.',
-        tags: ['Python', 'TypeScript', 'Svelte', 'HTML', 'CSS', 'JS', 'AI'],
-        categories: ['Wellness & Health'],
-        audience: ['Personal', 'Public'],
-        date: '2023-12-01',
-        image: 'ai-workout',
-        icon: 'fa-dumbbell',
-        link: 'CI/AI-Workout/'
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-primary);
+    background-color: var(--background);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.5rem;
+}
+
+/* Container */
+.app-container {
+    position: relative;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+/* Particles background */
+#particles-js {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.6;
+}
+
+/* Navigation */
+.nav-container {
+    position: fixed;
+    bottom: var(--spacing-lg);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1000;
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.nav-toggle {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-full);
+    background: var(--primary-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--shadow-lg);
+    z-index: 1001;
+    cursor: pointer;
+    transition: transform var(--transition-medium) ease, background-color var(--transition-medium) ease;
+}
+
+.nav-toggle:hover {
+    transform: scale(1.05);
+}
+
+.nav-toggle.active {
+    background-color: var(--accent-color);
+}
+
+.nav-icon {
+    position: relative;
+    width: 24px;
+    height: 2px;
+    background-color: transparent;
+    transition: all var(--transition-medium) ease;
+}
+
+.nav-icon::before,
+.nav-icon::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 2px;
+    background-color: white;
+    transition: all var(--transition-medium) ease;
+}
+
+.nav-icon::before {
+    transform: translateY(-8px);
+}
+
+.nav-icon::after {
+    transform: translateY(8px);
+}
+
+.nav-toggle.active .nav-icon::before {
+    transform: rotate(45deg);
+}
+
+.nav-toggle.active .nav-icon::after {
+    transform: rotate(-45deg);
+}
+
+.nav-menu {
+    position: absolute;
+    bottom: 70px;
+    background-color: var(--surface);
+    padding: var(--spacing-md);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lg);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    opacity: 0;
+    transform: translateY(20px);
+    pointer-events: none;
+    transition: opacity var(--transition-medium) ease, transform var(--transition-medium) ease;
+}
+
+.nav-menu.active {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: all;
+}
+
+.nav-item {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-md);
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast) ease;
+    position: relative;
+    white-space: nowrap;
+}
+
+.nav-item:hover {
+    color: var(--primary-color);
+    background-color: rgba(108, 92, 231, 0.1);
+}
+
+.nav-item.active {
+    color: var(--primary-color);
+    background-color: rgba(108, 92, 231, 0.1);
+}
+
+.nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 16px;
+    background-color: var(--primary-color);
+    border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+
+/* Sections common styles */
+.section {
+    scroll-snap-align: start;
+    min-height: 100vh;
+    padding: var(--spacing-xxl) var(--spacing-lg);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    scroll-margin-top: 0;
+}
+
+.section-header {
+    margin-bottom: var(--spacing-xl);
+    text-align: center;
+}
+
+.section-divider {
+    height: 4px;
+    width: 60px;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    margin: var(--spacing-sm) auto 0;
+    border-radius: var(--radius-full);
+}
+
+/* Hero section */
+.hero-section {
+    position: relative;
+    overflow: hidden;
+    padding-top: 120px;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+    z-index: 1;
+    animation: fadeInUp 1s ease;
+}
+
+.logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: var(--spacing-lg);
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.8rem;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.logo::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: rotate(45deg);
+    animation: shimmer 3s infinite;
+}
+
+.hero-title {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
+
+.hero-tagline {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-xl);
+    min-height: 1.5rem;
+    position: relative;
+}
+
+.hero-tagline::after {
+    content: '|';
+    position: absolute;
+    right: -4px;
+    animation: blink 0.8s infinite;
+}
+
+.hero-tagline.typing-complete::after {
+    display: inline-block;
+    animation: blink 0.8s infinite;
+}
+
+.hero-cta {
+    margin-top: var(--spacing-lg);
+}
+
+/* About section */
+.about-section {
+    position: relative;
+    overflow: hidden;
+    perspective: 1000px;
+    background-color: rgba(249, 249, 249, 0.7);
+    scroll-snap-align: start;
+}
+
+.about-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-lg);
+    transition: transform 0.5s ease-out;
+}
+
+.about-avatar {
+    margin-bottom: var(--spacing-md);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.avatar-container {
+    width: 150px;
+    height: 150px;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--primary-light), var(--secondary-light));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.6s ease;
+    transform-style: preserve-3d;
+}
+
+.avatar-container:hover {
+    transform: rotateY(10deg) scale(1.05);
+    box-shadow: 0 15px 30px rgba(108, 92, 231, 0.3);
+}
+
+.avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 3.5rem;
+    position: relative;
+    z-index: 1;
+    transition: all 0.5s ease;
+}
+
+.avatar-placeholder i {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+    transition: transform 0.5s ease;
+}
+
+.avatar-container:hover .avatar-placeholder i {
+    transform: scale(1.2) rotate(10deg);
+}
+
+.avatar-container::after {
+    content: '';
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background: linear-gradient(transparent, rgba(255, 255, 255, 0.1), transparent);
+    transform: rotate(45deg) translateX(-100%);
+    animation: avatarShine 6s infinite;
+}
+
+@keyframes avatarShine {
+    0% { transform: rotate(45deg) translateX(-100%); }
+    50% { transform: rotate(45deg) translateX(100%); }
+    100% { transform: rotate(45deg) translateX(100%); }
+}
+
+.about-text {
+    text-align: center;
+    max-width: 700px;
+    position: relative;
+    overflow: hidden;
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-lg);
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.5s ease;
+    margin-bottom: var(--spacing-lg);
+}
+
+body.dark-mode .about-text {
+    background: rgba(30, 30, 46, 0.3);
+    border: 1px solid rgba(70, 70, 90, 0.2);
+}
+
+.about-text:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(108, 92, 231, 0.1);
+}
+
+.about-text p {
+    margin-bottom: var(--spacing-md);
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeInUp 0.6s forwards;
+    animation-delay: calc(var(--index) * 0.3s);
+}
+
+.typing-text {
+    position: relative;
+    opacity: 1;
+    min-height: 1.8em;
+}
+
+.typing-text.active {
+    opacity: 1;
+}
+
+.typing-text.active::after {
+    content: '|';
+    position: absolute;
+    right: -8px;
+    animation: blink 0.8s infinite;
+}
+
+.typing-text::after {
+    display: none;
+}
+
+.about-cta {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--spacing-xl);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.8s ease;
+}
+
+.about-cta.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.skills-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-lg);
+    perspective: 1000px;
+}
+
+.skill-tag {
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.1), rgba(0, 206, 201, 0.1));
+    color: var(--primary-color);
+    border-radius: var(--radius-full);
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 3px 10px rgba(108, 92, 231, 0.1);
+    border: 1px solid rgba(108, 92, 231, 0.1);
+    transform-style: preserve-3d;
+}
+
+body.dark-mode .skill-tag {
+    background: linear-gradient(135deg, rgba(162, 155, 254, 0.1), rgba(129, 236, 236, 0.1));
+    color: var(--primary-light);
+    border: 1px solid rgba(162, 155, 254, 0.2);
+    box-shadow: 0 3px 10px rgba(162, 155, 254, 0.1);
+}
+
+.skill-tag:hover {
+    background: linear-gradient(135deg, rgba(108, 92, 231, 0.2), rgba(0, 206, 201, 0.2));
+    transform: translateY(-5px) rotateY(10deg);
+    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.2);
+}
+
+body.dark-mode .skill-tag:hover {
+    background: linear-gradient(135deg, rgba(162, 155, 254, 0.2), rgba(129, 236, 236, 0.2));
+    box-shadow: 0 8px 20px rgba(162, 155, 254, 0.3);
+}
+
+/* Projects section */
+.projects-section {
+    background-color: rgba(255, 255, 255, 0.7);
+    position: relative;
+    overflow: hidden;
+}
+
+.projects-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xl);
+    justify-content: center;
+    animation: fadeIn 0.8s ease-out;
+}
+
+.filter-container,
+.sort-container {
+    position: relative;
+}
+
+.filter-button,
+.sort-button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-full);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--text-secondary);
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: all var(--transition-fast) ease;
+    border: 1px solid rgba(108, 92, 231, 0.15);
+}
+
+body.dark-mode .filter-button,
+body.dark-mode .sort-button {
+    background: rgba(45, 45, 63, 0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--dark-text-secondary);
+    border: 1px solid rgba(162, 155, 254, 0.2);
+}
+
+.filter-button:hover,
+.sort-button:hover {
+    box-shadow: var(--shadow-md);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+body.dark-mode .filter-button:hover,
+body.dark-mode .sort-button:hover {
+    color: var(--primary-light);
+    box-shadow: 0 6px 16px rgba(108, 92, 231, 0.2);
+}
+
+.filter-menu,
+.sort-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: var(--spacing-xs);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    padding: var(--spacing-sm);
+    min-width: 220px;
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+    transform: translateY(10px);
+    opacity: 0;
+    transition: all var(--transition-medium) ease-out;
+    border: 1px solid rgba(108, 92, 231, 0.1);
+}
+
+body.dark-mode .filter-menu,
+body.dark-mode .sort-menu {
+    background: rgba(45, 45, 63, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(108, 92, 231, 0.2);
+}
+
+.filter-menu.active,
+.sort-menu.active {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+    animation: fadeInUp 0.3s ease-out;
+}
+
+.filter-option,
+.sort-option {
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--text-secondary);
+    transition: all var(--transition-fast) ease;
+}
+
+body.dark-mode .filter-option,
+body.dark-mode .sort-option {
+    color: var(--dark-text-secondary);
+}
+
+.filter-option:hover,
+.sort-option:hover {
+    background-color: rgba(108, 92, 231, 0.1);
+    color: var(--primary-color);
+    transform: translateX(4px);
+}
+
+body.dark-mode .filter-option:hover,
+body.dark-mode .sort-option:hover {
+    background-color: rgba(162, 155, 254, 0.1);
+    color: var(--primary-light);
+}
+
+.filter-option.active,
+.sort-option.active {
+    background-color: rgba(108, 92, 231, 0.2);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+body.dark-mode .filter-option.active,
+body.dark-mode .sort-option.active {
+    background-color: rgba(162, 155, 254, 0.2);
+    color: var(--primary-light);
+}
+
+.filter-option i,
+.sort-option i {
+    font-size: 0.8rem;
+    transition: all var(--transition-fast) ease;
+}
+
+.filter-option:hover i,
+.sort-option:hover i {
+    transform: scale(1.2);
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-xl);
+    perspective: 1000px;
+}
+
+.project-card {
+    background-color: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transform-style: preserve-3d;
+}
+
+body.dark-mode .project-card {
+    background-color: rgba(45, 45, 63, 0.75);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(70, 70, 90, 0.4);
+}
+
+.project-card:hover {
+    transform: translateY(-12px) rotateX(5deg);
+    box-shadow: 0 20px 30px rgba(108, 92, 231, 0.2);
+}
+
+body.dark-mode .project-card:hover {
+    box-shadow: 0 20px 30px rgba(108, 92, 231, 0.3);
+}
+
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0));
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: var(--radius-lg);
+}
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
+.project-image {
+    width: 100%;
+    height: 180px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.project-card:hover .project-image {
+    height: 200px;
+}
+
+.project-image-placeholder {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 3rem;
+    transition: transform 0.5s ease;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.project-card:hover .project-image-placeholder {
+    transform: scale(1.1);
+}
+
+.project-content {
+    padding: var(--spacing-lg);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+}
+
+.project-title {
+    font-size: 1.3rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    transition: all 0.3s ease;
+}
+
+body.dark-mode .project-title {
+    background: linear-gradient(to right, var(--primary-light), var(--secondary-light));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.project-card:hover .project-title {
+    transform: translateX(5px);
+}
+
+.project-description {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin-bottom: var(--spacing-md);
+    flex: 1;
+    line-height: 1.5;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+    margin-bottom: var(--spacing-md);
+}
+
+.project-tag {
+    font-size: 0.8rem;
+    padding: 3px 10px;
+    background-color: rgba(108, 92, 231, 0.1);
+    color: var(--primary-color);
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(108, 92, 231, 0.1);
+}
+
+body.dark-mode .project-tag {
+    background-color: rgba(162, 155, 254, 0.1);
+    color: var(--primary-light);
+    border: 1px solid rgba(162, 155, 254, 0.15);
+}
+
+.project-tag:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(108, 92, 231, 0.2);
+    background-color: rgba(108, 92, 231, 0.2);
+}
+
+body.dark-mode .project-tag:hover {
+    background-color: rgba(162, 155, 254, 0.2);
+    box-shadow: 0 4px 8px rgba(162, 155, 254, 0.3);
+}
+
+.project-view-btn {
+    align-self: flex-end;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    overflow: hidden;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    border: none;
+}
+
+.project-view-btn:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 6px 15px rgba(108, 92, 231, 0.4);
+}
+
+.project-view-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, var(--primary-light), var(--secondary-light));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.project-view-btn:hover::after {
+    opacity: 1;
+}
+
+/* Modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-medium) ease;
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: all;
+    animation: modalFadeIn 0.4s ease-out;
+}
+
+.modal-content {
+    background-color: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-radius: var(--radius-lg);
+    width: 90%;
+    max-width: 550px;
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: scale(0.9) translateY(20px);
+    opacity: 0;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+body.dark-mode .modal-content {
+    background-color: rgba(45, 45, 63, 0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(70, 70, 90, 0.4);
+}
+
+.modal.active .modal-content {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+.modal-header {
+    padding: var(--spacing-lg);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(178, 190, 195, 0.2);
+    position: relative;
+}
+
+body.dark-mode .modal-header {
+    border-bottom: 1px solid rgba(139, 148, 158, 0.2);
+}
+
+.modal-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+    opacity: 0.5;
+}
+
+#modal-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--accent-color));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+body.dark-mode #modal-title {
+    background: linear-gradient(to right, var(--primary-light), var(--secondary-light), var(--accent-light));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.modal-close {
+    font-size: 1.2rem;
+    color: var(--text-secondary);
+    transition: all var(--transition-fast) ease;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(108, 92, 231, 0.1);
+}
+
+body.dark-mode .modal-close {
+    color: var(--dark-text-secondary);
+    background: rgba(162, 155, 254, 0.1);
+}
+
+.modal-close:hover {
+    color: var(--accent-color);
+    background: rgba(108, 92, 231, 0.2);
+    transform: rotate(90deg);
+}
+
+body.dark-mode .modal-close:hover {
+    background: rgba(162, 155, 254, 0.2);
+}
+
+.modal-body {
+    padding: var(--spacing-lg);
+}
+
+.modal-image {
+    width: 100%;
+    height: 260px;
+    border-radius: var(--radius-lg);
+    margin-bottom: var(--spacing-lg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 4rem;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, rgba(0,0,0,0.2), transparent);
+    z-index: 1;
+}
+
+.project-image-placeholder i {
+    filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.3));
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
     }
-];
-
-// Initialize dark mode
-function initDarkMode() {
-    const themeToggle = document.getElementById('theme-toggle');
-    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
-    
-    // Check for saved theme preference or use system preference
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark' || (!savedTheme && prefersDarkScheme.matches)) {
-        document.body.classList.add('dark-mode');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-    } else {
-        themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+    50% {
+        transform: scale(1.05);
     }
-    
-    // Toggle theme
-    themeToggle.addEventListener('click', () => {
-        document.body.classList.toggle('dark-mode');
-        
-        if (document.body.classList.contains('dark-mode')) {
-            localStorage.setItem('theme', 'dark');
-            themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        } else {
-            localStorage.setItem('theme', 'light');
-            themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
-        }
-    });
-}
-
-// Initialize project filters and sorting
-function initProjectFilters() {
-    const categoryFilter = document.getElementById('category-filter');
-    const audienceFilter = document.getElementById('audience-filter');
-    const sortSelect = document.getElementById('sort-select');
-    const filterButtons = document.querySelectorAll('.filter-button');
-    const sortButton = document.querySelector('.sort-button');
-    const filterMenus = document.querySelectorAll('.filter-menu');
-    const sortMenu = document.querySelector('.sort-menu');
-    
-    // Get unique categories and audiences
-    const categories = [...new Set(projectsData.flatMap(project => project.categories))].sort();
-    const audiences = [...new Set(projectsData.flatMap(project => project.audience))].sort();
-    
-    // Populate category filter
-    categories.forEach(category => {
-        const option = document.createElement('div');
-        option.className = 'filter-option';
-        option.dataset.value = category;
-        option.innerHTML = `<i class="fas fa-circle"></i> ${category}`;
-        categoryFilter.appendChild(option);
-    });
-    
-    // Populate audience filter
-    audiences.forEach(audience => {
-        const option = document.createElement('div');
-        option.className = 'filter-option';
-        option.dataset.value = audience;
-        option.innerHTML = `<i class="fas fa-circle"></i> ${audience}`;
-        audienceFilter.appendChild(option);
-    });
-    
-    // Toggle filter menus
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const targetId = this.getAttribute('data-target');
-            const targetMenu = document.getElementById(targetId);
-            
-            // Close other menus
-            filterMenus.forEach(menu => {
-                if (menu.id !== targetId) {
-                    menu.classList.remove('active');
-                }
-            });
-            sortMenu.classList.remove('active');
-            
-            // Toggle target menu
-            targetMenu.classList.toggle('active');
-        });
-    });
-    
-    // Toggle sort menu
-    sortButton.addEventListener('click', function() {
-        sortMenu.classList.toggle('active');
-        
-        // Close filter menus
-        filterMenus.forEach(menu => {
-            menu.classList.remove('active');
-        });
-    });
-    
-    // Close menus when clicking outside
-    document.addEventListener('click', function(event) {
-        if (!event.target.closest('.filter-container') && !event.target.closest('.sort-container')) {
-            filterMenus.forEach(menu => {
-                menu.classList.remove('active');
-            });
-            sortMenu.classList.remove('active');
-        }
-    });
-    
-    // Handle filter option clicks
-    const filterOptions = document.querySelectorAll('.filter-option');
-    filterOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            const filterType = this.closest('.filter-menu').id;
-            const value = this.dataset.value;
-            
-            // Add subtle animation when clicking
-            this.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                this.style.transform = '';
-            }, 200);
-            
-            // Toggle active state
-            this.classList.toggle('active');
-            
-            // Update filter button text
-            updateFilterButtonText(filterType);
-            
-            // Apply filters
-            applyFilters();
-            
-            // Close menu
-            this.closest('.filter-menu').classList.remove('active');
-        });
-    });
-    
-    // Handle sort option clicks
-    const sortOptions = document.querySelectorAll('.sort-option');
-    sortOptions.forEach(option => {
-        option.addEventListener('click', function() {
-            // Remove active from all sort options
-            sortOptions.forEach(opt => opt.classList.remove('active'));
-            
-            // Add active to clicked option
-            this.classList.add('active');
-            
-            // Update sort button text
-            const sortText = this.textContent;
-            document.querySelector('.sort-button span').textContent = sortText;
-            
-            // Apply sorting
-            applyFilters();
-            
-            // Close menu
-            sortMenu.classList.remove('active');
-        });
-    });
-}
-
-// Update filter button text based on selected options
-function updateFilterButtonText(filterType) {
-    const filterMenu = document.getElementById(filterType);
-    const filterButton = document.querySelector(`[data-target="${filterType}"]`).querySelector('span');
-    const selectedOptions = filterMenu.querySelectorAll('.filter-option.active');
-    
-    if (selectedOptions.length === 0) {
-        filterButton.textContent = filterType === 'category-filter' ? 'Category: All' : 'Audience: All';
-    } else if (selectedOptions.length === 1) {
-        filterButton.textContent = filterType === 'category-filter' ? 
-            `Category: ${selectedOptions[0].dataset.value}` : 
-            `Audience: ${selectedOptions[0].dataset.value}`;
-    } else {
-        filterButton.textContent = filterType === 'category-filter' ? 
-            `Category: ${selectedOptions.length} selected` : 
-            `Audience: ${selectedOptions.length} selected`;
-    }
-}
-
-// Apply filters and sorting to projects
-function applyFilters() {
-    const projectsGrid = document.querySelector('.projects-grid');
-    const noResultsMsg = document.querySelector('.no-results');
-    
-    // Get selected categories
-    const selectedCategories = Array.from(document.querySelectorAll('#category-filter .filter-option.active'))
-        .map(option => option.dataset.value);
-    
-    // Get selected audiences
-    const selectedAudiences = Array.from(document.querySelectorAll('#audience-filter .filter-option.active'))
-        .map(option => option.dataset.value);
-    
-    // Get sort option
-    const sortOption = document.querySelector('.sort-option.active').dataset.value;
-    
-    // Filter projects
-    let filteredProjects = [...projectsData];
-    
-    if (selectedCategories.length > 0) {
-        filteredProjects = filteredProjects.filter(project => 
-            project.categories.some(category => selectedCategories.includes(category))
-        );
-    }
-    
-    if (selectedAudiences.length > 0) {
-        filteredProjects = filteredProjects.filter(project => 
-            project.audience.some(audience => selectedAudiences.includes(audience))
-        );
-    }
-    
-    // Sort projects
-    switch (sortOption) {
-        case 'alphabetical':
-            filteredProjects.sort((a, b) => a.title.localeCompare(b.title));
-            break;
-        case 'date-new':
-            filteredProjects.sort((a, b) => new Date(b.date) - new Date(a.date));
-            break;
-        case 'date-old':
-            filteredProjects.sort((a, b) => new Date(a.date) - new Date(b.date));
-            break;
-        default:
-            // Default sorting (by id)
-            filteredProjects.sort((a, b) => a.id - b.id);
-    }
-    
-    // Clear projects grid
-    projectsGrid.innerHTML = '';
-    
-    // Show no results message if no projects match filters
-    if (filteredProjects.length === 0) {
-        noResultsMsg.classList.add('active');
-    } else {
-        noResultsMsg.classList.remove('active');
-        
-        // Populate grid with filtered projects
-        filteredProjects.forEach((project, index) => {
-            const projectCard = document.createElement('div');
-            projectCard.className = 'project-card';
-            projectCard.style.animationDelay = `${index * 0.1}s`;
-            
-            projectCard.innerHTML = `
-                <div class="project-image ${project.image}">
-                    <div class="project-image-placeholder">
-                        <i class="fas ${project.icon}"></i>
-                    </div>
-                </div>
-                <div class="project-content">
-                    <h3 class="project-title">${project.title}</h3>
-                    <p class="project-description">${project.description}</p>
-                    <div class="project-tags">
-                        ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
-                    </div>
-                    <button class="project-view-btn" data-project-id="${project.id}">
-                        View Details
-                    </button>
-                </div>
-            `;
-            
-            projectsGrid.appendChild(projectCard);
-        });
-        
-        // Add click event to view buttons - call the dedicated function
-        addProjectButtonListeners();
-    }
-}
-
-// Populate projects grid
-function populateProjects() {
-    const projectsGrid = document.querySelector('.projects-grid');
-    
-    // Initialize with all projects
-    projectsData.forEach((project, index) => {
-        const projectCard = document.createElement('div');
-        projectCard.className = 'project-card';
-        projectCard.style.animationDelay = `${index * 0.1}s`;
-        
-        projectCard.innerHTML = `
-            <div class="project-image ${project.image}">
-                <div class="project-image-placeholder">
-                    <i class="fas ${project.icon}"></i>
-                </div>
-            </div>
-            <div class="project-content">
-                <h3 class="project-title">${project.title}</h3>
-                <p class="project-description">${project.description}</p>
-                <div class="project-tags">
-                    ${project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('')}
-                </div>
-                <button class="project-view-btn" data-project-id="${project.id}">
-                    View Details
-                </button>
-            </div>
-        `;
-        
-        // Add hover effect with mouse movement
-        projectCard.addEventListener('mousemove', function(e) {
-            const rect = this.getBoundingClientRect();
-            const x = e.clientX - rect.left; // x position within the element
-            const y = e.clientY - rect.top;  // y position within the element
-            
-            // Calculate rotation based on mouse position
-            const rotateY = ((x / rect.width) - 0.5) * 5; // -2.5 to 2.5 degrees
-            const rotateX = ((y / rect.height) - 0.5) * -5; // 2.5 to -2.5 degrees
-            
-            this.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-8px)`;
-        });
-        
-        projectCard.addEventListener('mouseleave', function() {
-            this.style.transform = '';
-            // Reset to CSS default transition
-            setTimeout(() => {
-                this.style.transition = '';
-            }, 300);
-        });
-        
-        projectsGrid.appendChild(projectCard);
-    });
-    
-    // Add click event to view buttons with enhanced feedback
-    addProjectButtonListeners();
-}
-
-// Separate function to add event listeners to project buttons
-function addProjectButtonListeners() {
-    const viewButtons = document.querySelectorAll('.project-view-btn');
-    viewButtons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            // Get project ID
-            const projectId = this.getAttribute('data-project-id');
-            
-            // Find the project data
-            const project = projectsData.find(p => p.id == projectId);
-            
-            
-            // For all other projects, create ripple effect and show modal
-            const circle = document.createElement('span');
-            const diameter = Math.max(button.clientWidth, button.clientHeight);
-            const radius = diameter / 2;
-            
-            circle.style.width = circle.style.height = `${diameter}px`;
-            circle.style.left = `${e.clientX - button.getBoundingClientRect().left - radius}px`;
-            circle.style.top = `${e.clientY - button.getBoundingClientRect().top - radius}px`;
-            circle.classList.add('ripple');
-            
-            const ripple = button.getElementsByClassName('ripple')[0];
-            if (ripple) {
-                ripple.remove();
-            }
-            
-            button.appendChild(circle);
-            
-            // Show modal with slight delay for effect
-            setTimeout(() => {
-                openProjectModal(projectId);
-            }, 300);
-        });
-    });
-}
-
-// Modal functionality
-function initModal() {
-    const modal = document.getElementById('project-modal');
-    const closeBtn = document.getElementById('modal-close');
-    
-    // Close modal when clicking the close button
-    closeBtn.addEventListener('click', function() {
-        closeModal();
-    });
-    
-    // Close modal when clicking outside of modal content
-    modal.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            closeModal();
-        }
-    });
-    
-    // Close modal when pressing escape key
-    document.addEventListener('keydown', function(event) {
-        if (event.key === 'Escape' && modal.classList.contains('active')) {
-            closeModal();
-        }
-    });
-}
-
-// Enhanced open project modal function with explicit style setting
-function openProjectModal(projectId) {
-    const modal = document.getElementById('project-modal');
-    const modalTitle = document.getElementById('modal-title');
-    const modalImage = document.getElementById('modal-image');
-    const modalDescription = document.getElementById('modal-description');
-    const modalTags = document.getElementById('modal-tags');
-    const modalLink = document.getElementById('modal-link');
-    
-    // Find the project data
-    const project = projectsData.find(p => p.id == projectId);
-    
-    if (project) {
-        // Set modal content
-        modalTitle.textContent = project.title;
-        modalImage.className = 'modal-image';
-        modalImage.classList.add(project.image);
-        modalImage.innerHTML = `<div class="project-image-placeholder"><i class="fas ${project.icon}"></i></div>`;
-        modalDescription.textContent = project.description;
-        
-        // Set tags with staggered animation
-        modalTags.innerHTML = '';
-        project.tags.forEach((tag, index) => {
-            const tagElement = document.createElement('span');
-            tagElement.className = 'modal-tag';
-            tagElement.textContent = tag;
-            tagElement.style.opacity = '0';
-            tagElement.style.transform = 'translateY(10px)';
-            modalTags.appendChild(tagElement);
-            
-            // Staggered animation for tags
-            setTimeout(() => {
-                tagElement.style.transition = 'all 0.3s ease';
-                tagElement.style.opacity = '1';
-                tagElement.style.transform = 'translateY(0)';
-            }, 100 + (index * 50));
-        });
-        
-        // Set link
-        modalLink.href = project.link;
-        
-        // Get modal content and reset its styles explicitly before showing
-        const modalContent = document.querySelector('.modal-content');
-        modalContent.style.transition = 'all 0.5s cubic-bezier(0.19, 1, 0.22, 1)';
-        modalContent.style.transform = 'scale(1) translateY(0)';
-        modalContent.style.opacity = '1';
-        
-        // Show modal with animation
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
-    }
-}
-
-// Fixed close modal function with proper style reset
-function closeModal() {
-    const modal = document.getElementById('project-modal');
-    const modalContent = document.querySelector('.modal-content');
-    
-    // Play exit animation
-    modalContent.style.transform = 'scale(0.95) translateY(10px)';
-    modalContent.style.opacity = '0';
-    
-    // Wait for animation to complete before hiding modal
-    setTimeout(() => {
-        modal.classList.remove('active');
-        document.body.style.overflow = ''; // Restore scrolling
-        
-        // Remove all ripple effects that might have been added
-        document.querySelectorAll('.ripple').forEach(ripple => ripple.remove());
-        
-        // Reset modalContent styles after hiding the modal
-        // This is the important fix - we need to reset these styles
-        setTimeout(() => {
-            modalContent.style.transform = '';
-            modalContent.style.opacity = '';
-        }, 50);
-    }, 300);
-}
-
-// Button click events
-function initButtonEvents() {
-    // Explore button scroll to about
-    const exploreBtn = document.getElementById('explore-btn');
-    if (exploreBtn) {
-        exploreBtn.addEventListener('click', function() {
-            document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
-        });
-    }
-    
-    // Projects button scroll to projects section
-    const aboutExploreBtn = document.getElementById('about-explore-btn');
-    if (aboutExploreBtn) {
-        aboutExploreBtn.addEventListener('click', function() {
-            document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
-        });
-    }
-    
-    // Contact button (can be modified to show a contact form)
-    const contactBtn = document.getElementById('contact-btn');
-    if (contactBtn) {
-        contactBtn.addEventListener('click', function() {
-            // This could trigger a contact form modal or other action
-            alert('Contact form would open here!');
-        });
-    }
-    
-    // Add ripple effect to all buttons
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            const x = e.clientX - e.target.getBoundingClientRect().left;
-            const y = e.clientY - e.target.getBoundingClientRect().top;
-            
-            const ripple = document.createElement('span');
-            ripple.className = 'ripple';
-            ripple.style.left = `${x}px`;
-            ripple.style.top = `${y}px`;
-            
-            this.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
-        });
-    });
-}
-
-// Initialize typing animation for Hero section
-function initHeroTypingEffect() {
-    const heroTagline = document.getElementById('hero-tagline');
-    if (!heroTagline) return;
-    
-    const text = "cynthetic-attenti0n";
-    let i = 0;
-    const typingSpeed = 100; // milliseconds per character
-    
-    function typeHeroText() {
-        if (i < text.length) {
-            heroTagline.textContent += text.charAt(i);
-            i++;
-            setTimeout(typeHeroText, typingSpeed);
-        } else {
-            // Keep the blinking cursor after typing is complete
-            heroTagline.classList.add('typing-complete');
-        }
-    }
-    
-    // Start typing with a small delay
-    setTimeout(typeHeroText, 500);
-}
-
-// Initialize typing animation for About section
-function initTypingAnimation() {
-    const typingTexts = document.querySelectorAll('.typing-text');
-    
-    // Skip if no typing texts are found
-    if (!typingTexts.length) return;
-    
-    // Add typing animation decorator elements
-    const typingContainer = document.querySelector('.about-text');
-    if (typingContainer) {
-        // Add decorator elements
-        const decorator1 = document.createElement('div');
-        decorator1.classList.add('typing-decorator');
-        decorator1.innerHTML = '<i class="fas fa-code"></i>';
-        typingContainer.appendChild(decorator1);
-        
-        const decorator2 = document.createElement('div');
-        decorator2.classList.add('typing-decorator');
-        decorator2.innerHTML = '<i class="fas fa-terminal"></i>';
-        typingContainer.appendChild(decorator2);
-        
-        // Add kraken image
-        const krakenContainer = document.createElement('div');
-        krakenContainer.classList.add('kraken-container');
-        const krakenImg = document.createElement('img');
-        krakenImg.src = 'baby kraken no back.png';
-        krakenImg.alt = 'Cute kraken';
-        krakenImg.style.width = '100%';
-        krakenContainer.appendChild(krakenImg);
-        typingContainer.appendChild(krakenContainer);
-    }
-    
-    // Set up sequential typing animation
-    let currentParagraphIndex = 0;
-    
-    function typeNextParagraph() {
-        if (currentParagraphIndex >= typingTexts.length) {
-            // All paragraphs typed, show CTA button
-            const aboutCta = document.querySelector('.about-cta');
-            if (aboutCta) {
-                aboutCta.classList.add('visible');
-            }
-            return;
-        }
-        
-        // Remove active class and cursor from all paragraphs except completed ones
-        typingTexts.forEach((p, idx) => {
-            if (idx >= currentParagraphIndex) {
-                p.classList.remove('active');
-            }
-        });
-        
-        const element = typingTexts[currentParagraphIndex];
-        const text = element.getAttribute('data-text');
-        element.textContent = '';
-        element.classList.add('active');
-        
-        let i = 0;
-        const typingSpeed = 20; // milliseconds per character
-        
-        const typingInterval = setInterval(() => {
-            if (i < text.length) {
-                element.textContent += text.charAt(i);
-                i++;
-            } else {
-                clearInterval(typingInterval);
-                // Wait a moment before starting the next paragraph
-                setTimeout(() => {
-                    // Keep paragraph visible but remove typing cursor
-                    element.classList.remove('active');
-                    currentParagraphIndex++;
-                    typeNextParagraph();
-                }, 800); // Delay between paragraphs
-            }
-        }, typingSpeed);
-    }
-    
-    // Start typing animation when about section is in view
-    const aboutSection = document.querySelector('.about-section');
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                // Start typing the first paragraph with a delay
-                setTimeout(() => {
-                    typeNextParagraph();
-                }, 500);
-                observer.unobserve(entry.target);
-            }
-        });
-    }, { threshold: 0.3 });
-    
-    if (aboutSection) {
-        observer.observe(aboutSection);
-    }
-    
-    // Initialize parallax effect for about section
-    initAboutParallax();
-    
-    // Initialize rotating skills
-    initRotatingSkills();
-}
-
-// Parallax effect for about section
-function initAboutParallax() {
-    const aboutSection = document.querySelector('.about-section');
-    const aboutContent = document.querySelector('.about-content');
-    
-    window.addEventListener('scroll', function() {
-        if (!aboutSection) return;
-        
-        const scrollPosition = window.pageYOffset;
-        const sectionOffset = aboutSection.offsetTop;
-        const distance = scrollPosition - sectionOffset;
-        
-        if (distance > -500 && distance < 500) {
-            const parallaxValue = distance * 0.1;
-            aboutContent.style.transform = `translateY(${parallaxValue}px)`;
-        }
-    });
-}
-
-// Initialize rotating skills
-function initRotatingSkills() {
-    const skillsContainer = document.querySelector('.skills-container');
-    if (!skillsContainer) return;
-    
-    const skills = skillsContainer.querySelectorAll('.skill-tag');
-    
-    skills.forEach((skill, index) => {
-        skill.style.opacity = '0';
-        skill.style.transform = 'scale(0.8) rotateY(40deg)';
-        
-        setTimeout(() => {
-            skill.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-            skill.style.opacity = '1';
-            skill.style.transform = 'scale(1) rotateY(0deg)';
-            
-            // Add hover rotation effect
-            skill.addEventListener('mouseover', function() {
-                this.style.transform = 'scale(1.1) rotateY(10deg)';
-            });
-            
-            skill.addEventListener('mouseout', function() {
-                this.style.transform = 'scale(1) rotateY(0deg)';
-            });
-            
-        }, 2000 + (index * 200)); // Start after typing animation with staggered delay
-    });
-}
-
-// Intersection Observer for scroll animations
-function initScrollObserver() {
-    const sections = document.querySelectorAll('.section');
-    
-    const options = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.1
-    };
-    
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, options);
-    
-    sections.forEach(section => {
-        observer.observe(section);
-    });
-    
-    // Add animation classes to projects
-    const projectCards = document.querySelectorAll('.project-card');
-    projectCards.forEach((card, index) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        card.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
-    });
-    
-    const projectsObserver = new IntersectionObserver((entries, observer) => {
-        if (entries[0].isIntersecting) {
-            projectCards.forEach(card => {
-                card.style.opacity = '1';
-                card.style.transform = 'translateY(0)';
-            });
-            projectsObserver.unobserve(entries[0].target);
-        }
-    }, { threshold: 0.1 });
-    
-    const projectsSection = document.getElementById('projects');
-    if (projectsSection) {
-        projectsObserver.observe(projectsSection);
+    100% {
+        transform: scale(1);
     }
 }
 
-// Enhanced smooth scrolling and snapping
-function enhanceScrolling() {
-    // Smooth scroll to section when clicking navigation items
-    const navItems = document.querySelectorAll('.nav-item');
-    const exploreBtn = document.getElementById('explore-btn');
-    const aboutExploreBtn = document.getElementById('about-explore-btn');
-    
-    // Handle click on buttons to jump to projects
-    if (exploreBtn) {
-        exploreBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            smoothScrollToSection('projects');
-        });
-    }
-    
-    if (aboutExploreBtn) {
-        aboutExploreBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            smoothScrollToSection('projects');
-        });
-    }
-    
-    navItems.forEach(item => {
-        item.addEventListener('click', function(e) {
-            e.preventDefault();
-            const targetId = this.getAttribute('href').substring(1);
-            smoothScrollToSection(targetId);
-        });
-    });
+.modal-description {
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    padding: 0 var(--spacing-sm);
 }
 
-function smoothScrollToSection(sectionId) {
-    const section = document.getElementById(sectionId);
-    if (section) {
-        // Smooth scroll with enhanced behavior
-        section.scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-        });
+body.dark-mode .modal-description {
+    color: var(--dark-text-secondary);
+}
+
+.modal-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-lg);
+}
+
+.modal-tag {
+    font-size: 0.9rem;
+    padding: 5px 12px;
+    background-color: rgba(108, 92, 231, 0.1);
+    color: var(--primary-color);
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+    border: 1px solid rgba(108, 92, 231, 0.1);
+}
+
+body.dark-mode .modal-tag {
+    background-color: rgba(162, 155, 254, 0.1);
+    color: var(--primary-light);
+    border: 1px solid rgba(162, 155, 254, 0.15);
+}
+
+.modal-tag:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(108, 92, 231, 0.2);
+    background-color: rgba(108, 92, 231, 0.2);
+}
+
+body.dark-mode .modal-tag:hover {
+    background-color: rgba(162, 155, 254, 0.2);
+    box-shadow: 0 4px 8px rgba(162, 155, 254, 0.3);
+}
+
+.modal-footer {
+    padding: var(--spacing-lg);
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid rgba(178, 190, 195, 0.2);
+    position: relative;
+}
+
+body.dark-mode .modal-footer {
+    border-top: 1px solid rgba(139, 148, 158, 0.2);
+}
+
+.modal-footer::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--primary-color), transparent);
+    opacity: 0.5;
+}
+
+#modal-link {
+    padding: var(--spacing-sm) var(--spacing-xl);
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(108, 92, 231, 0.4);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+#modal-link:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(108, 92, 231, 0.5);
+}
+
+#modal-link::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, var(--primary-light), var(--secondary-light));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#modal-link:hover::after {
+    opacity: 1;
+}
+
+#modal-link i {
+    transition: transform 0.3s ease;
+}
+
+#modal-link:hover i {
+    transform: translateX(4px);
+}
+
+/* No results message */
+.no-results {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+    display: none;
+    border: 2px dashed rgba(108, 92, 231, 0.2);
+    border-radius: var(--radius-lg);
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+body.dark-mode .no-results {
+    color: var(--dark-text-secondary);
+    background-color: rgba(45, 45, 63, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 2px dashed rgba(162, 155, 254, 0.2);
+}
+
+.no-results.active {
+    display: block;
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Contact section */
+.contact-section {
+    background-color: rgba(249, 249, 249, 0.7);
+}
+
+.contact-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xl);
+}
+
+.social-links {
+    display: flex;
+    gap: var(--spacing-lg);
+}
+
+.social-link {
+    width: 60px;
+    height: 60px;
+    border-radius: var(--radius-full);
+    background-color: var(--surface);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary-color);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-medium) ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.social-link::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: var(--radius-full);
+    top: 100%;
+    left: 0;
+    transition: top var(--transition-medium) ease;
+    z-index: -1;
+}
+
+.social-link:hover {
+    color: white;
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.social-link:hover::before {
+    top: 0;
+}
+
+/* Buttons */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    text-align: center;
+    transition: all var(--transition-medium) ease;
+    position: relative;
+    overflow: hidden;
+    gap: var(--spacing-sm);
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.5s, height 0.5s;
+}
+
+.btn:hover::after {
+    width: 300px;
+    height: 300px;
+}
+
+.btn:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+.primary-btn {
+    background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+    color: white;
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+}
+
+.primary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(108, 92, 231, 0.6);
+}
+
+.secondary-btn {
+    background-color: white;
+    color: var(--primary-color);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.secondary-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    background-color: rgba(108, 92, 231, 0.1);
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+    color: var(--dark-text-primary);
+    background-color: var(--dark-background);
+}
+
+body.dark-mode .project-card,
+body.dark-mode .modal-content,
+body.dark-mode .nav-menu,
+body.dark-mode .social-link {
+    background-color: var(--dark-surface);
+}
+
+body.dark-mode .project-title,
+body.dark-mode .modal-title {
+    color: var(--dark-text-primary);
+}
+
+body.dark-mode .project-description,
+body.dark-mode .modal-description {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .about-section,
+body.dark-mode .contact-section {
+    background-color: rgba(30, 30, 46, 0.7);
+}
+
+body.dark-mode .projects-section {
+    background-color: rgba(45, 45, 63, 0.7);
+}
+
+body.dark-mode .nav-item {
+    color: var(--dark-text-secondary);
+}
+
+body.dark-mode .nav-item:hover,
+body.dark-mode .nav-item.active {
+    color: var(--primary-light);
+    background-color: rgba(162, 155, 254, 0.1);
+}
+
+/* Dark mode toggle */
+.theme-toggle {
+    position: fixed;
+    top: var(--spacing-lg);
+    right: var(--spacing-lg);
+    z-index: 1000;
+    width: 50px;
+    height: 50px;
+    border-radius: var(--radius-full);
+    background: var(--surface);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--shadow-md);
+    cursor: pointer;
+    transition: background-color var(--transition-medium) ease;
+    color: var(--primary-color);
+}
+
+body.dark-mode .theme-toggle {
+    background: var(--dark-surface);
+    color: var(--primary-light);
+}
+
+/* Project filters and sorting */
+.filter-container,
+.sort-container {
+    position: relative;
+}
+
+.filter-button,
+.sort-button {
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-full);
+    background-color: var(--surface);
+    color: var(--text-secondary);
+    font-weight: 500;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    transition: all var(--transition-fast) ease;
+}
+
+body.dark-mode .filter-button,
+body.dark-mode .sort-button {
+    background-color: var(--dark-surface);
+    color: var(--dark-text-secondary);
+}
+
+.filter-button:hover,
+.sort-button:hover {
+    box-shadow: var(--shadow-md);
+    color: var(--primary-color);
+}
+
+.filter-menu,
+.sort-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: var(--spacing-xs);
+    background-color: var(--surface);
+    padding: var(--spacing-sm);
+    min-width: 200px;
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+}
+
+body.dark-mode .filter-menu,
+body.dark-mode .sort-menu {
+    background-color: var(--dark-surface);
+}
+
+.filter-menu.active,
+.sort-menu.active {
+    display: flex;
+}
+
+.filter-option,
+.sort-option {
+    padding: var(--spacing-xs) var(--spacing-md);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    color: var(--text-secondary);
+    transition: all var(--transition-fast) ease;
+}
+
+body.dark-mode .filter-option,
+body.dark-mode .sort-option {
+    color: var(--dark-text-secondary);
+}
+
+.filter-option:hover,
+.sort-option:hover {
+    background-color: rgba(108, 92, 231, 0.1);
+    color: var(--primary-color);
+}
+
+.filter-option.active,
+.sort-option.active {
+    background-color: rgba(108, 92, 231, 0.2);
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+/* No results message */
+.no-results {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+    display: none;
+}
+
+body.dark-mode .no-results {
+    color: var(--dark-text-secondary);
+}
+
+.no-results.active {
+    display: block;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
     }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* Mobile optimizations */
+@media screen and (max-width: 768px) {
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .hero-tagline {
+        font-size: 1rem;
+    }
+    
+    .section {
+        padding: var(--spacing-xl) var(--spacing-md);
+    }
+    
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Project-specific styling for new apps */
+.tummy-time {
+    background: linear-gradient(135deg, #FF9A8B, #FF6A88);
+}
+
+.adventures-python {
+    background: linear-gradient(135deg, #67B26F, #4ca2cd);
+}
+
+.think-mate {
+    background: linear-gradient(135deg, #4e54c8, #8f94fb);
+}
+
+.mneme {
+    background: linear-gradient(135deg, #C33764, #1D2671);
+}
+
+.enov-1 {
+    background: linear-gradient(135deg, #00B4DB, #0083B0);
+}
+
+.chasm-beyond {
+    background: linear-gradient(135deg, #834d9b, #d04ed6);
+}
+
+.mind-over-matter {
+    background: linear-gradient(135deg, #42275a, #734b6d);
+}
+
+.inner-piece {
+    background: linear-gradient(135deg, #06beb6, #48b1bf);
+}
+
+.mindcare {
+    background: linear-gradient(135deg, #eb3349, #f45c43);
+}
+
+.enov-enhanced {
+    background: linear-gradient(135deg, #8e2de2, #4a00e0);
+}
+
+.thrive-mind {
+    background: linear-gradient(135deg, #11998e, #38ef7d);
+}
+
+.psypher {
+    background: linear-gradient(135deg, #fc4a1a, #f7b733);
+}
+
+.insightfully {
+    background: linear-gradient(135deg, #0F2027, #203A43, #2C5364);
+}
+
+.kai {
+    background: linear-gradient(135deg, #ee0979, #ff6a00);
+}
+
+.ai-workout {
+    background: linear-gradient(135deg, #dd3e54, #6be585);
+}
+
+/* Typing animation container */
+.typing-animation-container {
+    position: relative;
+}
+
+/* Typing animation decorator elements */
+.typing-decorator {
+    position: absolute;
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    opacity: 0.2;
+    transform: rotate(15deg);
+    top: -15px;
+    left: 10px;
+    animation: float 4s ease-in-out infinite;
+}
+
+.typing-decorator:nth-child(2) {
+    right: 10px;
+    left: auto;
+    top: auto;
+    bottom: -15px;
+    transform: rotate(-15deg);
+    animation-delay: 1s;
+}
+
+.kraken-container {
+    position: absolute;
+    bottom: -100px;
+    right: -100px;
+    width: 200px;
+    height: 200px;
+    opacity: 0;
+    transform: translate(50px, 50px) rotate(15deg);
+    transition: all 1.5s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.about-text:hover .kraken-container {
+    opacity: 0.7;
+    transform: translate(0, 0) rotate(0deg);
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(15deg); }
+    50% { transform: translateY(-10px) rotate(15deg); }
+}
+
+body.dark-mode .typing-decorator {
+    color: var(--primary-light);
 }
