@@ -22,6 +22,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Intersection Observer for scroll animations
     initScrollObserver();
+    
+    // Initialize typing animation
+    initTypingAnimation();
+    
+    // Initialize the enhanced scrolling
+    enhanceScrolling();
+    
+    // Initialize hero typing effect
+    initHeroTypingEffect();
 });
 
 // Initialize particles background
@@ -832,14 +841,20 @@ function closeModal() {
     }, 300);
 }
 
-
-
 // Button click events
 function initButtonEvents() {
-    // Explore button scroll to projects
+    // Explore button scroll to about
     const exploreBtn = document.getElementById('explore-btn');
     if (exploreBtn) {
         exploreBtn.addEventListener('click', function() {
+            document.getElementById('about').scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+    
+    // Projects button scroll to projects section
+    const aboutExploreBtn = document.getElementById('about-explore-btn');
+    if (aboutExploreBtn) {
+        aboutExploreBtn.addEventListener('click', function() {
             document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
         });
     }
@@ -871,6 +886,181 @@ function initButtonEvents() {
                 ripple.remove();
             }, 600);
         });
+    });
+}
+
+// Initialize typing animation for Hero section
+function initHeroTypingEffect() {
+    const heroTagline = document.getElementById('hero-tagline');
+    if (!heroTagline) return;
+    
+    const text = "cynthetic-attenti0n";
+    let i = 0;
+    const typingSpeed = 100; // milliseconds per character
+    
+    function typeHeroText() {
+        if (i < text.length) {
+            heroTagline.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeHeroText, typingSpeed);
+        } else {
+            // Keep the blinking cursor after typing is complete
+            heroTagline.classList.add('typing-complete');
+        }
+    }
+    
+    // Start typing with a small delay
+    setTimeout(typeHeroText, 500);
+}
+
+// Initialize typing animation for About section
+function initTypingAnimation() {
+    const typingTexts = document.querySelectorAll('.typing-text');
+    
+    // Skip if no typing texts are found
+    if (!typingTexts.length) return;
+    
+    // Add typing animation decorator elements
+    const typingContainer = document.querySelector('.about-text');
+    if (typingContainer) {
+        // Add decorator elements
+        const decorator1 = document.createElement('div');
+        decorator1.classList.add('typing-decorator');
+        decorator1.innerHTML = '<i class="fas fa-code"></i>';
+        typingContainer.appendChild(decorator1);
+        
+        const decorator2 = document.createElement('div');
+        decorator2.classList.add('typing-decorator');
+        decorator2.innerHTML = '<i class="fas fa-terminal"></i>';
+        typingContainer.appendChild(decorator2);
+        
+        // Add kraken image
+        const krakenContainer = document.createElement('div');
+        krakenContainer.classList.add('kraken-container');
+        const krakenImg = document.createElement('img');
+        krakenImg.src = 'baby kraken no back.png';
+        krakenImg.alt = 'Cute kraken';
+        krakenImg.style.width = '100%';
+        krakenContainer.appendChild(krakenImg);
+        typingContainer.appendChild(krakenContainer);
+    }
+    
+    // Set up sequential typing animation
+    let currentParagraphIndex = 0;
+    
+    function typeNextParagraph() {
+        if (currentParagraphIndex >= typingTexts.length) {
+            // All paragraphs typed, show CTA button
+            const aboutCta = document.querySelector('.about-cta');
+            if (aboutCta) {
+                aboutCta.classList.add('visible');
+            }
+            return;
+        }
+        
+        // Remove active class and cursor from all paragraphs except completed ones
+        typingTexts.forEach((p, idx) => {
+            if (idx >= currentParagraphIndex) {
+                p.classList.remove('active');
+            }
+        });
+        
+        const element = typingTexts[currentParagraphIndex];
+        const text = element.getAttribute('data-text');
+        element.textContent = '';
+        element.classList.add('active');
+        
+        let i = 0;
+        const typingSpeed = 20; // milliseconds per character
+        
+        const typingInterval = setInterval(() => {
+            if (i < text.length) {
+                element.textContent += text.charAt(i);
+                i++;
+            } else {
+                clearInterval(typingInterval);
+                // Wait a moment before starting the next paragraph
+                setTimeout(() => {
+                    // Keep paragraph visible but remove typing cursor
+                    element.classList.remove('active');
+                    currentParagraphIndex++;
+                    typeNextParagraph();
+                }, 800); // Delay between paragraphs
+            }
+        }, typingSpeed);
+    }
+    
+    // Start typing animation when about section is in view
+    const aboutSection = document.querySelector('.about-section');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                // Start typing the first paragraph with a delay
+                setTimeout(() => {
+                    typeNextParagraph();
+                }, 500);
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.3 });
+    
+    if (aboutSection) {
+        observer.observe(aboutSection);
+    }
+    
+    // Initialize parallax effect for about section
+    initAboutParallax();
+    
+    // Initialize rotating skills
+    initRotatingSkills();
+}
+
+// Parallax effect for about section
+function initAboutParallax() {
+    const aboutSection = document.querySelector('.about-section');
+    const aboutContent = document.querySelector('.about-content');
+    
+    window.addEventListener('scroll', function() {
+        if (!aboutSection) return;
+        
+        const scrollPosition = window.pageYOffset;
+        const sectionOffset = aboutSection.offsetTop;
+        const distance = scrollPosition - sectionOffset;
+        
+        if (distance > -500 && distance < 500) {
+            const parallaxValue = distance * 0.1;
+            aboutContent.style.transform = `translateY(${parallaxValue}px)`;
+        }
+    });
+}
+
+// Initialize rotating skills
+function initRotatingSkills() {
+    const skillsContainer = document.querySelector('.skills-container');
+    if (!skillsContainer) return;
+    
+    const skills = skillsContainer.querySelectorAll('.skill-tag');
+    
+    skills.forEach((skill, index) => {
+        skill.style.opacity = '0';
+        skill.style.transform = 'scale(0.8) rotateY(40deg)';
+        
+        setTimeout(() => {
+            skill.style.transition = 'all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+            skill.style.opacity = '1';
+            skill.style.transform = 'scale(1) rotateY(0deg)';
+            
+            // Add hover rotation effect
+            skill.addEventListener('mouseover', function() {
+                this.style.transform = 'scale(1.1) rotateY(10deg)';
+            });
+            
+            skill.addEventListener('mouseout', function() {
+                this.style.transform = 'scale(1) rotateY(0deg)';
+            });
+            
+        }, 2000 + (index * 200)); // Start after typing animation with staggered delay
     });
 }
 
@@ -917,5 +1107,47 @@ function initScrollObserver() {
     const projectsSection = document.getElementById('projects');
     if (projectsSection) {
         projectsObserver.observe(projectsSection);
+    }
+}
+
+// Enhanced smooth scrolling and snapping
+function enhanceScrolling() {
+    // Smooth scroll to section when clicking navigation items
+    const navItems = document.querySelectorAll('.nav-item');
+    const exploreBtn = document.getElementById('explore-btn');
+    const aboutExploreBtn = document.getElementById('about-explore-btn');
+    
+    // Handle click on buttons to jump to projects
+    if (exploreBtn) {
+        exploreBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            smoothScrollToSection('projects');
+        });
+    }
+    
+    if (aboutExploreBtn) {
+        aboutExploreBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            smoothScrollToSection('projects');
+        });
+    }
+    
+    navItems.forEach(item => {
+        item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            smoothScrollToSection(targetId);
+        });
+    });
+}
+
+function smoothScrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+        // Smooth scroll with enhanced behavior
+        section.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
     }
 }
