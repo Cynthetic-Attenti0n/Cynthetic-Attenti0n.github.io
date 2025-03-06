@@ -197,7 +197,7 @@ export const moduleData = {
     },
     drsabcd: {
         title: 'DRSABCD Action Plan',
-        description: 'Learn the St John's step-by-step emergency response protocol for responding to emergencies involving children.',
+        description: "Learn the St John's step-by-step emergency response protocol for responding to emergencies involving children.",
         progress: 0,
         sections: [
             {
