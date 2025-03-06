@@ -387,16 +387,16 @@ const projectsData = [
         link: 'CI/AI-Workout/'
     },
     {
-    id: 16,
-    title: "Little Lifesaver's",
-    description: "A free pediatric first aid course built on current Australian guidelines. Delivered in digestible bite-sized modules with interactive quizzes and real-world scenarios. Designed with parents in mind, it equips caregivers with the skills needed to protect their most precious treasures - because protecting our little ones shouldn’t come with a price tag.",
-    tags: ['TypeScript', 'HTML', 'CSS', 'JS'],
-    categories: ['Education & Learning', 'Wellness & Health'],
-    audience: ['Family', 'Public'],
-    date: '2025-03-06',
-    image: 'little-lifesavers',
-    icon: 'fa-heart',
-    link: 'AJ/Little-Lifesavers/'
+        id: 16,
+        title: "Little Lifesaver's",
+        description: "A free pediatric first aid course built on current Australian guidelines. Delivered in digestible bite-sized modules with interactive quizzes and real-world scenarios. Designed with parents in mind, it equips caregivers with the skills needed to protect their most precious treasures - because protecting our little ones shouldn’t come with a price tag.",
+        tags: ['TypeScript', 'HTML', 'CSS', 'JS'],
+        categories: ['Education & Learning', 'Wellness & Health'],
+        audience: ['Family', 'Public'],
+        date: '2025-03-06',
+        image: 'mindcare',
+        icon: 'fa-hand-holding-heart',
+        link: 'AJ/Little-Lifesavers/'
     }
 ];
 
