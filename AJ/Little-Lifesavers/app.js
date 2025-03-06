@@ -22,6 +22,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Smooth scrolling for navigation links
     setupSmoothScrolling();
+    
+    // Setup theme toggle
+    setupThemeToggle();
 });
 
 function initAnimations() {
@@ -128,7 +131,7 @@ function loadHeroAnimation() {
 }
 
 function animateOnScroll() {
-    // Section titles
+    // Section titles with improved animation
     gsap.utils.toArray('.section-title').forEach(title => {
         gsap.from(title, {
             scrollTrigger: {
@@ -139,7 +142,16 @@ function animateOnScroll() {
             y: 30,
             opacity: 0,
             duration: 0.8,
-            ease: 'power2.out'
+            ease: 'power2.out',
+            onComplete: () => {
+                // Add a subtle highlight animation after the title appears
+                gsap.to(title, {
+                    boxShadow: '0 0 10px rgba(255,107,107,0.3), 0 0 20px rgba(255,107,107,0.2), 0 0 30px rgba(255,107,107,0.1)',
+                    duration: 1,
+                    repeat: 1,
+                    yoyo: true
+                });
+            }
         });
     });
     
@@ -226,12 +238,8 @@ function setupModuleCards() {
             document.body.style.overflow = 'hidden';
             moduleContainer.style.display = 'flex';
             
-            // Animate progress (for demo)
-            gsap.to(moduleProgress, {
-                width: '100%',
-                duration: 30,
-                ease: 'none'
-            });
+            // Set initial progress
+            moduleProgress.style.width = '0%';
         });
     });
 }
@@ -318,6 +326,64 @@ function loadModuleContent(moduleId, container) {
     if (module.sections.some(section => section.id === 'assessment')) {
         setupQuiz(container, module.answers);
     }
+    
+    // Initialize progress
+    const updateProgress = () => {
+        const cardCount = module.sections.length;
+        const progress = ((0 + 1) / cardCount) * 100;
+        
+        // Animate progress bar
+        gsap.to('#module-progress', {
+            width: `${progress}%`,
+            duration: 0.8,
+            ease: "power3.out",
+            onStart: function() {
+                gsap.to('#module-progress', {
+                    backgroundColor: 0 === cardCount - 1 
+                        ? '#81C784' 
+                        : 'linear-gradient(90deg, var(--primary-color), var(--secondary-color))',
+                    duration: 0.8
+                });
+            }
+        });
+    };
+    updateProgress();
+    
+    // Add entrance animation to header
+    animateModuleHeader();
+}
+
+function animateModuleHeader() {
+    const moduleHeader = document.querySelector('.module-header');
+    const moduleTitle = document.getElementById('module-title');
+    const backBtn = document.querySelector('.back-btn');
+    const progressContainer = document.querySelector('.progress-container');
+    const progressBar = document.getElementById('module-progress');
+    
+    gsap.fromTo(moduleHeader, 
+        { y: -50, opacity: 0 }, 
+        { y: 0, opacity: 1, duration: 0.8, ease: "elastic.out(1, 0.7)" }
+    );
+    
+    gsap.fromTo(moduleTitle, 
+        { x: -20, opacity: 0 }, 
+        { x: 0, opacity: 1, duration: 0.6, delay: 0.2, ease: "back.out(1.7)" }
+    );
+    
+    gsap.fromTo(backBtn, 
+        { x: -20, opacity: 0, rotation: -90 }, 
+        { x: 0, opacity: 1, rotation: 0, duration: 0.5, delay: 0.1, ease: "back.out(1.7)" }
+    );
+    
+    gsap.fromTo(progressContainer, 
+        { x: 20, opacity: 0, width: '50%' }, 
+        { x: 0, opacity: 1, width: 'calc(100% - 300px)', duration: 0.6, delay: 0.3, ease: "back.out(1.7)" }
+    );
+    
+    gsap.fromTo(progressBar,
+        { width: '0%', opacity: 0.5 },
+        { width: '0%', opacity: 1, duration: 0.4, delay: 0.6 }
+    );
 }
 
 function setupCardNavigation(container, cardCount) {
@@ -326,17 +392,38 @@ function setupCardNavigation(container, cardCount) {
     const cards = container.querySelectorAll('.module-card-item');
     const indicators = container.querySelectorAll('.nav-indicator');
     let currentCardIndex = 0;
+    let startX = 0;
+    let endX = 0;
+    let isSwiping = false;
     
     // Update progress bar
     const updateProgress = () => {
         const progress = ((currentCardIndex + 1) / cardCount) * 100;
-        document.getElementById('module-progress').style.width = `${progress}%`;
+        
+        // Animate progress bar
+        gsap.to('#module-progress', {
+            width: `${progress}%`,
+            duration: 0.8,
+            ease: "power3.out",
+            onStart: function() {
+                gsap.to('#module-progress', {
+                    backgroundColor: currentCardIndex === cardCount - 1 
+                        ? '#81C784' 
+                        : 'linear-gradient(90deg, var(--primary-color), var(--secondary-color))',
+                    duration: 0.8
+                });
+            }
+        });
     };
     
     // Navigate to specific card
     const navigateToCard = (index) => {
+        if (isSwiping) return; // Prevent navigation during animation
+        
+        isSwiping = true;
+        
         // Hide all cards and deactivate indicators
-        cards.forEach(card => card.classList.remove('active', 'hidden', 'previous'));
+        cards.forEach(card => card.classList.remove('active', 'hidden', 'previous', 'next', 'sliding-left', 'sliding-right', 'sliding-in-left', 'sliding-in-right'));
         indicators.forEach(ind => ind.classList.remove('active'));
         
         // Show the current card
@@ -344,14 +431,68 @@ function setupCardNavigation(container, cardCount) {
             if (i < index) {
                 card.classList.add('previous');
             } else if (i > index) {
-                card.classList.add('hidden');
+                card.classList.add('next');
             } else {
                 card.classList.add('active');
             }
         });
         
-        // Update indicator
+        // Play a satisfying sound effect on navigation
+        playNavigationSound(currentCardIndex < index ? 'forward' : 'backward');
+        
+        // Create enhanced 3D transition effect
+        if (currentCardIndex < index) {
+            // Moving forward - current card slides out left, new card slides in right
+            gsap.to(cards[currentCardIndex], {
+                rotationY: -15,
+                x: '-100%',
+                opacity: 0,
+                scale: 0.85,
+                duration: 0.7,
+                ease: "power2.inOut",
+                transformOrigin: "left center"
+            });
+            
+            gsap.fromTo(cards[index], 
+                { rotationY: 15, x: '100%', opacity: 0, scale: 0.85 }, 
+                { rotationY: 0, x: 0, opacity: 1, scale: 1, duration: 0.7, delay: 0.1, ease: "power2.out", transformOrigin: "right center" }
+            );
+            
+            // Animate the next button
+            gsap.fromTo(nextBtn, 
+                { scale: 0.8 }, 
+                { scale: 1.2, duration: 0.3, yoyo: true, repeat: 1, ease: "back.out(3)" }
+            );
+        } else if (currentCardIndex > index) {
+            // Moving backward - current card slides out right, new card slides in left
+            gsap.to(cards[currentCardIndex], {
+                rotationY: 15,
+                x: '100%',
+                opacity: 0,
+                scale: 0.85,
+                duration: 0.7,
+                ease: "power2.inOut",
+                transformOrigin: "right center"
+            });
+            
+            gsap.fromTo(cards[index], 
+                { rotationY: -15, x: '-100%', opacity: 0, scale: 0.85 }, 
+                { rotationY: 0, x: 0, opacity: 1, scale: 1, duration: 0.7, delay: 0.1, ease: "power2.out", transformOrigin: "left center" }
+            );
+            
+            // Animate the prev button
+            gsap.fromTo(prevBtn, 
+                { scale: 0.8 }, 
+                { scale: 1.2, duration: 0.3, yoyo: true, repeat: 1, ease: "back.out(3)" }
+            );
+        }
+        
+        // Update indicator with animation
         indicators[index].classList.add('active');
+        gsap.fromTo(indicators[index], 
+            { scale: 1 }, 
+            { scale: 1.5, duration: 0.4, ease: "back.out(1.7)" }
+        );
         
         // Update button states
         prevBtn.disabled = index === 0;
@@ -360,17 +501,84 @@ function setupCardNavigation(container, cardCount) {
         // Update progress
         currentCardIndex = index;
         updateProgress();
+        
+        // Scroll to top of new card
+        setTimeout(() => {
+            container.scrollTop = 0;
+            // Add scroll arrow to new card
+            addScrollArrow(cards[index]);
+        }, 300);
+        
+        // Reset swiping flag after animation completes
+        setTimeout(() => {
+            isSwiping = false;
+        }, 800);
     };
+    
+    // Add scroll arrow to card
+    const addScrollArrow = (card) => {
+        // Remove any existing scroll arrows
+        const existingArrows = document.querySelectorAll('.scroll-down-arrow');
+        existingArrows.forEach(arrow => arrow.remove());
+        
+        // Create new scroll arrow
+        const scrollArrow = document.createElement('div');
+        scrollArrow.className = 'scroll-down-arrow';
+        scrollArrow.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                <path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z" fill="currentColor"/>
+            </svg>
+        `;
+        
+        card.appendChild(scrollArrow);
+        
+        // Check if scroll is needed
+        updateScrollArrowVisibility(card, scrollArrow);
+        
+        // Add scroll event listener
+        card.addEventListener('scroll', () => {
+            updateScrollArrowVisibility(card, scrollArrow);
+        });
+        
+        // Add click event to arrow
+        scrollArrow.addEventListener('click', () => {
+            card.scrollBy({ 
+                top: 200, 
+                behavior: 'smooth' 
+            });
+        });
+    };
+    
+    // Update scroll arrow visibility
+    const updateScrollArrowVisibility = (card, arrow) => {
+        if (card.scrollHeight <= card.clientHeight) {
+            // Content fits entirely in view - hide arrow
+            arrow.classList.add('hidden');
+        } else if (Math.abs(card.scrollHeight - card.clientHeight - card.scrollTop) < 10) {
+            // Scrolled to bottom - hide arrow
+            arrow.classList.add('hidden');
+        } else {
+            // More content to scroll to - show arrow
+            arrow.classList.remove('hidden');
+        }
+    };
+    
+    function playNavigationSound(direction) {
+        // Create audio context and play a subtle sound
+        // This is just a placeholder for actual sound implementation
+        // You would need to add sound files or use Web Audio API to generate sounds
+        console.log(`Playing ${direction} navigation sound effect`);
+    }
     
     // Add click event to prev/next buttons
     prevBtn.addEventListener('click', () => {
-        if (currentCardIndex > 0) {
+        if (currentCardIndex > 0 && !isSwiping) {
             navigateToCard(currentCardIndex - 1);
         }
     });
 
     nextBtn.addEventListener('click', () => {
-        if (currentCardIndex < cardCount - 1) {
+        if (currentCardIndex < cardCount - 1 && !isSwiping) {
             navigateToCard(currentCardIndex + 1);
         }
     });
@@ -378,19 +586,21 @@ function setupCardNavigation(container, cardCount) {
     // Add click events to indicators
     indicators.forEach((indicator, index) => {
         indicator.addEventListener('click', () => {
-            navigateToCard(index);
+            if (!isSwiping && index !== currentCardIndex) {
+                navigateToCard(index);
+            }
         });
     });
     
-    // Add swipe functionality
-    let touchStartX = 0;
-    let touchEndX = 0;
+    // Add swipe functionality with reduced sensitivity
     const handleSwipe = () => {
-        const swipeThreshold = 50;
-        if (touchStartX - touchEndX > swipeThreshold && currentCardIndex < cardCount - 1) {
+        if (isSwiping) return;
+        
+        const swipeThreshold = 120; // Threshold for swipe detection
+        if (startX - endX > swipeThreshold && currentCardIndex < cardCount - 1) {
             // Swipe left - go to next
             navigateToCard(currentCardIndex + 1);
-        } else if (touchEndX - touchStartX > swipeThreshold && currentCardIndex > 0) {
+        } else if (endX - startX > swipeThreshold && currentCardIndex > 0) {
             // Swipe right - go to previous
             navigateToCard(currentCardIndex - 1);
         }
@@ -398,16 +608,32 @@ function setupCardNavigation(container, cardCount) {
     
     const cardsContainer = container.querySelector('.module-cards-container');
     cardsContainer.addEventListener('touchstart', e => {
-        touchStartX = e.changedTouches[0].screenX;
-    });
+        startX = e.changedTouches[0].screenX;
+    }, { passive: true });
     
     cardsContainer.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
+        endX = e.changedTouches[0].screenX;
         handleSwipe();
-    });
+    }, { passive: true });
     
     // Initialize progress
     updateProgress();
+    
+    // Add keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (container.closest('.module-container').style.display === 'flex') {
+            if (e.key === 'ArrowRight' && currentCardIndex < cardCount - 1 && !isSwiping) {
+                navigateToCard(currentCardIndex + 1);
+            } else if (e.key === 'ArrowLeft' && currentCardIndex > 0 && !isSwiping) {
+                navigateToCard(currentCardIndex - 1);
+            }
+        }
+    });
+    
+    // Add initial scroll arrow to the first card
+    setTimeout(() => {
+        addScrollArrow(cards[0]);
+    }, 500);
 }
 
 function setupQuiz(container, answers) {
@@ -416,6 +642,7 @@ function setupQuiz(container, answers) {
         quizSubmitBtn.addEventListener('click', () => {
             const quizQuestions = container.querySelectorAll('.quiz-question');
             let correctAnswers = 0;
+            let firstIncorrectIndex = -1;
             
             quizQuestions.forEach((question, index) => {
                 const questionId = question.querySelector('input[type="radio"]').name;
@@ -428,15 +655,38 @@ function setupQuiz(container, answers) {
                         correctAnswers++;
                     } else {
                         feedbackContainer.innerHTML = '<div class="feedback incorrect">Incorrect. Please review the module content.</div>';
+                        if (firstIncorrectIndex === -1) {
+                            firstIncorrectIndex = index;
+                        }
                     }
                 } else {
                     feedbackContainer.innerHTML = '<div class="feedback warning">Please select an answer.</div>';
+                    if (firstIncorrectIndex === -1) {
+                        firstIncorrectIndex = index;
+                    }
                 }
             });
             
-            // Show overall score
+            // Scroll to the first incorrect answer if any
+            if (firstIncorrectIndex !== -1) {
+                const firstIncorrectQuestion = quizQuestions[firstIncorrectIndex];
+                setTimeout(() => {
+                    firstIncorrectQuestion.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 200);
+            }
+            
+            // Show overall score as a modal if all answers are correct
             if (correctAnswers === quizQuestions.length) {
-                container.appendChild(createCompletionMessage('Great job! You\'ve completed this module.'));
+                const completionEl = createCompletionMessage('Great job! You\'ve completed this module.');
+                document.body.appendChild(completionEl);
+                
+                // Add exciting completion animation
+                gsap.from('.completion-message', {
+                    scale: 0.5,
+                    opacity: 0,
+                    duration: 0.6,
+                    ease: 'back.out(1.7)'
+                });
             }
         });
     }
@@ -459,7 +709,10 @@ function createCompletionMessage(message) {
     setTimeout(() => {
         const returnBtn = completionEl.querySelector('#return-to-modules');
         if (returnBtn) {
-            returnBtn.addEventListener('click', closeModuleView);
+            returnBtn.addEventListener('click', () => {
+                document.body.removeChild(completionEl);
+                closeModuleView();
+            });
         }
     }, 100);
     
@@ -468,8 +721,20 @@ function createCompletionMessage(message) {
 
 function closeModuleView() {
     const moduleContainer = document.getElementById('module-container');
-    moduleContainer.style.display = 'none';
-    document.body.style.overflow = 'auto';
+    
+    // Add exit animation
+    gsap.to(moduleContainer, {
+        opacity: 0,
+        y: 20,
+        duration: 0.5,
+        ease: "power3.inOut",
+        onComplete: () => {
+            moduleContainer.style.display = 'none';
+            moduleContainer.style.opacity = 1;
+            moduleContainer.style.y = 0;
+            document.body.style.overflow = 'auto';
+        }
+    });
     
     // Reset progress animation
     gsap.killTweensOf('#module-progress');
@@ -516,5 +781,91 @@ function setupSmoothScrolling() {
                 });
             }
         });
+    });
+}
+
+function setupThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    
+    // Initialize theme based on user preference or saved setting
+    const savedTheme = localStorage.getItem('theme');
+    
+    if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+    } else if (prefersDarkScheme.matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        updateThemeIcon('dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        updateThemeIcon('light');
+    }
+    
+    // Toggle theme when button is clicked
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        // Animate the transition
+        const tl = gsap.timeline();
+        tl.to('body', { opacity: 0.8, duration: 0.2, ease: 'power2.out' })
+          .call(() => {
+              document.documentElement.setAttribute('data-theme', newTheme);
+              localStorage.setItem('theme', newTheme);
+              updateThemeIcon(newTheme);
+          })
+          .to('body', { opacity: 1, duration: 0.2, ease: 'power2.in' });
+        
+        // Create ripple effect
+        createRipple(themeToggle);
+    });
+    
+    // Listen for system preference changes
+    prefersDarkScheme.addEventListener('change', (e) => {
+        const newTheme = e.matches ? 'dark' : 'light';
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        updateThemeIcon(newTheme);
+    });
+}
+
+function updateThemeIcon(theme) {
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+    
+    if (theme === 'dark') {
+        gsap.to(sunIcon, { opacity: 0, rotate: -180, duration: 0.5, ease: 'back.out' });
+        gsap.to(moonIcon, { opacity: 1, rotate: 0, duration: 0.5, ease: 'back.out' });
+    } else {
+        gsap.to(sunIcon, { opacity: 1, rotate: 0, duration: 0.5, ease: 'back.out' });
+        gsap.to(moonIcon, { opacity: 0, rotate: 180, duration: 0.5, ease: 'back.out' });
+    }
+}
+
+function createRipple(button) {
+    const circle = document.createElement('span');
+    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.position = 'absolute';
+    circle.style.borderRadius = '50%';
+    circle.style.transform = 'translate(-50%, -50%) scale(0)';
+    circle.style.backgroundColor = 'rgba(255, 255, 255, 0.3)';
+    
+    const rect = button.getBoundingClientRect();
+    circle.style.left = `${button.clientWidth / 2}px`;
+    circle.style.top = `${button.clientHeight / 2}px`;
+    
+    button.appendChild(circle);
+    
+    gsap.to(circle, {
+        scale: 3,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        onComplete: () => {
+            circle.remove();
+        }
     });
 }
