@@ -1,0 +1,257 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Lifesavers - Pediatric First Aid Course</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="importmap">
+        {
+            "imports": {
+                "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.2/index.js",
+                "ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.2/ScrollTrigger.js",
+                "lottie": "https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <div class="logo-container">
+                <svg class="logo" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg">
+                    <path class="logo-path" d="M30 10c11 0 20 9 20 20s-9 20-20 20S10 41 10 30s9-20 20-20z" fill="#FF6B6B"/>
+                    <path class="heart-path" d="M30 45c-.8 0-1.5-.3-2.1-.8l-10.6-10.6c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l2.1 2.1 2.1-2.1c2.9-2.9 7.7-2.9 10.6 0 2.9 2.9 2.9 7.7 0 10.6L32.1 44.2c-.6.5-1.3.8-2.1.8z" fill="#fff"/>
+                    <text x="70" y="35" font-family="Poppins, sans-serif" font-size="20" font-weight="600" fill="#333">Little Lifesavers</text>
+                </svg>
+            </div>
+            <nav>
+                <ul class="menu">
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#modules">Modules</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+                <button class="mobile-menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </nav>
+        </header>
+
+        <main>
+            <section id="home" class="hero">
+                <div class="hero-content">
+                    <h1>Pediatric First Aid</h1>
+                    <h2>For New Parents & Caregivers</h2>
+                    <p>Learn essential life-saving skills for infants and toddlers based on the latest Australian guidelines.</p>
+                    <button class="btn primary-btn">Start Learning</button>
+                </div>
+                <div class="hero-animation" id="hero-animation"></div>
+            </section>
+
+            <section id="modules" class="modules-section">
+                <h2 class="section-title">Course Modules</h2>
+                <div class="module-cards">
+                    <div class="module-card" data-module="cpr">
+                        <div class="module-icon">
+                            <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M25 5C14.5 5 6 13.5 6 24s8.5 19 19 19 19-8.5 19-19S35.5 5 25 5zm0 34c-8.3 0-15-6.7-15-15s6.7-15 15-15 15 6.7 15 15-6.7 15-15 15z" fill="#4FC3F7"/>
+                                <path d="M25 14c-2.8 0-5 2.2-5 5v2h-2v8h14v-8h-2v-2c0-2.8-2.2-5-5-5zm0 4c.6 0 1 .4 1 1v2h-2v-2c0-.6.4-1 1-1z" fill="#4FC3F7"/>
+                            </svg>
+                        </div>
+                        <h3>CPR</h3>
+                        <p>Learn proper techniques for infant and child CPR.</p>
+                        <button class="btn secondary-btn">Start Module</button>
+                    </div>
+                    <div class="module-card" data-module="drsabcd">
+                        <div class="module-icon">
+                            <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 15h30v25H10z" fill="#FFD54F"/>
+                                <path d="M15 10h20v5H15z" fill="#FFD54F"/>
+                                <text x="25" y="30" font-family="Arial" font-size="10" text-anchor="middle" fill="#333">DRSABCD</text>
+                            </svg>
+                        </div>
+                        <h3>DRSABCD Action Plan</h3>
+                        <p>St John's step-by-step emergency response protocol.</p>
+                        <button class="btn secondary-btn">Start Module</button>
+                    </div>
+                    <div class="module-card" data-module="recovery">
+                        <div class="module-icon">
+                            <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 35c0-8.3 6.7-15 15-15s15 6.7 15 15H10z" fill="#81C784"/>
+                                <path d="M25 15c-5.5 0-10 4.5-10 10h20c0-5.5-4.5-10-10-10z" fill="#81C784"/>
+                            </svg>
+                        </div>
+                        <h3>Recovery Position</h3>
+                        <p>Proper techniques for child and infant recovery positions.</p>
+                        <button class="btn secondary-btn">Start Module</button>
+                    </div>
+                    <div class="module-card" data-module="choking">
+                        <div class="module-icon">
+                            <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="25" cy="20" r="10" fill="#FF8A65"/>
+                                <path d="M15 25h20v10H15z" fill="#FF8A65"/>
+                                <path d="M20 32l5-2 5 2v8H20z" fill="#FF8A65"/>
+                            </svg>
+                        </div>
+                        <h3>Choking</h3>
+                        <p>Emergency response for choking incidents.</p>
+                        <button class="btn secondary-btn">Start Module</button>
+                    </div>
+                    <div class="module-card" data-module="respiratory">
+                        <div class="module-icon">
+                            <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15 15c0 5.5 4.5 10 10 10s10-4.5 10-10H15z" fill="#9575CD"/>
+                                <path d="M15 35c0-5.5 4.5-10 10-10s10 4.5 10 10H15z" fill="#9575CD"/>
+                            </svg>
+                        </div>
+                        <h3>Respiratory Distress</h3>
+                        <p>Managing asthma and breathing difficulties.</p>
+                        <button class="btn secondary-btn">Start Module</button>
+                    </div>
+                    <div class="module-card" data-module="drowning">
+                        <div class="module-icon">
+                            <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10 30c5 5 10 0 15 5s10 0 15 5v-10c-5-5-10 0-15-5s-10 0-15-5v10z" fill="#64B5F6"/>
+                            </svg>
+                        </div>
+                        <h3>Drowning</h3>
+                        <p>Prevention and response to water emergencies.</p>
+                        <button class="btn secondary-btn">Start Module</button>
+                    </div>
+                    <div class="module-card" data-module="allergies">
+                        <div class="module-icon">
+                            <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="25" cy="25" r="15" fill="#EF5350" fill-opacity="0.3"/>
+                                <circle cx="25" cy="25" r="10" fill="#EF5350" fill-opacity="0.6"/>
+                                <circle cx="25" cy="25" r="5" fill="#EF5350"/>
+                            </svg>
+                        </div>
+                        <h3>Allergic Reactions</h3>
+                        <p>Identifying and managing anaphylaxis and allergies.</p>
+                        <button class="btn secondary-btn">Start Module</button>
+                    </div>
+                    <div class="module-card" data-module="fever">
+                        <div class="module-icon">
+                            <svg viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="20" y="10" width="5" r="2" height="25" fill="#90A4AE"/>
+                                <circle cx="22.5" cy="38" r="5" fill="#F44336"/>
+                                <rect x="35" y="15" width="5" height="15" fill="#E0E0E0"/>
+                            </svg>
+                        </div>
+                        <h3>Fever & Convulsions</h3>
+                        <p>Managing high temperatures and febrile seizures.</p>
+                        <button class="btn secondary-btn">Start Module</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="about" class="about-section">
+                <div class="about-content">
+                    <h2 class="section-title">About Little Lifesavers</h2>
+                    <p>Little Lifesavers is a comprehensive pediatric first aid course designed specifically for parents and caregivers of infants and toddlers in Australia. Based on the latest guidelines from St John Ambulance Australia and the Australian Resuscitation Council, our course provides essential knowledge and skills to respond confidently in emergency situations.</p>
+                    <p>Our interactive, modular approach makes learning accessible and engaging, with practical demonstrations, scenario-based learning, and regular assessments to reinforce your knowledge.</p>
+                    <div class="about-cards">
+                        <div class="about-card">
+                            <div class="about-icon">
+                                <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M20 5L5 15v20h30V15L20 5z" fill="#FFB74D" fill-opacity="0.5"/>
+                                    <path d="M15 25h10v10H15z" fill="#FFB74D"/>
+                                    <path d="M18 20c0-1.1.9-2 2-2s2 .9 2 2-.9 2-2 2-2-.9-2-2z" fill="#FFB74D"/>
+                                </svg>
+                            </div>
+                            <h3>Interactive Learning</h3>
+                            <p>Engage with animations, simulations, and hands-on activities to build practical skills.</p>
+                        </div>
+                        <div class="about-card">
+                            <div class="about-icon">
+                                <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="20" cy="20" r="15" fill="#4FC3F7" fill-opacity="0.5"/>
+                                    <path d="M20 10v10h7" stroke="#4FC3F7" stroke-width="2" fill="none"/>
+                                </svg>
+                            </div>
+                            <h3>Flexible Timing</h3>
+                            <p>Learn at your own pace with short, focused modules that fit into your busy schedule.</p>
+                        </div>
+                        <div class="about-card">
+                            <div class="about-icon">
+                                <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M10 10h20v20H10z" fill="#81C784" fill-opacity="0.5"/>
+                                    <path d="M15 20l3 3 7-7" stroke="#81C784" stroke-width="2" fill="none"/>
+                                </svg>
+                            </div>
+                            <h3>Evidence-Based</h3>
+                            <p>Content regularly updated to align with the latest Australian first aid guidelines.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <svg class="footer-logo-svg" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg">
+                        <path class="logo-path" d="M30 10c11 0 20 9 20 20s-9 20-20 20S10 41 10 30s9-20 20-20z" fill="#FF6B6B"/>
+                        <path class="heart-path" d="M30 45c-.8 0-1.5-.3-2.1-.8l-10.6-10.6c-2.9-2.9-2.9-7.7 0-10.6 2.9-2.9 7.7-2.9 10.6 0l2.1 2.1 2.1-2.1c2.9-2.9 7.7-2.9 10.6 0 2.9 2.9 2.9 7.7 0 10.6L32.1 44.2c-.6.5-1.3.8-2.1.8z" fill="#fff"/>
+                        <text x="70" y="35" font-family="Poppins, sans-serif" font-size="18" font-weight="600" fill="#fff">Little Lifesavers</text>
+                    </svg>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Navigation</h4>
+                        <ul>
+                            <li><a href="#home">Home</a></li>
+                            <li><a href="#modules">Modules</a></li>
+                            <li><a href="#about">About</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#">St John Ambulance</a></li>
+                            <li><a href="#">Australian Resuscitation Council</a></li>
+                            <li><a href="#">Emergency Services</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li><a href="/cdn-cgi/l/email-protection#c7aea9a1a887abaeb3b3aba2abaea1a2b4a6b1a2b5b4e9a4a8aae9a6b2"><span class="__cf_email__" data-cfemail="f79e999198b79b9e83839b929b9e9192849681928584d994989ad99682">[email&#160;protected]</span></a></li>
+                            <li><a href="tel:1300123456">1300 123 456</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Little Lifesavers. All rights reserved.</p>
+                <p>Based on guidelines from St John Ambulance Australia, Raising Children Network (Australia), Health Direct Australia - Pregnancy, Birth and Baby.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Module content container (hidden initially) -->
+    <div class="module-container" id="module-container">
+        <div class="module-header">
+            <button class="back-btn" id="back-btn">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" fill="currentColor"/>
+                </svg>
+                Back to Modules
+            </button>
+            <h2 id="module-title">Module Title</h2>
+            <div class="progress-container">
+                <div class="progress-bar" id="module-progress"></div>
+            </div>
+        </div>
+        <div class="module-content" id="module-content">
+            <!-- Content will be loaded dynamically -->
+        </div>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script type="module" src="app.js"></script>
+</body>
+</html>
