@@ -1,0 +1,1345 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daroodle</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap');
+
+:root {
+    --primary: #3a86ff;
+    --secondary: #ff006e;
+    --accent: #ffbe0b;
+    --dark: #1a1a2e;
+    --light: #f8f9fa;
+    --transition: all 0.4s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--dark);
+    color: var(--light);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+.container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 40px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: var(--transition);
+    backdrop-filter: blur(10px);
+    background-color: rgba(26, 26, 46, 0.8);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-svg {
+    width: 50px;
+    height: 50px;
+    margin-right: 15px;
+}
+
+.orbit {
+    fill: none;
+    stroke: var(--secondary);
+    stroke-width: 1;
+    animation: rotateOrbit 20s linear infinite;
+}
+
+.planet {
+    fill: var(--primary);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+.moon {
+    fill: var(--accent);
+    transform-origin: 50px 50px;
+    animation: orbitMoon 10s linear infinite;
+}
+
+.logo h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.8rem;
+    background-image: linear-gradient(45deg, var(--primary), var(--secondary));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin: 0 15px;
+}
+
+.nav-link {
+    color: var(--light);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-link:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: var(--secondary);
+    transition: var(--transition);
+    transform: translateX(-50%);
+}
+
+.nav-link:hover:before {
+    width: 80%;
+}
+
+.nav-link:hover {
+    color: var(--accent);
+}
+
+/* Hero Section */
+.hero {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.parallax-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.stars {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(33, 33, 33, 0) 0%, var(--dark) 100%);
+}
+
+.stars:after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, white, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 40px 70px, white, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 60px 110px, white, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 80px 150px, white, rgba(0,0,0,0));
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    opacity: 0.6;
+    animation: twinkling 4s infinite ease-in-out;
+}
+
+.mountains {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    background-image: 
+        linear-gradient(0deg, transparent 0%, var(--dark) 100%),
+        linear-gradient(135deg, var(--primary) 25%, transparent 25%) 0 50px,
+        linear-gradient(225deg, var(--secondary) 25%, transparent 25%) 0 50px,
+        linear-gradient(315deg, var(--primary) 25%, transparent 25%) 0 50px,
+        linear-gradient(45deg, var(--secondary) 25%, var(--dark) 25%) 0 50px;
+    background-size: 100px 100px;
+    opacity: 0.5;
+    transform-origin: bottom;
+    animation: mountainMove 15s ease-in-out infinite alternate;
+}
+
+.foreground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    background: linear-gradient(0deg, var(--dark) 0%, transparent 100%);
+    opacity: 0.8;
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 800px;
+    padding: 0 20px;
+    z-index: 1;
+    animation: fadeIn 1.5s ease-out;
+}
+
+.hero-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 3.5rem;
+    margin-bottom: 20px;
+    line-height: 1.2;
+}
+
+.highlight {
+    color: var(--accent);
+    position: relative;
+    display: inline-block;
+}
+
+.highlight:after {
+    content: '';
+    position: absolute;
+    bottom: 5px;
+    left: 0;
+    width: 100%;
+    height: 8px;
+    background: var(--secondary);
+    opacity: 0.3;
+    z-index: -1;
+    transform: skewX(-12deg);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    opacity: 0.9;
+}
+
+.cta-button {
+    padding: 12px 30px;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-button:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: translateX(-100%);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.cta-button:hover:before {
+    animation: shine 1.5s ease-out infinite;
+}
+
+/* Landscapes Section */
+.feature-section {
+    padding: 100px 40px;
+    text-align: center;
+    background: linear-gradient(to bottom, var(--dark), #2a2a42);
+}
+
+.feature-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    position: relative;
+    display: inline-block;
+}
+
+.feature-section h2:after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: var(--secondary);
+}
+
+.landscapes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.landscape-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 30px;
+    transition: var(--transition);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.landscape-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.landscape-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    position: relative;
+    overflow: hidden;
+}
+
+.landscape-icon:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-size: cover;
+    opacity: 0.7;
+}
+
+.landscape-icon.forest:after {
+    background: radial-gradient(circle, var(--accent) 10%, transparent 70%),
+                linear-gradient(to top, var(--primary) 0%, transparent 70%);
+}
+
+.landscape-icon.mountains:after {
+    background: linear-gradient(135deg, var(--primary) 0%, transparent 50%, var(--secondary) 100%);
+}
+
+.landscape-icon.ocean:after {
+    background: linear-gradient(to bottom, var(--primary) 0%, var(--accent) 100%);
+}
+
+.landscape-icon.desert:after {
+    background: radial-gradient(circle at bottom, var(--accent) 0%, var(--secondary) 70%);
+}
+
+.landscape-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    color: var(--accent);
+}
+
+.landscape-card p {
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
+
+/* Atmosphere Section */
+.atmosphere-section {
+    padding: 100px 40px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    background: linear-gradient(to bottom, #2a2a42, #3a3a52);
+    position: relative;
+    overflow: hidden;
+}
+
+.atmosphere-content {
+    flex: 1;
+    min-width: 300px;
+    padding-right: 40px;
+}
+
+.atmosphere-content h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+}
+
+.atmosphere-content p {
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+    opacity: 0.9;
+    max-width: 500px;
+}
+
+.time-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.time-btn {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    color: var(--light);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.time-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+.time-btn.active {
+    background: var(--primary);
+    color: white;
+}
+
+.atmosphere-display {
+    flex: 1;
+    min-width: 300px;
+    height: 400px;
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #5f6caf, #b8c6db);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    transition: var(--transition);
+}
+
+.sun-moon {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--accent);
+    box-shadow: 0 0 40px var(--accent);
+    transition: var(--transition);
+}
+
+.clouds {
+    position: absolute;
+    width: 100%;
+    height: 200px;
+    top: 80px;
+    left: 0;
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 50%),
+        radial-gradient(circle at 70% 60%, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 40%);
+    opacity: 0.6;
+    animation: cloudDrift 40s linear infinite;
+}
+
+.landscape-silhouette {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background-image: 
+        linear-gradient(135deg, transparent 50%, #000 50%),
+        linear-gradient(225deg, transparent 50%, #000 50%);
+    background-size: 100px 100px;
+    background-position: 0 0;
+    opacity: 0.8;
+}
+
+/* Elements Section */
+.elements-section {
+    padding: 100px 40px;
+    text-align: center;
+    background: linear-gradient(to bottom, #3a3a52, #4a4a62);
+}
+
+.elements-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 60px;
+    position: relative;
+    display: inline-block;
+}
+
+.elements-section h2:after {
+    content: '';
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: var(--secondary);
+}
+
+.elements-showcase {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.element {
+    width: 200px;
+    text-align: center;
+}
+
+.element-svg {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+}
+
+.water-wave {
+    fill: var(--primary);
+    animation: waveMotion 3s ease-in-out infinite alternate;
+}
+
+.fire-path {
+    fill: var(--secondary);
+    animation: flicker 2s ease-in-out infinite alternate;
+}
+
+.earth-base {
+    fill: #6b4226;
+}
+
+.earth-mount {
+    fill: #8d6e63;
+    animation: earthGrow 4s ease-in-out infinite alternate;
+}
+
+.air-swirl, .air-swirl-2 {
+    fill: none;
+    stroke: var(--light);
+    stroke-width: 2;
+    opacity: 0.7;
+    animation: swoosh 5s ease-in-out infinite;
+}
+
+.air-swirl-2 {
+    animation-delay: -2.5s;
+}
+
+.element h3 {
+    font-size: 1.3rem;
+    margin-top: 15px;
+    color: var(--accent);
+}
+
+/* Experience Section */
+.experience-section {
+    padding: 100px 40px;
+    text-align: center;
+    background: linear-gradient(to bottom, #4a4a62, var(--dark));
+}
+
+.experience-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+.experience-canvas {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.canvas-elements {
+    width: 100%;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    background-image: linear-gradient(to bottom, #3a3a52, #5f6caf);
+    box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
+.canvas-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
+.canvas-btn {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    color: var(--light);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.canvas-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+/* Footer */
+footer {
+    background-color: rgba(0, 0, 0, 0.3);
+    padding: 50px 40px 20px;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.footer-logo {
+    display: flex;
+    align-items: center;
+}
+
+.logo-svg.small {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-links a {
+    color: var(--light);
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: var(--transition);
+}
+
+.footer-links a:hover {
+    color: var(--accent);
+}
+
+.footer-social {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.social-icon:hover {
+    background: var(--primary);
+    transform: translateY(-3px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+/* Animations */
+@keyframes rotateOrbit {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@keyframes orbitMoon {
+    from { transform: rotate(0deg) translateX(45px); }
+    to { transform: rotate(360deg) translateX(45px); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes twinkling {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes mountainMove {
+    0% { transform: scaleY(1); }
+    50% { transform: scaleY(1.05); }
+    100% { transform: scaleY(1); }
+}
+
+@keyframes cloudDrift {
+    from { background-position: 0% 0%; }
+    to { background-position: 100% 0%; }
+}
+
+@keyframes shine {
+    0% { transform: translateX(-100%); }
+    20%, 100% { transform: translateX(100%); }
+}
+
+@keyframes waveMotion {
+    0% { d: path("M0,50 Q25,30 50,50 T100,50 V100 H0 Z"); }
+    50% { d: path("M0,50 Q25,70 50,50 T100,50 V100 H0 Z"); }
+    100% { d: path("M0,50 Q25,30 50,50 T100,50 V100 H0 Z"); }
+}
+
+@keyframes flicker {
+    0%, 100% { 
+        d: path("M50,100 C20,80 30,50 35,40 C35,20 45,10 50,0 C55,10 65,20 65,40 C70,50 80,80 50,100 Z");
+        fill: var(--secondary);
+    }
+    50% { 
+        d: path("M50,100 C25,80 35,50 40,40 C40,20 45,10 50,0 C55,10 60,20 60,40 C65,50 75,80 50,100 Z");
+        fill: var(--accent);
+    }
+}
+
+@keyframes earthGrow {
+    0% { transform: scaleY(1); }
+    100% { transform: scaleY(1.1); }
+}
+
+@keyframes swoosh {
+    0% { transform: rotate(0deg); opacity: 0.7; }
+    50% { transform: rotate(180deg); opacity: 0.9; }
+    100% { transform: rotate(360deg); opacity: 0.7; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    header {
+        padding: 15px 20px;
+        flex-direction: column;
+    }
+    
+    .logo {
+        margin-bottom: 15px;
+    }
+    
+    nav ul {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .hero-content h2 {
+        font-size: 2.5rem;
+    }
+    
+    .atmosphere-section {
+        padding: 50px 20px;
+    }
+    
+    .atmosphere-content {
+        padding-right: 0;
+        margin-bottom: 40px;
+    }
+    
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 30px;
+    }
+}
+
+
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <svg viewBox="0 0 100 100" class="logo-svg">
+                    <circle cx="50" cy="50" r="45" class="orbit" />
+                    <circle cx="50" cy="50" r="20" class="planet" />
+                    <circle cx="50" cy="5" r="5" class="moon" />
+                </svg>
+                <h1>Daroodle</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#landscapes" class="nav-link">Landscapes</a></li>
+                    <li><a href="#atmosphere" class="nav-link">Atmosphere</a></li>
+                    <li><a href="#elements" class="nav-link">Elements</a></li>
+                    <li><a href="#experience" class="nav-link">Experience</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <section class="hero">
+            <div class="parallax-background">
+                <div class="stars"></div>
+                <div class="mountains"></div>
+                <div class="foreground"></div>
+            </div>
+            <div class="hero-content">
+                <h2>Welcome to a <span class="highlight">World</span> Beyond Imagination</h2>
+                <p>Explore the beauty of artistic creation through interactive landscapes</p>
+                <button class="cta-button">Begin Journey</button>
+            </div>
+        </section>
+        
+        <section id="landscapes" class="feature-section">
+            <h2>Breathtaking Landscapes</h2>
+            <div class="landscapes-grid">
+                <div class="landscape-card">
+                    <div class="landscape-icon forest"></div>
+                    <h3>Mystical Forests</h3>
+                    <p>Ancient trees with luminescent leaves cast an ethereal glow</p>
+                </div>
+                <div class="landscape-card">
+                    <div class="landscape-icon mountains"></div>
+                    <h3>Floating Mountains</h3>
+                    <p>Defying gravity, these majestic peaks drift through clouds</p>
+                </div>
+                <div class="landscape-card">
+                    <div class="landscape-icon ocean"></div>
+                    <h3>Crystal Oceans</h3>
+                    <p>Waters that shimmer with the colors of a thousand gemstones</p>
+                </div>
+                <div class="landscape-card">
+                    <div class="landscape-icon desert"></div>
+                    <h3>Living Deserts</h3>
+                    <p>Sand dunes that pulse with hidden energies beneath the surface</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="atmosphere" class="atmosphere-section">
+            <div class="atmosphere-content">
+                <h2>Dynamic <span class="highlight">Atmosphere</span></h2>
+                <p>Experience the world as it breathes and changes around you. From gentle dawn to mystical twilight, each moment offers a unique visual spectacle.</p>
+                <div class="time-controls">
+                    <button class="time-btn" data-time="dawn">Dawn</button>
+                    <button class="time-btn" data-time="day">Day</button>
+                    <button class="time-btn" data-time="sunset">Sunset</button>
+                    <button class="time-btn" data-time="night">Night</button>
+                </div>
+            </div>
+            <div class="atmosphere-display">
+                <div class="sun-moon"></div>
+                <div class="clouds"></div>
+                <div class="landscape-silhouette"></div>
+            </div>
+        </section>
+        
+        <section id="elements" class="elements-section">
+            <h2>Interactive Elements</h2>
+            <div class="elements-showcase">
+                <div class="element" id="water-element">
+                    <svg viewBox="0 0 100 100" class="element-svg">
+                        <path class="water-wave" d="M0,50 Q25,30 50,50 T100,50 V100 H0 Z" />
+                    </svg>
+                    <h3>Water</h3>
+                </div>
+                <div class="element" id="fire-element">
+                    <svg viewBox="0 0 100 100" class="element-svg">
+                        <path class="fire-path" d="M50,100 C20,80 30,50 35,40 C35,20 45,10 50,0 C55,10 65,20 65,40 C70,50 80,80 50,100 Z" />
+                    </svg>
+                    <h3>Fire</h3>
+                </div>
+                <div class="element" id="earth-element">
+                    <svg viewBox="0 0 100 100" class="element-svg">
+                        <rect class="earth-base" x="10" y="60" width="80" height="40" rx="5" />
+                        <path class="earth-mount" d="M50,20 L80,60 H20 Z" />
+                    </svg>
+                    <h3>Earth</h3>
+                </div>
+                <div class="element" id="air-element">
+                    <svg viewBox="0 0 100 100" class="element-svg">
+                        <path class="air-swirl" d="M10,50 C30,30 70,30 90,50 C70,70 30,70 10,50 Z" />
+                        <path class="air-swirl-2" d="M30,30 C50,10 70,30 90,30 C70,50 50,70 30,30 Z" />
+                    </svg>
+                    <h3>Air</h3>
+                </div>
+            </div>
+        </section>
+        
+        <section id="experience" class="experience-section">
+            <h2>Create Your Experience</h2>
+            <div class="experience-canvas">
+                <div class="canvas-elements"></div>
+                <div class="canvas-controls">
+                    <button class="canvas-btn" id="add-tree">Add Tree</button>
+                    <button class="canvas-btn" id="add-mountain">Add Mountain</button>
+                    <button class="canvas-btn" id="add-cloud">Add Cloud</button>
+                    <button class="canvas-btn" id="add-water">Add Water</button>
+                    <button class="canvas-btn" id="clear-canvas">Clear All</button>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <svg viewBox="0 0 100 100" class="logo-svg small">
+                        <circle cx="50" cy="50" r="45" class="orbit" />
+                        <circle cx="50" cy="50" r="20" class="planet" />
+                        <circle cx="50" cy="5" r="5" class="moon" />
+                    </svg>
+                    <p>Daroodle</p>
+                </div>
+                <div class="footer-links">
+                    <a href="#landscapes">Landscapes</a>
+                    <a href="#atmosphere">Atmosphere</a>
+                    <a href="#elements">Elements</a>
+                    <a href="#experience">Experience</a>
+                </div>
+                <div class="footer-social">
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                    <div class="social-icon"></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Daroodle World - An Autistic Interactive Experience</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>document.addEventListener('DOMContentLoaded', () => {
+        // Header scroll effect
+        const header = document.querySelector('header');
+        
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(26, 26, 46, 0.95)';
+                header.style.padding = '10px 40px';
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.3)';
+            } else {
+                header.style.background = 'rgba(26, 26, 46, 0.8)';
+                header.style.padding = '20px 40px';
+                header.style.boxShadow = 'none';
+            }
+        });
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Parallax effect for hero section
+        const stars = document.querySelector('.stars');
+        const mountains = document.querySelector('.mountains');
+        
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            stars.style.transform = `translateY(${scrollY * 0.3}px)`;
+            mountains.style.transform = `translateY(${scrollY * 0.1}px)`;
+        });
+        
+        // Atmosphere time control
+        const timeButtons = document.querySelectorAll('.time-btn');
+        const atmosphereDisplay = document.querySelector('.atmosphere-display');
+        const sunMoon = document.querySelector('.sun-moon');
+        
+        timeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                timeButtons.forEach(btn => btn.classList.remove('active'));
+                
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                // Change atmosphere based on time
+                const time = button.getAttribute('data-time');
+                
+                switch(time) {
+                    case 'dawn':
+                        atmosphereDisplay.style.background = 'linear-gradient(to bottom, #ff9e7d, #ffcda3)';
+                        sunMoon.style.background = '#ffc266';
+                        sunMoon.style.boxShadow = '0 0 50px #ffc266';
+                        sunMoon.style.top = '150px';
+                        sunMoon.style.left = '30%';
+                        break;
+                    case 'day':
+                        atmosphereDisplay.style.background = 'linear-gradient(to bottom, #5f6caf, #b8c6db)';
+                        sunMoon.style.background = '#ffdb58';
+                        sunMoon.style.boxShadow = '0 0 60px #ffdb58';
+                        sunMoon.style.top = '50px';
+                        sunMoon.style.left = '50%';
+                        break;
+                    case 'sunset':
+                        atmosphereDisplay.style.background = 'linear-gradient(to bottom, #ff7e5f, #feb47b)';
+                        sunMoon.style.background = '#ff7e5f';
+                        sunMoon.style.boxShadow = '0 0 40px #ff7e5f';
+                        sunMoon.style.top = '150px';
+                        sunMoon.style.left = '70%';
+                        break;
+                    case 'night':
+                        atmosphereDisplay.style.background = 'linear-gradient(to bottom, #0f2027, #203a43)';
+                        sunMoon.style.background = '#e6e6e6';
+                        sunMoon.style.boxShadow = '0 0 30px #e6e6e6';
+                        sunMoon.style.top = '50px';
+                        sunMoon.style.left = '50%';
+                        break;
+                }
+            });
+        });
+        
+        // Set day as default active time
+        document.querySelector('[data-time="day"]').click();
+        
+        // Interactive elements
+        const elements = document.querySelectorAll('.element');
+        
+        elements.forEach(element => {
+            element.addEventListener('mouseover', () => {
+                const elementType = element.id.split('-')[0];
+                
+                switch(elementType) {
+                    case 'water':
+                        element.querySelector('.water-wave').style.animationDuration = '1.5s';
+                        break;
+                    case 'fire':
+                        element.querySelector('.fire-path').style.animationDuration = '1s';
+                        break;
+                    case 'earth':
+                        element.querySelector('.earth-mount').style.animationDuration = '2s';
+                        break;
+                    case 'air':
+                        element.querySelector('.air-swirl').style.animationDuration = '2.5s';
+                        element.querySelector('.air-swirl-2').style.animationDuration = '2.5s';
+                        break;
+                }
+            });
+            
+            element.addEventListener('mouseout', () => {
+                const elementType = element.id.split('-')[0];
+                
+                switch(elementType) {
+                    case 'water':
+                        element.querySelector('.water-wave').style.animationDuration = '3s';
+                        break;
+                    case 'fire':
+                        element.querySelector('.fire-path').style.animationDuration = '2s';
+                        break;
+                    case 'earth':
+                        element.querySelector('.earth-mount').style.animationDuration = '4s';
+                        break;
+                    case 'air':
+                        element.querySelector('.air-swirl').style.animationDuration = '5s';
+                        element.querySelector('.air-swirl-2').style.animationDuration = '5s';
+                        break;
+                }
+            });
+        });
+        
+        // Experience canvas functionality
+        const canvasArea = document.querySelector('.canvas-elements');
+        const addTreeBtn = document.getElementById('add-tree');
+        const addMountainBtn = document.getElementById('add-mountain');
+        const addCloudBtn = document.getElementById('add-cloud');
+        const addWaterBtn = document.getElementById('add-water');
+        const clearCanvasBtn = document.getElementById('clear-canvas');
+        
+        // Add tree to canvas
+        addTreeBtn.addEventListener('click', () => {
+            const tree = document.createElement('div');
+            tree.classList.add('canvas-tree');
+            tree.style.position = 'absolute';
+            tree.style.bottom = '10px';
+            tree.style.left = Math.random() * 80 + 10 + '%';
+            tree.style.width = '40px';
+            tree.style.height = '80px';
+            tree.style.zIndex = '10';
+            
+            // Create tree trunk
+            const trunk = document.createElement('div');
+            trunk.style.position = 'absolute';
+            trunk.style.bottom = '0';
+            trunk.style.left = '50%';
+            trunk.style.transform = 'translateX(-50%)';
+            trunk.style.width = '10px';
+            trunk.style.height = '40px';
+            trunk.style.backgroundColor = '#8d6e63';
+            trunk.style.borderRadius = '2px';
+            
+            // Create tree foliage
+            const foliage = document.createElement('div');
+            foliage.style.position = 'absolute';
+            foliage.style.bottom = '35px';
+            foliage.style.left = '50%';
+            foliage.style.transform = 'translateX(-50%)';
+            foliage.style.width = '40px';
+            foliage.style.height = '60px';
+            foliage.style.backgroundColor = '#4CAF50';
+            foliage.style.borderRadius = '50% 50% 50% 50% / 60% 60% 40% 40%';
+            
+            tree.appendChild(trunk);
+            tree.appendChild(foliage);
+            
+            // Make tree draggable
+            makeDraggable(tree);
+            
+            canvasArea.appendChild(tree);
+        });
+        
+        // Add mountain to canvas
+        addMountainBtn.addEventListener('click', () => {
+            const mountain = document.createElement('div');
+            mountain.classList.add('canvas-mountain');
+            mountain.style.position = 'absolute';
+            mountain.style.bottom = '10px';
+            mountain.style.left = Math.random() * 80 + 10 + '%';
+            mountain.style.width = '100px';
+            mountain.style.height = '80px';
+            mountain.style.zIndex = '5';
+            
+            // Create mountain using SVG
+            mountain.innerHTML = `
+                <svg width="100" height="80" viewBox="0 0 100 80">
+                    <path d="M10,80 L50,10 L90,80 Z" fill="#9E9E9E" />
+                    <path d="M30,80 L50,30 L70,80 Z" fill="#BDBDBD" />
+                    <path d="M40,80 L50,50 L60,80 Z" fill="#E0E0E0" />
+                </svg>
+            `;
+            
+            // Make mountain draggable
+            makeDraggable(mountain);
+            
+            canvasArea.appendChild(mountain);
+        });
+        
+        // Add cloud to canvas
+        addCloudBtn.addEventListener('click', () => {
+            const cloud = document.createElement('div');
+            cloud.classList.add('canvas-cloud');
+            cloud.style.position = 'absolute';
+            cloud.style.top = Math.random() * 50 + 10 + 'px';
+            cloud.style.left = Math.random() * 80 + 10 + '%';
+            cloud.style.width = '80px';
+            cloud.style.height = '40px';
+            cloud.style.zIndex = '15';
+            
+            // Create cloud using SVG
+            cloud.innerHTML = `
+                <svg width="80" height="40" viewBox="0 0 80 40">
+                    <path d="M10,30 Q15,20 30,25 Q35,10 50,15 Q65,5 70,20 Q80,15 75,30 Q65,35 55,30 Q45,40 35,30 Q25,35 10,30 Z" fill="white" opacity="0.8" />
+                </svg>
+            `;
+            
+            // Make cloud draggable
+            makeDraggable(cloud);
+            
+            // Add gentle animation to cloud
+            const driftAnimation = [
+                { transform: `translateX(0px)` },
+                { transform: `translateX(10px)` },
+                { transform: `translateX(0px)` }
+            ];
+            
+            const driftTiming = {
+                duration: 5000,
+                iterations: Infinity,
+                easing: 'ease-in-out'
+            };
+            
+            cloud.animate(driftAnimation, driftTiming);
+            
+            canvasArea.appendChild(cloud);
+        });
+        
+        // Add water to canvas
+        addWaterBtn.addEventListener('click', () => {
+            const water = document.createElement('div');
+            water.classList.add('canvas-water');
+            water.style.position = 'absolute';
+            water.style.bottom = '0';
+            water.style.left = '0';
+            water.style.width = '100%';
+            water.style.height = '40px';
+            water.style.zIndex = '2';
+            
+            // Create water using SVG
+            water.innerHTML = `
+                <svg width="100%" height="40" viewBox="0 0 100 40">
+                    <path d="M0,20 Q10,15 20,20 T40,20 T60,20 T80,20 T100,20 V40 H0 Z" fill="#3a86ff" opacity="0.7" />
+                </svg>
+            `;
+            
+            // Add ripple animation to water
+            const rippleAnimation = [
+                { d: "M0,20 Q10,15 20,20 T40,20 T60,20 T80,20 T100,20 V40 H0 Z" },
+                { d: "M0,20 Q10,25 20,20 T40,20 T60,20 T80,20 T100,20 V40 H0 Z" },
+                { d: "M0,20 Q10,15 20,20 T40,20 T60,20 T80,20 T100,20 V40 H0 Z" }
+            ];
+            
+            const rippleTiming = {
+                duration: 3000,
+                iterations: Infinity,
+                easing: 'ease-in-out'
+            };
+            
+            setTimeout(() => {
+                const waterPath = water.querySelector('path');
+                waterPath.animate(rippleAnimation, rippleTiming);
+            }, 100);
+            
+            canvasArea.appendChild(water);
+        });
+        
+        // Clear canvas
+        clearCanvasBtn.addEventListener('click', () => {
+            while (canvasArea.firstChild) {
+                canvasArea.removeChild(canvasArea.firstChild);
+            }
+        });
+        
+        // Function to make elements draggable
+        function makeDraggable(element) {
+            let isDragging = false;
+            let offsetX, offsetY;
+            
+            element.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                const rect = element.getBoundingClientRect();
+                offsetX = e.clientX - rect.left;
+                offsetY = e.clientY - rect.top;
+                element.style.cursor = 'grabbing';
+                element.style.zIndex = '100';
+            });
+            
+            document.addEventListener('mousemove', (e) => {
+                if (!isDragging) return;
+                
+                const canvasRect = canvasArea.getBoundingClientRect();
+                const x = e.clientX - canvasRect.left - offsetX;
+                const y = e.clientY - canvasRect.top - offsetY;
+                
+                // Keep the element within canvas boundaries
+                const maxX = canvasRect.width - element.offsetWidth;
+                const maxY = canvasRect.height - element.offsetHeight;
+                
+                const validX = Math.min(Math.max(0, x), maxX);
+                const validY = Math.min(Math.max(0, y), maxY);
+                
+                element.style.left = validX + 'px';
+                element.style.top = validY + 'px';
+            });
+            
+            document.addEventListener('mouseup', () => {
+                if (isDragging) {
+                    isDragging = false;
+                    element.style.cursor = 'grab';
+                    setTimeout(() => {
+                        element.style.zIndex = element.classList.contains('canvas-cloud') ? '15' : 
+                                            element.classList.contains('canvas-tree') ? '10' : 
+                                            element.classList.contains('canvas-mountain') ? '5' : '2';
+                    }, 100);
+                }
+            });
+        }
+        
+        // CTA button animation
+        const ctaButton = document.querySelector('.cta-button');
+        
+        ctaButton.addEventListener('click', () => {
+            // Scroll to first section
+            document.getElementById('landscapes').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+        
+        // Animate elements on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.landscape-card, .element, .hero-content, .atmosphere-content, .atmosphere-display');
+            
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementBottom = element.getBoundingClientRect().bottom;
+                const isVisible = (elementTop < window.innerHeight) && (elementBottom > 0);
+                
+                if (isVisible) {
+                    element.style.transform = 'translateY(0)';
+                    element.style.opacity = '1';
+                }
+            });
+        };
+        
+        // Initialize scroll animation
+        window.addEventListener('scroll', animateOnScroll);
+        animateOnScroll(); // Trigger once on page load
+        
+        // Initialize AOS-like custom animation system
+        const elementsToAnimate = document.querySelectorAll('.landscape-card, .element');
+        
+        elementsToAnimate.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'all 0.6s ease-out ' + (index * 0.1) + 's';
+        });
+        
+        const contentToAnimate = document.querySelectorAll('.atmosphere-content, .atmosphere-display');
+        
+        contentToAnimate.forEach((element, index) => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'all 0.8s ease-out ' + (index * 0.2) + 's';
+        });
+    });
+    
+    </script>
+</body>
+</html>
