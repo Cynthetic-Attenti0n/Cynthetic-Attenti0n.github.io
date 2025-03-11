@@ -1,0 +1,3177 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geriatric and Rehabilitation Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "d3": "https://cdn.jsdelivr.net/npm/d3@7/+esm"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="dashboard">
+        <header class="top-bar">
+            <div class="logo">
+                <i class="fas fa-hospital-user"></i>
+                <span>GARM</span>
+            </div>
+            
+            <div class="nav-controls">
+                <button class="home-btn active">
+                    <i class="fas fa-chart-line"></i>
+                    Executive Summary
+                </button>
+                
+                <div class="dropdown">
+                    <button class="dropdown-btn">
+                        <i class="far fa-calendar-alt"></i>
+                        Timeframe
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#" data-value="exact">Exact</a>
+                        <a href="#" data-value="daily" class="active">Daily</a>
+                        <a href="#" data-value="weekly">Weekly</a>
+                        <a href="#" data-value="monthly">Monthly</a>
+                        <a href="#" data-value="yearly">Yearly</a>
+                    </div>
+                </div>
+                
+                <div class="dropdown">
+                    <button class="dropdown-btn">
+                        <i class="fas fa-hospital"></i>
+                        Department
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#" data-value="scgh" class="active">SCGH</a>
+                        <a href="#" data-value="oph">OPH</a>
+                    </div>
+                </div>
+                
+                <div class="dropdown">
+                    <button class="dropdown-btn">
+                        <i class="fas fa-procedures"></i>
+                        Ward
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="#" data-value="c16" class="active">C16</a>
+                        <a href="#" data-value="c17">C17</a>
+                        <a href="#" data-value="ward2">Ward 2</a>
+                        <a href="#" data-value="ward3">Ward 3</a>
+                        <a href="#" data-value="ward4">Ward 4</a>
+                        <a href="#" data-value="ward5">Ward 5</a>
+                        <a href="#" data-value="ward6">Ward 6</a>
+                        <a href="#" data-value="ward7">Ward 7</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="profile">
+                <div class="date-display">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>March 11, 2025</span>
+                </div>
+            </div>
+        </header>
+        
+        <div class="banner">
+            <h1>Patient Care & Outcomes <span>Patient Flow</span></h1>
+            <div class="details">
+                <div class="detail">
+                    <i class="fas fa-hospital"></i>
+                    <span>SCGH</span>
+                </div>
+                <div class="detail">
+                    <i class="fas fa-procedures"></i>
+                    <span>C16</span>
+                </div>
+                <div class="detail">
+                    <i class="far fa-calendar-alt"></i>
+                    <span>Daily</span>
+                </div>
+                <div class="date-picker">
+                    <div class="date-picker-container">
+                        <button class="date-btn">
+                            <i class="far fa-calendar"></i>
+                            <span>March 11, 2025</span>
+                        </button>
+                        <div class="date-picker-panel">
+                            <div class="date-picker-header">
+                                <div class="month-selector">
+                                    <button class="nav-btn prev-month"><i class="fas fa-chevron-left"></i></button>
+                                    <h3 class="month-name">March 2025</h3>
+                                    <button class="nav-btn next-month"><i class="fas fa-chevron-right"></i></button>
+                                </div>
+                            </div>
+                            <div class="calendar">
+                                <div class="weekday">Sun</div>
+                                <div class="weekday">Mon</div>
+                                <div class="weekday">Tue</div>
+                                <div class="weekday">Wed</div>
+                                <div class="weekday">Thu</div>
+                                <div class="weekday">Fri</div>
+                                <div class="weekday">Sat</div>
+                                <div class="calendar-days"></div>
+                            </div>
+                            <div class="date-picker-footer">
+                                <button class="cancel-btn">Cancel</button>
+                                <button class="apply-btn">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="main-tabs">
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li class="active"><a href="#patientcare">Patient Care & Outcomes</a></li>
+                <li><a href="#quality">Quality & Safety</a></li>
+                <li><a href="#workforce">Workforce Management</a></li>
+                <li><a href="#compliance">Compliance & Risk</a></li>
+                <li><a href="#benchmark">Benchmark and Comparison</a></li>
+                <li><a href="#alerts">Alerts and Issues</a></li>
+            </ul>
+        </nav>
+        
+        <nav class="sub-tabs" data-parent="patientcare" style="display: flex;">
+            <ul>
+                <li><a href="#patientcare-overview">Overview</a></li>
+                <li><a href="#patientcare-occupancy">Occupancy & Census</a></li>
+                <li class="active"><a href="#patientcare-flow">Patient Flow</a></li>
+                <li><a href="#patientcare-readmissions">Readmissions</a></li>
+            </ul>
+        </nav>
+        
+        <nav class="sub-tabs" data-parent="quality" style="display: none;">
+            <ul>
+                <li><a href="#quality-overview">Overview</a></li>
+                <li><a href="#quality-satisfaction">Patient Satisfaction</a></li>
+                <li><a href="#quality-complaints">Complaints</a></li>
+                <li><a href="#quality-incidents">Incidents</a></li>
+                <li><a href="#quality-issues">Potential Issues & Warnings</a></li>
+            </ul>
+        </nav>
+        
+        <nav class="sub-tabs" data-parent="workforce" style="display: none;">
+            <ul>
+                <li><a href="#workforce-overview">Overview</a></li>
+                <li><a href="#workforce-training">Mandatory Training</a></li>
+            </ul>
+        </nav>
+        
+        <nav class="sub-tabs" data-parent="compliance" style="display: none;">
+            <ul>
+                <li><a href="#compliance-overview">Overview</a></li>
+            </ul>
+        </nav>
+        
+        <nav class="sub-tabs" data-parent="benchmark" style="display: none;">
+            <ul>
+                <li><a href="#benchmark-overview">Overview</a></li>
+                <li><a href="#benchmark-kpi">KPI</a></li>
+                <li><a href="#benchmark-national">National Benchmarks</a></li>
+                <li><a href="#benchmark-comparison">Comparison</a></li>
+                <li><a href="#benchmark-issues">Potential Issues & Warnings</a></li>
+            </ul>
+        </nav>
+        
+        <nav class="sub-tabs" data-parent="alerts" style="display: none;">
+            <ul>
+                <li><a href="#alerts-overview">Overview</a></li>
+            </ul>
+        </nav>
+        
+        <main class="dashboard-content">
+            <div id="patientcare-overview" class="tab-content" style="display: none;">
+                <div class="metrics-summary">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Average LOS</h3>
+                            <div class="metric-value">6.2 <small>days</small></div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-down"></i> 0.8 days
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-procedures"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Bed Occupancy</h3>
+                            <div class="metric-value">94<small>%</small></div>
+                            <div class="metric-trend warning">
+                                <i class="fas fa-arrow-up"></i> 2.5%
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-redo-alt"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Readmission (30d)</h3>
+                            <div class="metric-value">5.2<small>%</small></div>
+                            <div class="metric-trend negative">
+                                <i class="fas fa-arrow-up"></i> 0.4%
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-walking"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Discharges</h3>
+                            <div class="metric-value">25</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i> 12.5%
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-item double-width">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Average Length of Stay Trend</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="losTrendChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Occupancy Rate</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="occupancyRateChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Readmission Summary</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="readmissionSummaryChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="patientcare-occupancy" class="tab-content" style="display: none;">
+                <div class="metrics-summary">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-procedures"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Bed Occupancy</h3>
+                            <div class="metric-value">94<small>%</small></div>
+                            <div class="metric-trend warning">
+                                <i class="fas fa-arrow-up"></i> 2.5%
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-bed"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Total Beds</h3>
+                            <div class="metric-value">32</div>
+                            <div class="metric-trend neutral">
+                                <i class="fas fa-minus"></i> No change
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Patients</h3>
+                            <div class="metric-value">30</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i> 2
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Avg Time to Bed</h3>
+                            <div class="metric-value">2.4 <small>hrs</small></div>
+                            <div class="metric-trend negative">
+                                <i class="fas fa-arrow-up"></i> 0.3 hrs
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Bed Capacity by Ward</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="bedCapacityChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Admission Source</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="admissionSourceChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-item double-width">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Bed Status - Ward C16</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="occupancy-grid">
+                                    <div class="occupancy-stat">
+                                        <div class="occupancy-stat-value">30</div>
+                                        <div class="occupancy-stat-label">Occupied</div>
+                                    </div>
+                                    <div class="occupancy-stat">
+                                        <div class="occupancy-stat-value">2</div>
+                                        <div class="occupancy-stat-label">Vacant</div>
+                                    </div>
+                                    <div class="occupancy-stat">
+                                        <div class="occupancy-stat-value">0</div>
+                                        <div class="occupancy-stat-label">Reserved</div>
+                                    </div>
+                                    <div class="occupancy-stat">
+                                        <div class="occupancy-stat-value">32</div>
+                                        <div class="occupancy-stat-label">Total</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bed-status">
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">101</div>
+                                        <div class="bed-info">P-4538</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">102</div>
+                                        <div class="bed-info">P-4539</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">103</div>
+                                        <div class="bed-info">P-4540</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">104</div>
+                                        <div class="bed-info">P-4541</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">105</div>
+                                        <div class="bed-info">P-4542</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">106</div>
+                                        <div class="bed-info">P-4543</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">107</div>
+                                        <div class="bed-info">P-4544</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">108</div>
+                                        <div class="bed-info">P-4545</div>
+                                    </div>
+                                    <div class="bed bed-vacant">
+                                        <div class="bed-number">109</div>
+                                        <div class="bed-info">Available</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">110</div>
+                                        <div class="bed-info">P-4546</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">111</div>
+                                        <div class="bed-info">P-4547</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">112</div>
+                                        <div class="bed-info">P-4548</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">113</div>
+                                        <div class="bed-info">P-4549</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">114</div>
+                                        <div class="bed-info">P-4550</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">115</div>
+                                        <div class="bed-info">P-4551</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">116</div>
+                                        <div class="bed-info">P-4552</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">117</div>
+                                        <div class="bed-info">P-4553</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">118</div>
+                                        <div class="bed-info">P-4554</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">119</div>
+                                        <div class="bed-info">P-4555</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">120</div>
+                                        <div class="bed-info">P-4556</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">121</div>
+                                        <div class="bed-info">P-4557</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">122</div>
+                                        <div class="bed-info">P-4558</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">123</div>
+                                        <div class="bed-info">P-4559</div>
+                                    </div>
+                                    <div class="bed bed-vacant">
+                                        <div class="bed-number">124</div>
+                                        <div class="bed-info">Available</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">125</div>
+                                        <div class="bed-info">P-4560</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">126</div>
+                                        <div class="bed-info">P-4561</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">127</div>
+                                        <div class="bed-info">P-4562</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">128</div>
+                                        <div class="bed-info">P-4563</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">129</div>
+                                        <div class="bed-info">P-4564</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">130</div>
+                                        <div class="bed-info">P-4565</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">131</div>
+                                        <div class="bed-info">P-4566</div>
+                                    </div>
+                                    <div class="bed bed-occupied">
+                                        <div class="bed-number">132</div>
+                                        <div class="bed-info">P-4567</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="patientcare-flow" class="tab-content" style="display: block;">
+                <div class="metrics-summary">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-clipboard-list"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Average LOS</h3>
+                            <div class="metric-value">6.2 <small>days</small></div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-down"></i> 0.8 days
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-procedures"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Admissions</h3>
+                            <div class="metric-value">28</div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-up"></i> 12.5%
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-walking"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Discharges</h3>
+                            <div class="metric-value">25</div>
+                            <div class="metric-trend negative">
+                                <i class="fas fa-arrow-down"></i> 4.2%
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Discharge Time</h3>
+                            <div class="metric-value">13:45 <small>avg</small></div>
+                            <div class="metric-trend warning">
+                                <i class="fas fa-arrow-up"></i> 1.2 hours
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-item double-width">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Average Length of Stay</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="losChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-item double-width">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Patients In/Out Flow</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="patientFlowChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Discharge Destinations</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="dischargeDestChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Transfer Times</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="transferTimesChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="patientcare-readmissions" class="tab-content" style="display: none;">
+                <div class="metrics-summary">
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-redo-alt"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>7-Day Rate</h3>
+                            <div class="metric-value">2.1<small>%</small></div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-down"></i> 0.3%
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-redo-alt"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>30-Day Rate</h3>
+                            <div class="metric-value">5.2<small>%</small></div>
+                            <div class="metric-trend negative">
+                                <i class="fas fa-arrow-up"></i> 0.4%
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Preventable</h3>
+                            <div class="metric-value">32<small>%</small></div>
+                            <div class="metric-trend positive">
+                                <i class="fas fa-arrow-down"></i> 3.2%
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div class="metric-details">
+                            <h3>Avg Days to Return</h3>
+                            <div class="metric-value">18.5</div>
+                            <div class="metric-trend warning">
+                                <i class="fas fa-arrow-down"></i> 1.2 days
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-grid">
+                    <div class="dashboard-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Readmission Rate by Period</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="readmissionChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Readmission by Type</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="readmissionTypeChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Causes of Readmission</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="readmission-category">
+                                    <div class="category-name">Medication Issues</div>
+                                    <div class="category-bar">
+                                        <div class="category-fill fill-high" style="width: 28%"></div>
+                                    </div>
+                                    <div class="category-percentage">28%</div>
+                                </div>
+                                <div class="readmission-category">
+                                    <div class="category-name">Inadequate Follow-up</div>
+                                    <div class="category-bar">
+                                        <div class="category-fill fill-high" style="width: 24%"></div>
+                                    </div>
+                                    <div class="category-percentage">24%</div>
+                                </div>
+                                <div class="readmission-category">
+                                    <div class="category-name">Early Discharge</div>
+                                    <div class="category-bar">
+                                        <div class="category-fill fill-medium" style="width: 18%"></div>
+                                    </div>
+                                    <div class="category-percentage">18%</div>
+                                </div>
+                                <div class="readmission-category">
+                                    <div class="category-name">Patient Non-compliance</div>
+                                    <div class="category-bar">
+                                        <div class="category-fill fill-medium" style="width: 15%"></div>
+                                    </div>
+                                    <div class="category-percentage">15%</div>
+                                </div>
+                                <div class="readmission-category">
+                                    <div class="category-name">Social Support Lacking</div>
+                                    <div class="category-bar">
+                                        <div class="category-fill fill-low" style="width: 10%"></div>
+                                    </div>
+                                    <div class="category-percentage">10%</div>
+                                </div>
+                                <div class="readmission-category">
+                                    <div class="category-name">Other</div>
+                                    <div class="category-bar">
+                                        <div class="category-fill fill-low" style="width: 5%"></div>
+                                    </div>
+                                    <div class="category-percentage">5%</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-item">
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Preventable vs Non-preventable</h2>
+                                <div class="card-actions">
+                                    <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                    <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="preventableReadmissionsChart" height="250"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <div id="quality-overview" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Patient Satisfaction</h3>
+                        <div class="metric-value">4.5 <small>/ 5</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 0.3
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Complaints</h3>
+                        <div class="metric-value">5</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i> 2
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Incidents</h3>
+                        <div class="metric-value">8</div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-up"></i> 1
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Quality Score</h3>
+                        <div class="metric-value">92<small>%</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 3%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Patient Satisfaction Trend</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="satisfactionTrendChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Incidents by Category</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="incidentsCategoryChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="quality-satisfaction" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Overall Rating</h3>
+                        <div class="metric-value">4.5 <small>/ 5</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 0.3
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Staff Rating</h3>
+                        <div class="metric-value">4.8 <small>/ 5</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 0.2
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Food Rating</h3>
+                        <div class="metric-value">3.9 <small>/ 5</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 0.4
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Facility Rating</h3>
+                        <div class="metric-value">4.2 <small>/ 5</small></div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-down"></i> 0.1
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Patient Satisfaction by Category</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="satisfactionChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Monthly Satisfaction Trend</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="monthlySatisfactionChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Survey Completion Rate</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="surveyCompletionChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="quality-complaints" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Total Complaints</h3>
+                        <div class="metric-value">5</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i> 2
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Avg Resolution Time</h3>
+                        <div class="metric-value">7.2 <small>days</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i> 1.3 days
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Resolution Rate</h3>
+                        <div class="metric-value">92<small>%</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 3%
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-redo-alt"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Repeat Complaints</h3>
+                        <div class="metric-value">1</div>
+                        <div class="metric-trend neutral">
+                            <i class="fas fa-minus"></i> No change
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Complaints Trend</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="complaintsChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Complaints by Category</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="complaintsCategoryChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Recent Complaints</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="readmission-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Age (days)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Mar 5, 2025</td>
+                                        <td>Communication</td>
+                                        <td><span class="status in-progress">In Progress</span></td>
+                                        <td>6</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mar 1, 2025</td>
+                                        <td>Food Quality</td>
+                                        <td><span class="status in-progress">In Progress</span></td>
+                                        <td>10</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Feb 24, 2025</td>
+                                        <td>Waiting Time</td>
+                                        <td><span class="status in-progress">In Progress</span></td>
+                                        <td>15</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Feb 18, 2025</td>
+                                        <td>Staff Attitude</td>
+                                        <td><span class="status delayed">Delayed</span></td>
+                                        <td>21</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Feb 10, 2025</td>
+                                        <td>Facilities</td>
+                                        <td><span class="status at-risk">At Risk</span></td>
+                                        <td>29</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="quality-incidents" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Total Incidents</h3>
+                        <div class="metric-value">8</div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-up"></i> 1
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-user-injured"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Patient Falls</h3>
+                        <div class="metric-value">3</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i> 1
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-pills"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Medication Errors</h3>
+                        <div class="metric-value">2</div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-up"></i> 1
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Documentation Errors</h3>
+                        <div class="metric-value">3</div>
+                        <div class="metric-trend neutral">
+                            <i class="fas fa-minus"></i> No change
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Incidents by Type</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="incidentsChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Incident Trend</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="incidentTrendChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Recent Incidents</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="readmission-table">
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Severity</th>
+                                        <th>Ward</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Mar 8, 2025</td>
+                                        <td>Medication Error</td>
+                                        <td><span class="status at-risk">Medium</span></td>
+                                        <td>C16</td>
+                                        <td>Under Review</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mar 6, 2025</td>
+                                        <td>Patient Fall</td>
+                                        <td><span class="status delayed">High</span></td>
+                                        <td>C16</td>
+                                        <td>Investigation</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mar 3, 2025</td>
+                                        <td>Documentation Error</td>
+                                        <td><span class="status in-progress">Low</span></td>
+                                        <td>C17</td>
+                                        <td>Resolved</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Feb 28, 2025</td>
+                                        <td>Patient Fall</td>
+                                        <td><span class="status at-risk">Medium</span></td>
+                                        <td>C16</td>
+                                        <td>Resolved</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Feb 25, 2025</td>
+                                        <td>Medication Error</td>
+                                        <td><span class="status in-progress">Low</span></td>
+                                        <td>C17</td>
+                                        <td>Resolved</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="quality-issues" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>High Risk Issues</h3>
+                        <div class="metric-value">2</div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-up"></i> 1
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Medium Risk Issues</h3>
+                        <div class="metric-value">3</div>
+                        <div class="metric-trend neutral">
+                            <i class="fas fa-minus"></i> No change
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Low Risk Issues</h3>
+                        <div class="metric-value">4</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i> 2
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Risk Score</h3>
+                        <div class="metric-value">14</div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-up"></i> 1
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Potential Issues & Risk Assessment</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="qualityIssuesChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Action Plans</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="readmission-table">
+                                <thead>
+                                    <tr>
+                                        <th>Issue</th>
+                                        <th>Risk Level</th>
+                                        <th>Action Plan</th>
+                                        <th>Owner</th>
+                                        <th>Status</th>
+                                        <th>Due Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Communication with Patients</td>
+                                        <td><span class="status delayed">High</span></td>
+                                        <td>Staff Training Program</td>
+                                        <td>E. Johnson</td>
+                                        <td>In Progress</td>
+                                        <td>Apr 15, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pain Management</td>
+                                        <td><span class="status delayed">High</span></td>
+                                        <td>Protocol Review</td>
+                                        <td>S. Williams</td>
+                                        <td>Not Started</td>
+                                        <td>Apr 30, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wait Times</td>
+                                        <td><span class="status at-risk">Medium</span></td>
+                                        <td>Process Improvement</td>
+                                        <td>M. Brown</td>
+                                        <td>In Progress</td>
+                                        <td>May 15, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Staff Behavior</td>
+                                        <td><span class="status at-risk">Medium</span></td>
+                                        <td>Refresher Course</td>
+                                        <td>J. Davis</td>
+                                        <td>Scheduled</td>
+                                        <td>May 20, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Facilities</td>
+                                        <td><span class="status at-risk">Medium</span></td>
+                                        <td>Upgrade Plan</td>
+                                        <td>T. Wilson</td>
+                                        <td>In Progress</td>
+                                        <td>Jun 10, 2025</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="workforce-overview" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-user-nurse"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Staff Count</h3>
+                        <div class="metric-value">42</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 2
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Staff to Patient Ratio</h3>
+                        <div class="metric-value">1:4.2</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i> 0.3
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-pie"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Turnover Rate</h3>
+                        <div class="metric-value">3.7<small>%</small></div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-up"></i> 0.4%
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-book-medical"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Training Compliance</h3>
+                        <div class="metric-value">92<small>%</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 3%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Staffing Levels</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="staffingChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Staff Turnover</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="staffTurnoverChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Shift Coverage</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="shiftCoverageChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Staff Roles Distribution</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div style="height: 250px; display: flex; flex-direction: column; justify-content: center;">
+                                <div class="staff-distribution">
+                                    <div class="distribution-item">
+                                        <div class="role">Nurses</div>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 65%; background-color: rgba(52, 152, 219, 0.7);"></div>
+                                        </div>
+                                        <div class="count">24</div>
+                                    </div>
+                                    <div class="distribution-item">
+                                        <div class="role">Care Assistants</div>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 30%; background-color: rgba(46, 204, 113, 0.7);"></div>
+                                        </div>
+                                        <div class="count">11</div>
+                                    </div>
+                                    <div class="distribution-item">
+                                        <div class="role">Ward Clerks</div>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 10%; background-color: rgba(155, 89, 182, 0.7);"></div>
+                                        </div>
+                                        <div class="count">3</div>
+                                    </div>
+                                    <div class="distribution-item">
+                                        <div class="role">Therapists</div>
+                                        <div class="bar-container">
+                                            <div class="bar" style="width: 14%; background-color: rgba(241, 196, 15, 0.7);"></div>
+                                        </div>
+                                        <div class="count">4</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="workforce-training" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Overall Compliance</h3>
+                        <div class="metric-value">92<small>%</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 3%
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Expiring Soon</h3>
+                        <div class="metric-value">5</div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-up"></i> 2
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Expired</h3>
+                        <div class="metric-value">2</div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-up"></i> 1
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Upcoming Sessions</h3>
+                        <div class="metric-value">3</div>
+                        <div class="metric-trend neutral">
+                            <i class="fas fa-minus"></i> No change
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Training Compliance by Area</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="trainingComplianceChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Training Hours by Staff Group</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div style="height: 250px; display: flex; flex-direction: column; justify-content: center;">
+                                <div class="training-hours">
+                                    <div class="training-group">
+                                        <div class="group-name">Nurses</div>
+                                        <div class="hours-container">
+                                            <div class="hours-bar" style="width: 90%;">
+                                                <div class="hours-fill" style="width: 85%; background-color: rgba(46, 204, 113, 0.7);"></div>
+                                            </div>
+                                            <div class="hours-text">25.5 / 30 hrs</div>
+                                        </div>
+                                    </div>
+                                    <div class="training-group">
+                                        <div class="group-name">Care Assistants</div>
+                                        <div class="hours-container">
+                                            <div class="hours-bar" style="width: 90%;">
+                                                <div class="hours-fill" style="width: 80%; background-color: rgba(46, 204, 113, 0.7);"></div>
+                                            </div>
+                                            <div class="hours-text">16 / 20 hrs</div>
+                                        </div>
+                                    </div>
+                                    <div class="training-group">
+                                        <div class="group-name">Ward Clerks</div>
+                                        <div class="hours-container">
+                                            <div class="hours-bar" style="width: 90%;">
+                                                <div class="hours-fill" style="width: 95%; background-color: rgba(46, 204, 113, 0.7);"></div>
+                                            </div>
+                                            <div class="hours-text">11.4 / 12 hrs</div>
+                                        </div>
+                                    </div>
+                                    <div class="training-group">
+                                        <div class="group-name">Therapists</div>
+                                        <div class="hours-container">
+                                            <div class="hours-bar" style="width: 90%;">
+                                                <div class="hours-fill" style="width: 70%; background-color: rgba(243, 156, 18, 0.7);"></div>
+                                            </div>
+                                            <div class="hours-text">14 / 20 hrs</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Non-Compliant Staff</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="readmission-table">
+                                <thead>
+                                    <tr>
+                                        <th>Staff ID</th>
+                                        <th>Name</th>
+                                        <th>Role</th>
+                                        <th>Training</th>
+                                        <th>Status</th>
+                                        <th>Due Date</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>N-1042</td>
+                                        <td>Sarah Johnson</td>
+                                        <td>Nurse</td>
+                                        <td>Fire Safety</td>
+                                        <td><span class="status delayed">Expired</span></td>
+                                        <td>Feb 28, 2025</td>
+                                        <td><button class="btn-small">Remind</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>CA-2134</td>
+                                        <td>Michael Brown</td>
+                                        <td>Care Assistant</td>
+                                        <td>Manual Handling</td>
+                                        <td><span class="status at-risk">Expiring</span></td>
+                                        <td>Mar 15, 2025</td>
+                                        <td><button class="btn-small">Remind</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>N-1578</td>
+                                        <td>Emma Wilson</td>
+                                        <td>Nurse</td>
+                                        <td>Infection Control</td>
+                                        <td><span class="status delayed">Expired</span></td>
+                                        <td>Mar 5, 2025</td>
+                                        <td><button class="btn-small">Remind</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>CA-2301</td>
+                                        <td>John Davis</td>
+                                        <td>Care Assistant</td>
+                                        <td>Safeguarding</td>
+                                        <td><span class="status at-risk">Expiring</span></td>
+                                        <td>Mar 20, 2025</td>
+                                        <td><button class="btn-small">Remind</button></td>
+                                    </tr>
+                                    <tr>
+                                        <td>T-4023</td>
+                                        <td>Lisa Martinez</td>
+                                        <td>Therapist</td>
+                                        <td>Information Governance</td>
+                                        <td><span class="status at-risk">Expiring</span></td>
+                                        <td>Mar 22, 2025</td>
+                                        <td><button class="btn-small">Remind</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="benchmark-overview" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Overall Ranking</h3>
+                        <div class="metric-value">4<small>th</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 2 positions
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Quality Score</h3>
+                        <div class="metric-value">92<small>/100</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 3 points
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-clipboard-check"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Above Avg Metrics</h3>
+                        <div class="metric-value">8<small>/10</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 1
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Below Avg Metrics</h3>
+                        <div class="metric-value">2<small>/10</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i> 1
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Performance Comparison</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="benchmarkPerformanceChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Trend Analysis</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="trendAnalysisChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="benchmark-kpi" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-procedures"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>LOS Performance</h3>
+                        <div class="metric-value">A<small>+</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> from A
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-redo-alt"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Readmission KPI</h3>
+                        <div class="metric-value">B<small>+</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> from B
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Patient Satisfaction</h3>
+                        <div class="metric-value">A<small>-</small></div>
+                        <div class="metric-trend neutral">
+                            <i class="fas fa-minus"></i> No change
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-user-nurse"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Staff Performance</h3>
+                        <div class="metric-value">A</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> from B+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>KPI Metrics vs Target</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="readmission-table">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Current</th>
+                                        <th>Target</th>
+                                        <th>Status</th>
+                                        <th>Trend</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Average LOS</td>
+                                        <td>6.2 days</td>
+                                        <td>≤ 7.0 days</td>
+                                        <td><span class="status in-progress">On Target</span></td>
+                                        <td><i class="fas fa-arrow-down text-success"></i> Decreasing</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Readmission Rate (30d)</td>
+                                        <td>5.2%</td>
+                                        <td>≤ 5.0%</td>
+                                        <td><span class="status at-risk">Near Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-danger"></i> Increasing</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bed Occupancy</td>
+                                        <td>94%</td>
+                                        <td>85-95%</td>
+                                        <td><span class="status in-progress">On Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-warning"></i> Increasing</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patient Satisfaction</td>
+                                        <td>4.5/5</td>
+                                        <td>≥ 4.5/5</td>
+                                        <td><span class="status in-progress">On Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-success"></i> Increasing</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Staff to Patient Ratio</td>
+                                        <td>1:4.2</td>
+                                        <td>1:4.0</td>
+                                        <td><span class="status at-risk">Near Target</span></td>
+                                        <td><i class="fas fa-arrow-down text-success"></i> Improving</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wait Times (Admission)</td>
+                                        <td>2.4 hrs</td>
+                                        <td>≤ 2.0 hrs</td>
+                                        <td><span class="status delayed">Off Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-danger"></i> Increasing</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Medication Errors</td>
+                                        <td>2 (this month)</td>
+                                        <td>≤ 1 per month</td>
+                                        <td><span class="status delayed">Off Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-danger"></i> Increasing</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Training Compliance</td>
+                                        <td>92%</td>
+                                        <td>≥ 95%</td>
+                                        <td><span class="status at-risk">Near Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-success"></i> Increasing</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="benchmark-national" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>National Ranking</h3>
+                        <div class="metric-value">18<small>th</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 7 positions
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Percentile</h3>
+                        <div class="metric-value">85<small>th</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 5 percentiles
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Quality Rating</h3>
+                        <div class="metric-value">4<small>/5</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> from 3/5
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Excellence Areas</h3>
+                        <div class="metric-value">3</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 1
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>National Comparison</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="nationalComparisonChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Star Ratings</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div style="height: 250px; display: flex; flex-direction: column; justify-content: center;">
+                                <div class="staff-distribution">
+                                    <div class="distribution-item">
+                                        <div class="role">Patient Care</div>
+                                        <div style="min-width: 120px; text-align: center;">
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="far fa-star" style="color: gold;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="distribution-item">
+                                        <div class="role">Efficiency</div>
+                                        <div style="min-width: 120px; text-align: center;">
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star-half-alt" style="color: gold;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="distribution-item">
+                                        <div class="role">Safety</div>
+                                        <div style="min-width: 120px; text-align: center;">
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="far fa-star" style="color: gold;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="distribution-item">
+                                        <div class="role">Facilities</div>
+                                        <div style="min-width: 120px; text-align: center;">
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="far fa-star" style="color: gold;"></i>
+                                            <i class="far fa-star" style="color: gold;"></i>
+                                        </div>
+                                    </div>
+                                    <div class="distribution-item">
+                                        <div class="role">Timeliness</div>
+                                        <div style="min-width: 120px; text-align: center;">
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star" style="color: gold;"></i>
+                                            <i class="fas fa-star-half-alt" style="color: gold;"></i>
+                                            <i class="far fa-star" style="color: gold;"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Areas of Excellence & Improvement</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="readmission-table">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Your Score</th>
+                                        <th>National Avg.</th>
+                                        <th>Percentile</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Length of Stay Management</td>
+                                        <td>6.2 days</td>
+                                        <td>7.5 days</td>
+                                        <td>92nd</td>
+                                        <td><span class="status in-progress">Excellence</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patient Satisfaction</td>
+                                        <td>4.5/5</td>
+                                        <td>4.1/5</td>
+                                        <td>89th</td>
+                                        <td><span class="status in-progress">Excellence</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Staff Engagement</td>
+                                        <td>4.7/5</td>
+                                        <td>4.2/5</td>
+                                        <td>91st</td>
+                                        <td><span class="status in-progress">Excellence</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Readmission Rate (30 day)</td>
+                                        <td>5.2%</td>
+                                        <td>5.0%</td>
+                                        <td>48th</td>
+                                        <td><span class="status at-risk">Average</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Documentation Completeness</td>
+                                        <td>92%</td>
+                                        <td>94%</td>
+                                        <td>38th</td>
+                                        <td><span class="status at-risk">Area for Improvement</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Medication Management</td>
+                                        <td>2 errors/month</td>
+                                        <td>1.2 errors/month</td>
+                                        <td>32nd</td>
+                                        <td><span class="status delayed">Area for Improvement</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="benchmark-comparison" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-hospital"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Hospitals in Comparison</h3>
+                        <div class="metric-value">5</div>
+                        <div class="metric-trend neutral">
+                            <i class="fas fa-minus"></i> No change
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Regional Ranking</h3>
+                        <div class="metric-value">2<small>nd</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> from 3rd
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Best Performance In</h3>
+                        <div class="metric-value">LOS</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> from 2nd
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Worst Performance In</h3>
+                        <div class="metric-value">Wait Time</div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-down"></i> from 3rd
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Hospital Comparison</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="hospitalComparisonChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Comparative Analysis</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="readmission-table">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>SCGH</th>
+                                        <th>OSH</th>
+                                        <th>Memorial</th>
+                                        <th>City General</th>
+                                        <th>University</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Average LOS (days)</td>
+                                        <td><b>6.2</b></td>
+                                        <td>6.8</td>
+                                        <td>7.3</td>
+                                        <td>6.9</td>
+                                        <td>7.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Readmission Rate (%)</td>
+                                        <td>5.2</td>
+                                        <td>5.7</td>
+                                        <td>6.8</td>
+                                        <td>5.9</td>
+                                        <td><b>4.9</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patient Satisfaction</td>
+                                        <td>4.5</td>
+                                        <td>4.3</td>
+                                        <td><b>4.6</b></td>
+                                        <td>4.2</td>
+                                        <td>4.4</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bed Occupancy (%)</td>
+                                        <td>94</td>
+                                        <td>92</td>
+                                        <td>90</td>
+                                        <td><b>88</b></td>
+                                        <td>96</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wait Time (hrs)</td>
+                                        <td>2.4</td>
+                                        <td>2.2</td>
+                                        <td>1.9</td>
+                                        <td><b>1.7</b></td>
+                                        <td>2.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Staff-Patient Ratio</td>
+                                        <td>1:4.2</td>
+                                        <td>1:4.5</td>
+                                        <td>1:4.8</td>
+                                        <td>1:4.6</td>
+                                        <td><b>1:4.0</b></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p style="text-align: center; font-size: 0.8rem; margin-top: 0.5rem; color: #7f8c8d;"><b>Bold</b> indicates best performance in category</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="benchmark-issues" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Benchmark Gaps</h3>
+                        <div class="metric-value">3</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i> 1
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-thumbs-down"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Underperforming Areas</h3>
+                        <div class="metric-value">2</div>
+                        <div class="metric-trend neutral">
+                            <i class="fas fa-minus"></i> No change
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Action Plans</h3>
+                        <div class="metric-value">4</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 1
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Plan Completion</h3>
+                        <div class="metric-value">65<small>%</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 15%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Performance Gaps & Action Plans</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="readmission-table">
+                                <thead>
+                                    <tr>
+                                        <th>Issue Area</th>
+                                        <th>Current</th>
+                                        <th>Benchmark</th>
+                                        <th>Gap</th>
+                                        <th>Action Plan</th>
+                                        <th>Status</th>
+                                        <th>Due Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Medication Management</td>
+                                        <td>2 errors/month</td>
+                                        <td>1.2 errors/month</td>
+                                        <td>+0.8</td>
+                                        <td>Staff Training & New Protocol</td>
+                                        <td><span class="status in-progress">In Progress</span></td>
+                                        <td>Apr 15, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Documentation Completeness</td>
+                                        <td>92%</td>
+                                        <td>94%</td>
+                                        <td>-2%</td>
+                                        <td>Review Workflow & Staff Training</td>
+                                        <td><span class="status in-progress">In Progress</span></td>
+                                        <td>Apr 30, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wait Time (Admission)</td>
+                                        <td>2.4 hours</td>
+                                        <td>2.0 hours</td>
+                                        <td>+0.4</td>
+                                        <td>Process Improvement</td>
+                                        <td><span class="status in-progress">In Progress</span></td>
+                                        <td>May 15, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Readmission Rate</td>
+                                        <td>5.2%</td>
+                                        <td>5.0%</td>
+                                        <td>+0.2%</td>
+                                        <td>Discharge Planning Enhancement</td>
+                                        <td><span class="status at-risk">At Risk</span></td>
+                                        <td>Jun 30, 2025</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Performance Trends of Gap Areas</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="gapAreasChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="alerts-overview" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Total Alerts</h3>
+                        <div class="metric-value">22</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i> 4
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Critical Issues</h3>
+                        <div class="metric-value">3</div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-up"></i> 1
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Resolved</h3>
+                        <div class="metric-value">8</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 3
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Avg Resolution Time</h3>
+                        <div class="metric-value">3.2 <small>days</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i> 0.5 days
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Alerts by Category</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="alertsCategoryChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Critical Issues by Severity</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="criticalIssuesChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Issues Trend</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="riskTrendChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Critical Issues</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="readmission-table">
+                                <thead>
+                                    <tr>
+                                        <th>Issue</th>
+                                        <th>Severity</th>
+                                        <th>Status</th>
+                                        <th>Owner</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Staffing Shortage (Night Shift)</td>
+                                        <td><span class="status delayed">High</span></td>
+                                        <td>Open</td>
+                                        <td>M. Johnson</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Medication Error Increase</td>
+                                        <td><span class="status delayed">High</span></td>
+                                        <td>In Progress</td>
+                                        <td>S. Williams</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ward C16 Occupancy >97%</td>
+                                        <td><span class="status delayed">High</span></td>
+                                        <td>In Progress</td>
+                                        <td>E. Davis</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <nav class="sub-tabs" data-parent="overview" style="display: none;">
+            <ul>
+                <li><a href="#overview-summary">Executive Summary</a></li>
+                <li><a href="#overview-performance">KPI Dashboard</a></li>
+                <li><a href="#overview-trends">Key Trends</a></li>
+                <li><a href="#overview-critical">Critical Metrics</a></li>
+            </ul>
+        </nav>
+        
+        <div id="overview-summary" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Average LOS</h3>
+                        <div class="metric-value">6.2 <small>days</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i> 0.8 days
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-procedures"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Bed Occupancy</h3>
+                        <div class="metric-value">94<small>%</small></div>
+                        <div class="metric-trend warning">
+                            <i class="fas fa-arrow-up"></i> 2.5%
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-smile"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Patient Satisfaction</h3>
+                        <div class="metric-value">4.5 <small>/ 5</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 0.3
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Staff Coverage</h3>
+                        <div class="metric-value">96<small>%</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 3%
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Key Department Performance</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="overviewPerformanceChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Patient Census</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="censusOverviewChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Incidents Overview</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="overviewIncidentsChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Staff Coverage</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="overviewStaffingChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-item">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Patient Satisfaction</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="overviewSatisfactionChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="overview-performance" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Overall Score</h3>
+                        <div class="metric-value">87<small>/100</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 5 points
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>KPIs On Target</h3>
+                        <div class="metric-value">7<small>/10</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 2
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Critical Alerts</h3>
+                        <div class="metric-value">3</div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-up"></i> 1
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Dept. Ranking</h3>
+                        <div class="metric-value">2<small>nd</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> from 3rd
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Key Performance Indicators</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="readmission-table">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Current</th>
+                                        <th>Target</th>
+                                        <th>Status</th>
+                                        <th>Trend</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Average LOS</td>
+                                        <td>6.2 days</td>
+                                        <td>≤ 7.0 days</td>
+                                        <td><span class="status in-progress">On Target</span></td>
+                                        <td><i class="fas fa-arrow-down text-success"></i> Improving</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Readmission Rate (30d)</td>
+                                        <td>5.2%</td>
+                                        <td>≤ 5.0%</td>
+                                        <td><span class="status at-risk">Near Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-danger"></i> Worsening</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bed Occupancy</td>
+                                        <td>94%</td>
+                                        <td>85-95%</td>
+                                        <td><span class="status in-progress">On Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-warning"></i> Stable</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patient Satisfaction</td>
+                                        <td>4.5/5</td>
+                                        <td>≥ 4.5/5</td>
+                                        <td><span class="status in-progress">On Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-success"></i> Improving</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Staff Coverage</td>
+                                        <td>96%</td>
+                                        <td>≥ 95%</td>
+                                        <td><span class="status in-progress">On Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-success"></i> Improving</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Staff Turnover</td>
+                                        <td>3.7%</td>
+                                        <td>≤ 4.0%</td>
+                                        <td><span class="status in-progress">On Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-warning"></i> Stable</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Patient Falls</td>
+                                        <td>3</td>
+                                        <td>≤ 2</td>
+                                        <td><span class="status delayed">Off Target</span></td>
+                                        <td><i class="fas fa-arrow-down text-success"></i> Improving</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Medication Errors</td>
+                                        <td>2</td>
+                                        <td>≤ 1</td>
+                                        <td><span class="status delayed">Off Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-danger"></i> Worsening</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Documentation</td>
+                                        <td>92%</td>
+                                        <td>≥ 95%</td>
+                                        <td><span class="status at-risk">Near Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-success"></i> Improving</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wait Time (Admission)</td>
+                                        <td>2.4 hrs</td>
+                                        <td>≤ 2.0 hrs</td>
+                                        <td><span class="status delayed">Off Target</span></td>
+                                        <td><i class="fas fa-arrow-up text-danger"></i> Worsening</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="overview-trends" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Key Trends</h3>
+                        <div class="metric-value">7<small>/10</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> Positive
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Warning Trends</h3>
+                        <div class="metric-value">3<small>/10</small></div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-up"></i> Rising
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-calendar-day"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Analysis Period</h3>
+                        <div class="metric-value">12 <small>months</small></div>
+                        <div class="metric-trend neutral">
+                            <i class="fas fa-minus"></i> No change
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-chart-area"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Data Points</h3>
+                        <div class="metric-value">3,652</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> Complete
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Key Metrics Trend Analysis</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="overviewTrendsChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="overview-critical" class="tab-content" style="display: none;">
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Critical Issues</h3>
+                        <div class="metric-value">3</div>
+                        <div class="metric-trend negative">
+                            <i class="fas fa-arrow-up"></i> 1
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Action Plans</h3>
+                        <div class="metric-value">5</div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 2
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Plan Completion</h3>
+                        <div class="metric-value">65<small>%</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-up"></i> 15%
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="metric-card">
+                    <div class="metric-icon">
+                        <i class="fas fa-hourglass-half"></i>
+                    </div>
+                    <div class="metric-details">
+                        <h3>Avg Response Time</h3>
+                        <div class="metric-value">3.2 <small>days</small></div>
+                        <div class="metric-trend positive">
+                            <i class="fas fa-arrow-down"></i> 0.5 days
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-item double-width">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Critical Issues & Action Plans</h2>
+                            <div class="card-actions">
+                                <button class="action-btn"><i class="fas fa-sync-alt"></i></button>
+                                <button class="action-btn"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <table class="readmission-table">
+                                <thead>
+                                    <tr>
+                                        <th>Issue</th>
+                                        <th>Severity</th>
+                                        <th>Responsible</th>
+                                        <th>Action Plan</th>
+                                        <th>Status</th>
+                                        <th>Due Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Medication Errors Increase</td>
+                                        <td><span class="status delayed">High</span></td>
+                                        <td>S. Williams</td>
+                                        <td>Staff Training & Protocol Review</td>
+                                        <td>In Progress</td>
+                                        <td>Mar 25, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ward C16 Occupancy >97%</td>
+                                        <td><span class="status delayed">High</span></td>
+                                        <td>E. Davis</td>
+                                        <td>Discharge Planning & Capacity Management</td>
+                                        <td>In Progress</td>
+                                        <td>Mar 18, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Wait Time (Admission)</td>
+                                        <td><span class="status delayed">High</span></td>
+                                        <td>M. Johnson</td>
+                                        <td>Process Improvement</td>
+                                        <td>In Progress</td>
+                                        <td>Apr 5, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Readmission Rate Above Target</td>
+                                        <td><span class="status at-risk">Medium</span></td>
+                                        <td>A. Brown</td>
+                                        <td>Post-Discharge Follow-up Protocol</td>
+                                        <td>Planning</td>
+                                        <td>Apr 15, 2025</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Documentation Completeness</td>
+                                        <td><span class="status at-risk">Medium</span></td>
+                                        <td>L. Wilson</td>
+                                        <td>Staff Training & Audit Program</td>
+                                        <td>In Progress</td>
+                                        <td>Apr 10, 2025</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script type="module" src="main.js"></script>
+    </div>
+
+</body>
+</html>
