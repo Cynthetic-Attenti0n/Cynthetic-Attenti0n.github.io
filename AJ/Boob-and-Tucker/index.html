@@ -1,0 +1,82 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boob and Tucker - A guide to feeding your mini-humans</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="importmap">
+        {
+            "imports": {
+                "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.2/+esm",
+                "lottie": "https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/+esm",
+                "gsap/DrawSVGPlugin": "https://cdn.jsdelivr.net/npm/gsap@3.12.2/DrawSVGPlugin.js"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="logo-container" id="logo-link">
+                <div class="logo">
+                    <svg viewBox="0 0 100 100" width="40" height="40">
+                        <circle cx="50" cy="50" r="45" fill="#FF9FB2" />
+                        <path d="M30,40 Q50,20 70,40 T30,40" fill="#FFF" stroke="#FF6384" stroke-width="2" />
+                        <circle cx="40" cy="45" r="5" fill="#FF6384" />
+                        <circle cx="60" cy="45" r="5" fill="#FF6384" />
+                    </svg>
+                </div>
+                <h1>Boob and Tucker</h1>
+            </div>
+            <p class="tagline">A guide to feeding your mini-humans</p>
+        </header>
+
+        <main class="content-area">
+            <div id="welcome-screen" class="screen active">
+                <!-- Welcome screen content will be loaded here -->
+                <div class="loader-container">
+                    <div class="loader"></div>
+                </div>
+            </div>
+            <div id="module-selection" class="screen">
+                <!-- Module selection content will be loaded here -->
+            </div>
+            <div id="module-content" class="screen">
+                <!-- Module content will be loaded here -->
+            </div>
+            <div id="quiz-screen" class="screen">
+                <!-- Quiz content will be loaded here -->
+            </div>
+        </main>
+
+        <footer class="app-footer">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                    <!-- Milestones will be added by JavaScript -->
+                </div>
+                <div class="progress-text">
+                    <span>Your Progress</span>
+                    <span id="progress-percentage">0%</span>
+                </div>
+                <!-- Progress labels will be added by JavaScript -->
+            </div>
+            <div class="navigation-buttons">
+                <button id="prev-btn" class="nav-btn"></button>
+                <button id="next-btn" class="nav-btn"></button>
+            </div>
+        </footer>
+    </div>
+
+    <script type="module">
+        // Register GSAP plugins
+        import { gsap } from "gsap";
+        import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
+        gsap.registerPlugin(DrawSVGPlugin);
+    </script>
+    <script type="module" src="scripts/app.js"></script>
+</body>
+</html>
