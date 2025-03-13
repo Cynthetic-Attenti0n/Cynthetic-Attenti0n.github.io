@@ -148,7 +148,6 @@ function updateNavigation() {
     const progressPercentage = appState.progress.getOverallProgress();
 }
 
-
 // Screen Transitions
 function switchScreen(fromScreen, toScreen) {
     if (screens[fromScreen].classList.contains('active')) {
