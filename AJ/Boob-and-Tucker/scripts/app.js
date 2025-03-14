@@ -3,6 +3,7 @@ import { loadWelcomeScreen } from './screens/welcome.js';
 import { loadModuleSelection } from './screens/moduleSelection.js';
 import { loadModuleContent } from './screens/moduleContent.js';
 import { loadQuiz } from './screens/quiz.js';
+import { loadComingSoonScreen } from './screens/comingSoon.js';
 import { UserProgress } from './models/UserProgress.js';
 import { showAchievement } from './components/achievements.js';
 import { showCompletionModal } from './components/completionModal.js';
@@ -22,7 +23,8 @@ const screens = {
     welcome: document.getElementById('welcome-screen'),
     moduleSelection: document.getElementById('module-selection'),
     moduleContent: document.getElementById('module-content'),
-    quiz: document.getElementById('quiz-screen')
+    quiz: document.getElementById('quiz-screen'),
+    comingSoon: document.getElementById('coming-soon-screen')
 };
 
 const navigationElements = {
@@ -34,22 +36,22 @@ const navigationElements = {
 
 // Navigation Controls
 function updateNavigation() {
-    const { currentScreen, currentModule, currentSection, quizCompleted } = appState;
+    const { currentScreen, currentModule, quizCompleted } = appState;
     
     // Hide/show footer progress bar based on screen
     const progressContainer = document.querySelector('.progress-container');
     const navigationButtons = document.querySelector('.navigation-buttons');
     
-    if (currentScreen === 'welcome' || (currentScreen === 'moduleSelection' && !currentModule)) {
+    if (currentScreen === 'welcome' || (currentScreen === 'moduleSelection' && !currentModule) || currentScreen === 'comingSoon') {
         progressContainer.style.display = 'none';
         if (currentScreen === 'welcome') {
             navigationButtons.style.display = 'none';
         } else {
-            navigationButtons.style.display = 'block';
+            navigationButtons.style.display = 'flex';
         }
     } else {
         progressContainer.style.display = 'block';
-        navigationButtons.style.display = 'block';
+        navigationButtons.style.display = 'flex';
         
         // Update progress percentage based on current module
         if (currentModule) {
@@ -119,14 +121,14 @@ function updateNavigation() {
         navigationElements.prevBtn.style.display = 'none';
         navigationElements.nextBtn.style.display = 'none';
     } else {
-        navigationElements.prevBtn.style.display = 'block';
-        navigationElements.nextBtn.style.display = 'block';
+        navigationElements.prevBtn.style.display = 'flex';
+        navigationElements.nextBtn.style.display = 'flex';
     }
     
-    // Ensure buttons are properly displayed as a horizontal row
-    navigationElements.prevBtn.style.marginRight = 'auto';
-    navigationElements.nextBtn.style.marginLeft = 'auto';
-    navigationElements.nextBtn.style.marginTop = '0'; // Reset any top margin that might be causing misalignment
+    // Remove problematic inline styles
+    navigationElements.prevBtn.style.removeProperty('margin-right');
+    navigationElements.nextBtn.style.removeProperty('margin-left');
+    navigationElements.nextBtn.style.removeProperty('margin-top');
     
     // Update next button
     if (currentScreen === 'welcome') {
@@ -139,6 +141,10 @@ function updateNavigation() {
         navigationElements.nextBtn.disabled = !quizCompleted;
     } else if (currentScreen === 'moduleSelection' && !currentModule) {
         navigationElements.nextBtn.disabled = true;
+    } else if (currentScreen === 'comingSoon') {
+        navigationElements.nextBtn.disabled = true;
+        navigationElements.nextBtn.style.display = 'none';
+        navigationElements.prevBtn.style.display = 'flex';
     } else {
         navigationElements.nextBtn.textContent = 'Next';
         navigationElements.nextBtn.disabled = false;
@@ -218,6 +224,10 @@ function handleNext() {
                 switchScreen('quiz', 'moduleSelection');
             }
             break;
+        case 'comingSoon':
+            loadModuleSelection();
+            switchScreen('comingSoon', 'moduleSelection');
+            break;
     }
     
     updateNavigation();
@@ -251,6 +261,10 @@ function handlePrevious() {
             appState.isQuizActive = false;
             loadModuleContent(appState.currentModule, appState.currentSection);
             switchScreen('quiz', 'moduleContent');
+            break;
+        case 'comingSoon':
+            loadModuleSelection();
+            switchScreen('comingSoon', 'moduleSelection');
             break;
     }
     
@@ -422,7 +436,7 @@ function createProgressParticles(percent) {
         particle.style.width = '8px';
         particle.style.height = '8px';
         particle.style.borderRadius = '50%';
-        particle.style.backgroundColor = i % 2 === 0 ? 'var(--primary-color)' : 'var(--accent-color)';
+        particle.style.backgroundColor = i % 2 === 0 ? 'var(--primary-color)' : 'var(--secondary-color)';
         particle.style.top = `${rect.top + rect.height/2}px`;
         particle.style.left = `${rect.left + rect.width/2}px`;
         particle.style.zIndex = '1000';

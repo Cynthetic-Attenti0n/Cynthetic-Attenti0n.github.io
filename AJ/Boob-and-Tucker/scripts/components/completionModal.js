@@ -246,22 +246,27 @@ export function showCompletionModal(type, title) {
         }
     );
     
-    // Add button hover effect
-    nextBtn.addEventListener('mouseenter', () => {
-        gsap.to(nextBtn, {
-            scale: 1.05,
-            backgroundColor: "var(--primary-color)",
-            boxShadow: "0 6px 15px rgba(255,99,132,0.3)",
-            duration: 0.3
-        });
-    });
-    
-    nextBtn.addEventListener('mouseleave', () => {
-        gsap.to(nextBtn, {
-            scale: 1,
-            backgroundColor: "var(--secondary-color)",
-            boxShadow: "0 4px 10px rgba(54,162,235,0.2)",
-            duration: 0.3
-        });
-    });
+    // Add CSS styles
+    const style = document.createElement('style');
+    style.innerHTML = `
+        .modal-next-btn {
+            padding: 0.875rem 2rem;
+            background-color: var(--secondary-color);
+            color: var(--white);
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(54, 162, 235, 0.2);
+        }
+
+        .modal-next-btn:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(255, 99, 132, 0.3);
+        }
+    `;
+    document.head.appendChild(style);
 }

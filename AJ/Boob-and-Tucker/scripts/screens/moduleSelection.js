@@ -1,4 +1,5 @@
 import { gsap } from 'gsap';
+import { loadComingSoonScreen } from './comingSoon.js';
 
 export function loadModuleSelection() {
     const moduleSelectionScreen = document.getElementById('module-selection');
@@ -19,7 +20,7 @@ export function loadModuleSelection() {
             </div>
             <div class="modules-content">
                 <h2>Choose a Module</h2>
-                <p>Select a module to begin or continue your learning journey.</p>
+                <p>Select a module to begin or continue your learning journey (or <a href="#" class="highlight-link" id="coming-soon-link">Click Here</a> to see future content).</p>
                 
                 <div class="modules-grid">
     `;
@@ -97,6 +98,16 @@ export function loadModuleSelection() {
             }, 3000);
         }
     });
+    
+    // Add event listener for the Coming Soon link
+    const comingSoonLink = moduleSelectionScreen.querySelector('#coming-soon-link');
+    if (comingSoonLink) {
+        comingSoonLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.appAPI.switchScreen('moduleSelection', 'comingSoon');
+            loadComingSoonScreen();
+        });
+    }
     
     // Add event listeners to module cards
     const moduleCards = moduleSelectionScreen.querySelectorAll('.module-card');
