@@ -130,6 +130,15 @@ export function loadWelcomeScreen() {
                         <path d="M4,12 L20,12" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
                     </svg>
                 </button>
+                <div class="creator-credit">
+    <p class="typing-container">
+        <span class="typing-text">Created with&nbsp;</span>
+        <span class="heart">❤️</span>
+        <span class="typing-text">&nbsp;by&nbsp;</span>
+        <span class="creator-name typing-text">DC</span>
+        <span class="typing-cursor">|</span>
+    </p>
+</div>
             </div>
         </div>
     `;
@@ -454,4 +463,86 @@ function initWelcomeAnimations() {
         duration: 2,
         ease: "sine.inOut"
     });
+
+  // Improve creator credit animation with this improved sequence
+const typingTimeline = gsap.timeline({delay: 0.8}); // Start after other animations
+
+// Set initial positions
+gsap.set('.typing-text', { width: 0 });
+gsap.set('.heart', { opacity: 0 });
+gsap.set('.typing-cursor', { left: 0 });
+
+// Create a function to update cursor position
+function updateCursorPosition(target, offset = 0) {
+    const textWidth = target.getBoundingClientRect().width;
+    const containerLeft = document.querySelector('.typing-container').getBoundingClientRect().left;
+    const targetLeft = target.getBoundingClientRect().left;
+    const relativePosition = targetLeft - containerLeft + textWidth + offset;
+    gsap.to('.typing-cursor', {
+        left: relativePosition,
+        duration: 0.05
+    });
+}
+
+// Type "Created with"
+typingTimeline.to(".typing-text:nth-child(1)", {
+    width: "auto",
+    duration: 0.8,
+    ease: "steps(12)",
+    onUpdate: function() {
+        updateCursorPosition(document.querySelector(".typing-text:nth-child(1)"));
+    }
+});
+
+// Show heart with fade in
+typingTimeline.to(".creator-credit .heart", {
+    opacity: 1,
+    duration: 0.4,
+    ease: "power1.in",
+    onComplete: function() {
+        updateCursorPosition(document.querySelector(".heart"), 2);
+    }
+}, "+=0.1");
+
+// Start heart beat animation
+typingTimeline.add(() => {
+    gsap.to(".creator-credit .heart", {
+        scale: 1.3,
+        duration: 0.6,
+        repeat: -1,
+        yoyo: true,
+        ease: "power1.inOut"
+    });
+});
+
+// Type " by "
+typingTimeline.to(".typing-text:nth-child(3)", {
+    width: "auto",
+    duration: 0.4,
+    ease: "steps(4)",
+    onUpdate: function() {
+        updateCursorPosition(document.querySelector(".typing-text:nth-child(3)"));
+    }
+}, "+=0.2");
+
+// Type "DC"
+typingTimeline.to(".typing-text:nth-child(4)", {
+    width: "auto",
+    duration: 0.3,
+    ease: "steps(2)",
+    onUpdate: function() {
+        updateCursorPosition(document.querySelector(".typing-text:nth-child(4)"));
+    }
+}, "+=0.1");
+
+// Keep cursor blinking for 2 seconds, then fade out
+typingTimeline.to({}, { duration: 2 }) // 2-second pause
+.to('.typing-cursor', {
+    opacity: 0,
+    duration: 0.5,
+    ease: "power1.out",
+    onStart: () => {
+        document.querySelector('.typing-cursor').style.animation = 'none'; // Stops the blinking effect
+    }
+});
 }
