@@ -397,6 +397,18 @@ const projectsData = [
         image: 'mindcare',
         icon: 'fa-hand-holding-heart',
         link: 'AJ/Little-Lifesavers/'
+    },
+    {
+    id: 17,
+    title: 'Boob and Tucker',
+    description: 'A comprehensive, evidence-based e-learning platform for new parents navigating infant nutrition from breastfeeding to solid foods. Built on current Australian guidelines, it offers interactive modules, personalized tracking, and gentle guidance for the feeding journey from birth to 2 years.',
+    tags: ['HTML', 'CSS', 'JS', 'Interactive Learning', 'Healthcare'],
+    categories: ['Education & Learning', 'Wellness & Health', 'Family Resources'],
+    audience: ['Family', 'Public'],
+    date: '2025-03-15',
+    image: 'inner-piece',  // Reusing an existing gradient that works well
+    icon: 'fa-baby',       // Baby icon from Font Awesome
+    link: 'AJ/Boob-and-Tucker/'
     }
 ];
 
