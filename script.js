@@ -372,7 +372,7 @@ const projectsData = [
         date: '2023-11-05',
         image: 'kai',
         icon: 'fa-comments',
-        link: '#'
+        link: '#public/KAI-Chat/'
     },
     {
         id: 15,
