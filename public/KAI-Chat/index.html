@@ -1,0 +1,91 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DC Models</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <script type="importmap">
+    {
+      "imports": {
+        "@google/generative-ai": "https://cdn.jsdelivr.net/npm/@google/generative-ai@0.2.1/+esm"
+      }
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>DC Models</h1>
+      <div class="api-key-container">
+        <input type="password" id="api-key" placeholder="Enter your API key">
+        <button id="save-api-key">Save Key</button>
+      </div>
+    </header>
+    
+    <main>
+      <div class="model-selector-container">
+        <label for="model-selector">Select a Marvelous Model:</label>
+        <select id="model-selector"></select>
+      </div>
+      
+      <div class="mode-toggle" id="mode-toggle">
+        <button id="image-mode-btn" class="active">Image</button>
+        <button id="text-mode-btn">Text</button>
+      </div>
+      
+      <div id="media-section">
+        <div class="media-controls">
+          <button id="camera-btn">
+            <span class="camera-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4z"/>
+                <path d="M9 2L7.17 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3.17L15 2H9zm3 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/>
+              </svg>
+            </span>
+            Take Photo
+          </button>
+          <button id="upload-btn">
+            <span class="upload-icon-container">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                <path d="M19.35 10.04A7.49 7.49 0 0 0 12 4C9.11 4 6.6 5.64 5.35 8.04A5.994 5.994 0 0 0 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"/>
+              </svg>
+            </span>
+            Upload Image
+          </button>
+          <input type="file" id="file-input" accept="image/*" style="display: none;">
+        </div>
+        
+        <div id="media-preview-container" class="media-preview-container">
+          <video id="video-preview" autoplay playsinline style="display: none;"></video>
+          <canvas id="photo-canvas" style="display: none;"></canvas>
+          <img id="preview-image" alt="Preview" style="display: none;">
+        </div>
+      </div>
+      
+      <div class="prompt-container">
+        <textarea id="prompt-input" placeholder="Ask about the image..."></textarea>
+        <button id="submit-btn" disabled>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/>
+          </svg>
+        </button>
+      </div>
+      
+      <div class="response-container">
+        <div id="response-content"></div>
+        <div id="loading-indicator" style="display: none;">
+          <div class="spinner"></div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>Powered by DC's Marvelous Models</p>
+    </footer>
+  </div>
+  
+  <script src="config.js" type="module"></script>
+  <script src="app.js" type="module"></script>
+</body>
+</html>
