@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diet Tracker</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@tailwindcss/browser@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-6 rounded-lg">
+    <h1 class="text-3xl font-semibold text-center text-blue-600 mb-8">Diet Tracker</h1>
+
+    <div class="mx-auto w-full max-w-md bg-white rounded-lg shadow-md p-6">
+        <div class="mb-4">
+            <label for="foodName" class="block text-gray-700 text-sm font-bold mb-2">Food Name:</label>
+            <input type="text" id="foodName" placeholder="Enter food name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <div class="mb-4">
+            <label for="calories" class="block text-gray-700 text-sm font-bold mb-2">Calories:</label>
+            <input type="number" id="calories" placeholder="Enter calories" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <div class="flex items-center justify-between mb-4">
+            <button id="addFood" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add Food</button>
+            <button id="clearLog" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Clear Log</button>
+        </div>
+
+        <div class="mb-4">
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Total Calories: <span id="totalCalories" class="text-blue-600">0</span></h2>
+        </div>
+
+        <div>
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Food Log:</h2>
+            <ul id="foodList" class="border rounded p-4 bg-gray-50">
+                </ul>
+        </div>
+    </div>
+
+    <script>
+        const foodNameInput = document.getElementById("foodName");
+        const caloriesInput = document.getElementById("calories");
+        const addFoodButton = document.getElementById("addFood");
+        const foodList = document.getElementById("foodList");
+        const totalCaloriesElement = document.getElementById("totalCalories");
+        const clearLogButton = document.getElementById("clearLog");
+
+        let totalCalories = 0;
+
+        function updateUI() {
+            totalCaloriesElement.textContent = totalCalories;
+        }
+
+        function addFoodItem() {
+            const foodName = foodNameInput.value.trim();
+            const calories = parseInt(caloriesInput.value.trim());
+
+            if (foodName === "" || isNaN(calories)) {
+                alert("Please enter both food name and calories!");
+                return;
+            }
+
+            const listItem = document.createElement("li");
+            listItem.className = "bg-white rounded-md shadow-sm py-2 px-3 mb-2";
+            listItem.innerHTML = `<div class="flex justify-between items-center">
+                                    <div>
+                                        <span class="font-semibold text-gray-800">${foodName}</span>
+                                        <span class="text-gray-600 ml-2">(${calories} Cal)</span>
+                                    </div>
+                                    <button class="delete-btn bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded focus:outline-none focus:shadow-outline text-xs">Delete</button>
+                                 </div>`;
+            foodList.appendChild(listItem);
+
+            totalCalories += calories;
+            updateUI();
+
+            foodNameInput.value = "";
+            caloriesInput.value = "";
+        }
+
+        function deleteFoodItem(event) {
+            const listItem = event.target.closest("li"); // Find the parent <li>
+             if (!listItem) return; // safety check in case of unexpected event
+            const caloriesText = listItem.querySelector("span:last-child").textContent;
+            const calories = parseInt(caloriesText.replace(/[^0-9]/g, '')); // Extract number
+            totalCalories -= calories;
+            updateUI();
+            listItem.remove();
+        }
+
+        function clearFoodLog() {
+            foodList.innerHTML = "";
+            totalCalories = 0;
+            updateUI();
+        }
+
+        addFoodButton.addEventListener("click", addFoodItem);
+        foodList.addEventListener("click", (event) => {
+            if (event.target.classList.contains("delete-btn")) {
+                deleteFoodItem(event);
+            }
+        });
+        clearLogButton.addEventListener("click", clearFoodLog);
+    </script>
+</body>
+</html>
+
