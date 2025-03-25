@@ -175,6 +175,7 @@ function openViewer(file) {
     mdViewer.classList.remove('hidden');
     setTimeout(() => {
         mdViewer.classList.add('active');
+        mdContent.scrollTop = 0; // Scroll to top when opening viewer
     }, 10);
     
     // Apply syntax highlighting
@@ -230,31 +231,79 @@ function showToast(message) {
     }, 3000);
 }
 
-// Initialize the application
-async function init() {
-    // Load sample files from config
-    for (const sampleFile of SAMPLE_MD_FILES) {
-        try {
-            const response = await fetch(sampleFile);
-            if (!response.ok) throw new Error(`Failed to load ${sampleFile}`);
-            
-            const content = await response.text();
-            const title = extractTitle(content) || sampleFile.split('/').pop().replace('.md', '');
-            
+// Function to load a markdown file
+async function loadMdFile(filePath) {
+    try {
+        const response = await fetch(filePath);
+        if (!response.ok) throw new Error(`Failed to load ${filePath}`);
+        
+        const content = await response.text();
+        const title = extractTitle(content) || filePath.split('/').pop().replace('.md', '');
+        
+        // Check if file already exists in state
+        if (!state.files.some(file => file.name === filePath.split('/').pop())) {
             state.files.push({
                 id: generateId(),
-                name: sampleFile.split('/').pop(),
+                name: filePath.split('/').pop(),
                 title,
                 content,
                 size: formatFileSize(content.length),
                 date: new Date().toISOString()
             });
-        } catch (error) {
-            console.error(`Error loading sample file ${sampleFile}:`, error);
+            return true;
+        }
+        return false;
+    } catch (error) {
+        console.error(`Error loading file ${filePath}:`, error);
+        return false;
+    }
+}
+
+// Function to scan for markdown files
+async function scanForMdFiles() {
+    let newFilesAdded = false;
+    
+    try {
+        const response = await fetch('/api/files');
+        if (response.ok) {
+            const files = await response.json();
+            const mdFiles = files.filter(f => f.toLowerCase().endsWith('.md'));
+            
+            for (const file of mdFiles) {
+                const added = await loadMdFile(file);
+                if (added) newFilesAdded = true;
+            }
+        } else {
+            throw new Error('API request failed');
+        }
+    } catch (error) {
+        console.log('API for directory listing not available, falling back to config files');
+        // Load sample files from config if API fails
+        for (const sampleFile of SAMPLE_MD_FILES) {
+            const added = await loadMdFile(sampleFile);
+            if (added) newFilesAdded = true;
         }
     }
     
+    return newFilesAdded;
+}
+
+// Initialize the application
+async function init() {
+    // First scan for MD files
+    await scanForMdFiles();
+    
+    // Render initial library
     renderLibrary();
+    
+    // Second scan after a delay to catch any missed files
+    setTimeout(async () => {
+        const newFilesAdded = await scanForMdFiles();
+        if (newFilesAdded) {
+            renderLibrary();
+            showToast('Additional markdown files detected and loaded');
+        }
+    }, 2000);
 }
 
 // Start the app
