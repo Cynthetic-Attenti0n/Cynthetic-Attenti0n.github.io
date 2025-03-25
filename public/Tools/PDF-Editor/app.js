@@ -106,12 +106,15 @@ async function loadPDF(file) {
     
     try {
         const arrayBuffer = await file.arrayBuffer();
+        const uint8Array = new Uint8Array(arrayBuffer); // Convert to Uint8Array for PDFLib
+        
         const pdfDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
         
         pdfState.pdfDoc = pdfDoc;
-        pdfState.pdfBytes = arrayBuffer;
+        pdfState.pdfBytes = uint8Array; // Store as Uint8Array
         pdfState.totalPages = pdfDoc.numPages;
         pdfState.currentPage = 1;
+        pdfState.selectedPage = 1;
         pdfState.filename = file.name;
         pdfState.pageRotations = {};
         
@@ -267,11 +270,11 @@ async function deletePage() {
         const pdfDoc = await PDFDocument.load(pdfState.pdfBytes);
         pdfDoc.removePage(pageNum - 1); // PDFDocument is 0-indexed
         
-        // Get the modified PDF bytes
+        // Get the modified PDF bytes as Uint8Array
         const modifiedPdfBytes = await pdfDoc.save();
         
         // Update state with the new PDF
-        pdfState.pdfBytes = modifiedPdfBytes.buffer;
+        pdfState.pdfBytes = modifiedPdfBytes;
         
         // Reload the PDF with the updated bytes
         await reloadPDF();
@@ -444,4 +447,4 @@ function showLoading(message) {
 
 function hideLoading() {
     loadingOverlay.classList.add('hidden');
-}
+            }
