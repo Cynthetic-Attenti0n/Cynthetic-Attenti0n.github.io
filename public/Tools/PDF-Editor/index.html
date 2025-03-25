@@ -1,0 +1,126 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Editor</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Load libraries directly before our app code -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.4.120/build/pdf.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>PDF Editor</h1>
+        </header>
+        
+        <div class="toolbar">
+            <button id="upload-btn" class="btn primary">
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                    <path d="M9 16h6v-6h4l-7-7-7 7h4v6zm-4 2h14v2H5v-2z"></path>
+                </svg>
+                Upload PDF
+            </button>
+            <input type="file" id="pdf-upload" accept=".pdf" style="display: none;">
+            
+            <div class="tool-group hidden" id="edit-tools">
+                <button id="save-btn" class="btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"></path>
+                    </svg>
+                    Save PDF
+                </button>
+                <button id="rotate-left-btn" class="btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M7.11 8.53L5.7 7.11C4.8 8.27 4.24 9.61 4.07 11h2.02c.14-.87.49-1.72 1.02-2.47zM6.09 13H4.07c.17 1.39.72 2.73 1.62 3.89l1.41-1.42c-.52-.75-.87-1.59-1.01-2.47zm1.01 5.32c1.16.9 2.51 1.44 3.9 1.61V17.9c-.87-.15-1.71-.49-2.46-1.03L7.1 18.32zM13 4.07V1L8.45 5.55 13 10V6.09c2.84.48 5 2.94 5 5.91s-2.16 5.43-5 5.91v2.02c3.95-.49 7-3.85 7-7.93s-3.05-7.44-7-7.93z"></path>
+                    </svg>
+                    Rotate Left
+                </button>
+                <button id="rotate-right-btn" class="btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M15.55 5.55L11 1v3.07C7.06 4.56 4 7.92 4 12s3.05 7.44 7 7.93v-2.02c-2.84-.48-5-2.94-5-5.91s2.16-5.43 5-5.91V10l4.55-4.45zM19.93 11c-.17-1.39-.72-2.73-1.62-3.89l-1.42 1.42c.54.75.88 1.6 1.02 2.47h2.02zM13 17.9v2.02c1.39-.17 2.74-.71 3.9-1.61l-1.44-1.44c-.75.54-1.59.89-2.46 1.03zm3.89-2.42l1.42 1.41c.9-1.16 1.45-2.5 1.62-3.89h-2.02c-.14.87-.48 1.72-1.02 2.48z"></path>
+                    </svg>
+                    Rotate Right
+                </button>
+                <button id="delete-page-btn" class="btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"></path>
+                    </svg>
+                    Delete Page
+                </button>
+                <button id="split-pdf-btn" class="btn">
+                    <svg viewBox="0 0 24 24" width="16" height="16">
+                        <path d="M8 21v-2H3V5h5V3h8v2h5v14h-5v2H8zm8-4h5V7h-5v10zm-2-10H8v10h6V7z"></path>
+                    </svg>
+                    Split PDF
+                </button>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <div class="pdf-drop-area" id="drop-area">
+                <div class="drop-message">
+                    <svg viewBox="0 0 24 24" width="48" height="48">
+                        <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path>
+                    </svg>
+                    <p>Drag & drop your PDF file here or click to browse</p>
+                </div>
+            </div>
+            
+            <div class="pdf-editor hidden" id="pdf-editor">
+                <div class="pages-container" id="pages-container">
+                    <!-- Page thumbnails will be added here -->
+                </div>
+                <div class="pdf-preview">
+                    <canvas id="pdf-canvas"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <div class="page-navigation hidden" id="page-navigation">
+            <button id="prev-page" class="btn nav-btn">
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path>
+                </svg>
+                Previous
+            </button>
+            <div class="page-info">
+                Page <span id="current-page">1</span> of <span id="total-pages">1</span>
+            </div>
+            <button id="next-page" class="btn nav-btn">
+                Next
+                <svg viewBox="0 0 24 24" width="16" height="16">
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <div id="split-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Split PDF</h2>
+                    <button id="close-split-modal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Select pages to extract into a new PDF:</p>
+                    <div class="page-selection" id="split-page-selection">
+                        <!-- Pages will be added here -->
+                    </div>
+                    <div class="modal-actions">
+                        <button id="extract-pages-btn" class="btn primary">Extract Selected Pages</button>
+                        <button id="cancel-split-btn" class="btn">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="spinner"></div>
+            <p id="loading-text">Processing...</p>
+        </div>
+    </div>
+    
+    <script type="module" src="config.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
