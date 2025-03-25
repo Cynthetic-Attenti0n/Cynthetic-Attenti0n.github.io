@@ -2,13 +2,14 @@
 
 // Sample Markdown files to load on startup
 export const SAMPLE_MD_FILES = [
-    'GARM/RoB/CASP_Qualitative_Checklist.md',
-    'GARM/RoB/Newcastle-Ottawa_Scale.md',
-    'GARM/RoB/PROBAST_Tool.md',
-    'GARM/RoB/QUADAS-2_Tool.md',
-    'GARM/RoB/ROBINS-I_Tool.md',
-    'GARM/RoB/ROBIS_Tool (1).md',
-    'GARM/RoB/RoB-2_Tool (1).md'
+    'PROBAST_Tool.md',
+    'RoB-2_Tool (1).md',
+    'ROBIS_Tool (1).md',
+    'CASP_Qualitative_Checklist.md',
+    'Newcastle-Ottawa_Scale.md',
+    'PROBAST_Tool.md',
+    'QUADAS-2_Tool.md',
+    'ROBINS-I_Tool.md'
 ];
 
 // Maximum preview length for MD card
