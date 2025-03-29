@@ -1,0 +1,100 @@
+/* theme.css - Light and Dark mode variables */
+
+:root {
+    /* Light Theme */
+    --primary-color-light: #6a11cb;
+    --secondary-color-light: #2575fc;
+    --accent-color-light: #ff6b6b;
+    --background-color-light: #f0f2f5;
+    --text-color-light: #333;
+    --card-background-light: #ffffff;
+    --card-border-light: transparent;
+    --input-bg-light: #e9ecef;
+    --input-border-light: #ced4da;
+    --button-text-light: #ffffff;
+    --header-text-light: #ffffff;
+    --footer-text-light: #aaa;
+    --shadow-light: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --shadow-hover-light: 0 15px 35px rgba(0, 0, 0, 0.15);
+    --gradient-primary-light: linear-gradient(135deg, var(--primary-color-light), var(--secondary-color-light));
+    --gradient-accent-light: linear-gradient(135deg, #ff8a8a, var(--accent-color-light));
+    --modal-bg-light: rgba(255, 255, 255, 0.85); 
+    --modal-content-bg-light: #ffffff;
+    --modal-shadow-light: 0 5px 15px rgba(0, 0, 0, 0.2);
+    --primary-color-light-rgb: 106, 17, 203;
+    --secondary-color-light-rgb: 37, 117, 252;
+
+    /* Dark Theme */
+    --primary-color-dark: #9b59b6; 
+    --secondary-color-dark: #3498db; 
+    --accent-color-dark: #e74c3c; 
+    --background-color-dark: #1a1a2e; 
+    --text-color-dark: #e0e0e0; 
+    --card-background-dark: #2c2c3e; 
+    --card-border-dark: #44445a;
+    --input-bg-dark: #3a3a4f;
+    --input-border-dark: #55556f;
+    --button-text-dark: #ffffff;
+    --header-text-dark: #ffffff;
+    --footer-text-dark: #888;
+    --shadow-dark: 0 10px 30px rgba(0, 0, 0, 0.3);
+    --shadow-hover-dark: 0 15px 35px rgba(0, 0, 0, 0.4);
+    --gradient-primary-dark: linear-gradient(135deg, var(--primary-color-dark), var(--secondary-color-dark));
+    --gradient-accent-dark: linear-gradient(135deg, #ff6b6b, var(--accent-color-dark));
+    --modal-bg-dark: rgba(0, 0, 0, 0.7);
+    --modal-content-bg-dark: #2c2c3e;
+    --modal-shadow-dark: 0 5px 20px rgba(0, 0, 0, 0.5);
+    --primary-color-dark-rgb: 155, 89, 182;
+    --secondary-color-dark-rgb: 52, 152, 219;
+}
+
+/* Apply light mode by default */
+:root {
+    --primary-color: var(--primary-color-light);
+    --secondary-color: var(--secondary-color-light);
+    --accent-color: var(--accent-color-light);
+    --background-color: var(--background-color-light);
+    --text-color: var(--text-color-light);
+    --card-background: var(--card-background-light);
+    --card-border: var(--card-border-light);
+    --input-bg: var(--input-bg-light);
+    --input-border: var(--input-border-light);
+    --button-text: var(--button-text-light);
+    --header-text: var(--header-text-light);
+    --footer-text: var(--footer-text-light);
+    --shadow: var(--shadow-light);
+    --shadow-hover: var(--shadow-hover-light);
+    --gradient-primary: var(--gradient-primary-light);
+    --gradient-accent: var(--gradient-accent-light);
+    --modal-bg: var(--modal-bg-light);
+    --modal-content-bg: var(--modal-content-bg-light);
+    --modal-shadow: var(--modal-shadow-light);
+    /* Set default RGB based on light mode */
+    --primary-color-rgb: var(--primary-color-light-rgb);
+    --secondary-color-rgb: var(--secondary-color-light-rgb);
+}
+
+body.dark-mode {
+    --primary-color: var(--primary-color-dark);
+    --secondary-color: var(--secondary-color-dark);
+    --accent-color: var(--accent-color-dark);
+    --background-color: var(--background-color-dark);
+    --text-color: var(--text-color-dark);
+    --card-background: var(--card-background-dark);
+    --card-border: var(--card-border-dark);
+    --input-bg: var(--input-bg-dark);
+    --input-border: var(--input-border-dark);
+    --button-text: var(--button-text-dark);
+    --header-text: var(--header-text-dark);
+    --footer-text: var(--footer-text-dark);
+    --shadow: var(--shadow-dark);
+    --shadow-hover: var(--shadow-hover-dark);
+    --gradient-primary: var(--gradient-primary-dark);
+    --gradient-accent: var(--gradient-accent-dark);
+    --modal-bg: var(--modal-bg-dark);
+    --modal-content-bg: var(--modal-content-bg-dark);
+    --modal-shadow: var(--modal-shadow-dark);
+    /* Set RGB based on dark mode */
+    --primary-color-rgb: var(--primary-color-dark-rgb);
+    --secondary-color-rgb: var(--secondary-color-dark-rgb);
+}

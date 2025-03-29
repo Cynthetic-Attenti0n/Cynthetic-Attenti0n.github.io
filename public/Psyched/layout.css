@@ -1,0 +1,63 @@
+/* layout.css - Styles for major layout containers like header, main, footer, app */
+
+#app {
+    width: 100%;
+    max-width: 600px; /* Typical mobile width */
+    display: flex;
+    flex-direction: column;
+    gap: 25px; /* Increased gap */
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 30px; /* More padding */
+    background: var(--gradient-primary);
+    color: var(--header-text);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    opacity: 0; /* Initial state for animation */
+    transform: translateY(-20px);
+}
+
+header h1 {
+    margin-bottom: 0px; /* Override base */
+}
+
+header p {
+    font-size: 1rem;
+    font-weight: 300;
+    opacity: 0.9;
+    margin-bottom: 0; /* Override base */
+}
+
+main {
+    display: flex; /* Using flex for simpler direct child control */
+    flex-direction: column;
+    gap: 25px; /* Match app gap */
+    width: 100%;
+    position: relative; /* Needed for absolute positioning of cards */
+    min-height: 450px; /* Ensure main has height for transitions */
+    overflow: hidden; /* Clip content during transition */
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    color: var(--footer-text);
+    font-size: 0.9rem;
+    opacity: 0; /* Initial state for animation */
+    transition: color var(--transition-speed) ease;
+}
+
+
+/* Media Query for larger mobile devices / tablets */
+@media (min-width: 768px) {
+    #app {
+        max-width: 700px;
+    }
+    header {
+        padding: 30px 40px;
+    }
+}

@@ -1,0 +1,86 @@
+/* base.css - Basic styles, resets, typography */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap');
+
+:root {
+    /* Light Theme Vars defined in theme.css */
+    /* Dark Theme Vars defined in theme.css */
+
+    /* Default to light mode values initially - theme.css will handle switching */
+    --primary-color: #6a11cb;
+    --secondary-color: #2575fc;
+    --accent-color: #ff6b6b;
+    --background-color: #f0f2f5;
+    --text-color: #333;
+    --card-background: #ffffff;
+    --card-border: transparent;
+    --input-bg: #e9ecef;
+    --input-border: #ced4da;
+    --button-text: #ffffff;
+    --header-text: #ffffff;
+    --footer-text: #aaa;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 15px 35px rgba(0, 0, 0, 0.15);
+    --gradient-primary: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    --gradient-accent: linear-gradient(135deg, #ff8a8a, var(--accent-color));
+    --modal-bg: rgba(255, 255, 255, 0.95);
+    --modal-content-bg: #ffffff;
+    --modal-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    /* RGB versions will be set by JS */
+    --primary-color-rgb: 106, 17, 203;
+    --secondary-color-rgb: 37, 117, 252;
+
+    --border-radius: 15px;
+    --transition-speed: 0.4s; /* Sync with config.js if necessary */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the start for scrolling */
+    min-height: 100vh;
+    padding: 20px;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    transition: background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+h1 { font-size: 2.2rem; }
+h2 { font-size: 1.8rem; margin-bottom: 15px; color: var(--primary-color); transition: color var(--transition-speed) ease; }
+h3 { font-size: 1.6rem; margin-bottom: 15px; color: var(--primary-color); }
+
+p {
+    margin-bottom: 25px;
+    font-size: 1.05rem;
+    opacity: 0.9;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+/* Media Query for larger mobile devices / tablets */
+@media (min-width: 768px) {
+    h1 { font-size: 2.5rem; }
+    h2 { font-size: 2rem; }
+}

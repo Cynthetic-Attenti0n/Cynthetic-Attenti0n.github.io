@@ -1,0 +1,602 @@
+/* components.css - Styles for reusable components like cards, buttons, inputs, modals, etc. */
+
+/* --- Card Base Styles --- */
+.card {
+    background-color: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 30px 35px;
+    box-shadow: var(--shadow);
+    transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+    position: absolute; /* Needed for transitions */
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    display: flex; /* Use flex for internal layout */
+    flex-direction: column; /* Stack content vertically */
+}
+
+.card.visible {
+    opacity: 1;
+    transform: translate(0, 0);
+    position: relative; /* Become part of the flow when visible */
+    pointer-events: auto;
+    visibility: visible;
+}
+
+.card.hidden {
+    /* Styles applied by GSAP during transition */
+    /* position: absolute; */
+    /* opacity: 0; */
+    /* pointer-events: none; */
+    /* visibility: hidden; */
+}
+
+/* --- Button Styles --- */
+button {
+    background: var(--gradient-accent);
+    color: var(--button-text);
+    border: none;
+    padding: 14px 28px;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, opacity 0.3s ease;
+    display: block;
+    width: fit-content;
+    margin: 25px auto 0;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+    letter-spacing: 0.5px;
+}
+
+button:hover:not(:disabled):not(.disabled) {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 7px 18px rgba(255, 107, 107, 0.4);
+}
+button:active:not(:disabled):not(.disabled) {
+    transform: translateY(-1px) scale(1);
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+button:disabled, button.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+    /* Ensure gradient doesn't look odd when disabled */
+    background: var(--gradient-accent) !important; /* Override potential hover states */
+}
+
+
+button.secondary {
+    background: none;
+    border: 2px solid var(--secondary-color);
+    color: var(--secondary-color);
+    box-shadow: none;
+    margin-top: 15px;
+    padding: 12px 26px;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease, border-color var(--transition-speed) ease, opacity 0.3s ease;
+}
+
+button.secondary:hover:not(:disabled):not(.disabled) {
+    background-color: rgba(var(--secondary-color-rgb), 0.1);
+    transform: translateY(-2px);
+    box-shadow: none;
+}
+button.secondary:active:not(:disabled):not(.disabled) {
+    transform: translateY(0);
+}
+
+button.secondary:disabled, button.secondary.disabled {
+    opacity: 0.5;
+    background-color: transparent !important;
+    border-color: var(--secondary-color) !important;
+    color: var(--secondary-color) !important;
+}
+
+
+/* --- Form Input Styles --- */
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.8;
+}
+
+input[type="text"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--text-color);
+    transition: border-color 0.3s ease, background-color var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(var(--primary-color-rgb), 0.2);
+}
+
+/* --- Login Specific --- */
+#loginError {
+    color: var(--accent-color);
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.3s ease, max-height 0.3s ease, margin-top 0.3s ease;
+}
+
+#loginError:not(.hidden) {
+    opacity: 1;
+    max-height: 30px; /* Adjust as needed */
+    margin-top: 15px;
+}
+
+/* --- Assessment List Grid --- */
+#assessmentListContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); /* Responsive columns */
+    gap: 15px; /* Gap between cards */
+    margin-top: 20px;
+    list-style: none;
+    padding: 0;
+}
+
+.assessment-card {
+    background-color: var(--card-background);
+    border: 1px solid var(--card-border);
+    border-radius: var(--border-radius);
+    padding: 20px; /* Slightly less padding for smaller cards */
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background-color var(--transition-speed) ease, border-color var(--transition-speed) ease;
+    box-shadow: var(--shadow);
+    position: relative; /* For placeholder badge */
+    overflow: hidden; /* Clip potential overflow */
+    display: flex; /* Use flexbox for content alignment */
+    flex-direction: column;
+    justify-content: space-between; /* Push content apart */
+    min-height: 180px; /* Give cards some minimum height */
+}
+
+.assessment-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: var(--box-shadow-hover);
+    border-color: var(--primary-color);
+}
+
+.assessment-card h3 {
+    font-size: 1.2rem; /* Smaller title for cards */
+    margin-bottom: 8px;
+    color: var(--primary-color);
+    flex-shrink: 0; /* Prevent title from shrinking */
+}
+
+.assessment-card p {
+    font-size: 0.9rem;
+    opacity: 0.7;
+    margin-bottom: 10px;
+    flex-grow: 1; /* Allow description to take available space */
+    line-height: 1.4;
+}
+
+.assessment-card.placeholder {
+    opacity: 0.7;
+    cursor: default; /* Indicate non-interactive */
+}
+.assessment-card.placeholder:hover {
+     transform: none; /* No hover effect */
+     box-shadow: var(--shadow);
+     border-color: var(--card-border);
+}
+
+
+.assessment-card.placeholder::after {
+    content: 'Coming Soon';
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 0.7rem;
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 2px 6px;
+    border-radius: 5px;
+    opacity: 0.9;
+}
+
+/* --- Assessment View Specific --- */
+#assessmentView #assessmentTitle {
+    text-align: center; /* Center the title */
+    margin-bottom: 15px; /* Space below title */
+}
+
+#assessmentView #assessmentContent {
+    min-height: 180px; /* Ensure space for content */
+    margin-top: 15px;
+    margin-bottom: 25px;
+    width: 100%; /* Take full width */
+}
+#assessmentView .question-number {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-color);
+    opacity: 0.6;
+    margin-bottom: 10px;
+    text-align: center;
+}
+#assessmentView .question-text {
+    font-size: 1.2rem; /* Make question text larger */
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 25px; /* More space before options */
+    line-height: 1.5;
+}
+
+#assessmentView .navigation-buttons {
+    display: flex;
+    justify-content: space-between; /* Space out Back and Next */
+    align-items: center;
+    margin-top: 20px;
+    width: 100%; /* Take full width */
+}
+
+#assessmentView .navigation-buttons button {
+    margin: 0; /* Remove auto margins */
+    min-width: 100px; /* Give buttons some minimum width */
+    text-align: center;
+}
+
+#assessmentView #backButton {
+     /* Styles handled by secondary button class */
+     transition: opacity 0.3s ease, transform 0.3s ease; /* Add opacity transition */
+     margin-right: 10px; /* Add some space between buttons */
+}
+
+
+/* --- Progress Bar --- */
+#assessmentProgressContainer {
+    width: 100%;
+    height: 8px;
+    background-color: var(--input-bg);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    transition: background-color var(--transition-speed) ease;
+}
+
+#progressBar {
+    height: 100%;
+    width: 0%; /* Initial width */
+    background: var(--gradient-primary);
+    border-radius: 4px;
+    transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1); /* Smoother ease */
+}
+
+/* --- Results Specific --- */
+#resultsContent {
+    min-height: 150px;
+    text-align: center;
+    margin-top: 20px; /* Add space above results text */
+}
+#resultsContent p {
+    font-size: 1.1rem;
+    margin-bottom: 20px; /* Slightly less margin */
+    line-height: 1.7;
+}
+#resultsContent strong {
+    color: var(--primary-color);
+}
+
+/* --- Likert Scale --- */
+.likert-scale {
+    display: flex;
+    flex-direction: column; /* Stack options vertically */
+    gap: 12px; /* Space between options */
+    margin-top: 20px;
+    align-items: stretch; /* Make labels stretch */
+}
+
+.likert-option { /* Style the label container */
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 12px 15px; /* More padding */
+    border-radius: 8px;
+    border: 1px solid var(--input-border);
+    background-color: var(--input-bg);
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+.likert-option:hover {
+    border-color: var(--secondary-color);
+    background-color: rgba(var(--secondary-color-rgb), 0.05);
+}
+
+.likert-option input[type="radio"] {
+    margin-right: 15px; /* More space */
+    accent-color: var(--primary-color); /* Color the radio button circle */
+    cursor: pointer;
+    width: 18px; /* Slightly smaller radio */
+    height: 18px;
+    flex-shrink: 0;
+}
+.likert-option span { /* Target the text span */
+    flex-grow: 1; /* Allow text to take space */
+}
+
+.likert-option.selected { /* Style for selected label */
+    border-color: var(--primary-color);
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    font-weight: 500; /* Make text slightly bolder */
+}
+.likert-option.selected span {
+    color: var(--primary-color);
+}
+
+
+/* --- Multiple Choice Options --- */
+.multiple-choice-options {
+    display: grid;
+    /* Keep single column on small screens */
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.option-button {
+    background: var(--card-background);
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+    padding: 15px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+    text-align: center;
+    width: 100%;
+    margin: 0; /* Reset button margin */
+    box-shadow: none;
+    font-weight: 500;
+}
+
+.option-button:hover:not(:disabled):not(.selected) { /* Don't apply hover if selected */
+    background-color: rgba(var(--secondary-color-rgb), 0.1);
+    transform: translateY(-2px);
+    border-color: var(--secondary-color);
+    color: var(--secondary-color);
+}
+
+.option-button.selected {
+    background-color: var(--secondary-color);
+    color: var(--button-text);
+    border-color: var(--secondary-color);
+    font-weight: 700;
+    transform: none; /* Reset hover transform */
+    box-shadow: 0 2px 8px rgba(var(--secondary-color-rgb), 0.3);
+}
+.option-button.selected:hover {
+    /* Prevent hover style change when selected */
+     background-color: var(--secondary-color);
+     color: var(--button-text);
+     border-color: var(--secondary-color);
+     transform: none;
+}
+
+
+/* --- Dark Mode Toggle Switch --- */
+.theme-switcher {
+    position: relative;
+}
+
+.switch-label {
+    cursor: pointer;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+    position: relative;
+}
+
+.switch-label input[type="checkbox"] {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: .4s;
+    border-radius: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 4px;
+}
+
+.slider::before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.switch-label input[type="checkbox"]:checked + .slider {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+.switch-label input[type="checkbox"]:checked + .slider::before {
+    transform: translateX(24px);
+}
+
+.slider svg {
+    width: 16px;
+    height: 16px;
+    transition: opacity 0.4s ease;
+    color: #f0f2f5;
+}
+
+.sun-icon { opacity: 1; }
+.moon-icon { opacity: 0.5; }
+
+.switch-label input[type="checkbox"]:checked + .slider .sun-icon { opacity: 0.5; }
+.switch-label input[type="checkbox"]:checked + .slider .moon-icon { opacity: 1; }
+
+/* --- Modal Styles --- */
+.modal {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--modal-bg);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-speed) ease, visibility var(--transition-speed) ease;
+    backdrop-filter: blur(5px);
+    padding: 20px; /* Add padding for smaller screens */
+}
+
+.modal:not(.hidden) {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: var(--modal-content-bg);
+    padding: 30px 40px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--modal-shadow);
+    text-align: center;
+    max-width: 90%;
+    width: 400px;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform var(--transition-speed) cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color var(--transition-speed) ease;
+}
+
+.modal:not(.hidden) .modal-content {
+    transform: scale(1);
+}
+
+.modal-content h3 {
+    /* Inherit base styles */
+     margin-bottom: 15px; /* Add space */
+     color: var(--primary-color); /* Match card title color */
+}
+
+.modal-content p {
+    color: var(--text-color);
+    opacity: 0.9;
+    margin-bottom: 20px; /* Space before icon */
+}
+
+.modal-icon {
+    color: var(--secondary-color);
+    margin: 15px auto 0; /* Center horizontally */
+    width: 40px;
+    height: 40px;
+    display: block; /* Ensure it takes block space */
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: var(--text-color);
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    background: none; /* Ensure no button styles apply */
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: auto; /* Override button width */
+    box-shadow: none; /* Override button shadow */
+}
+
+
+.close-button:hover {
+    opacity: 1;
+    transform: rotate(90deg) scale(1); /* Reset button transforms */
+    box-shadow: none;
+}
+
+
+/* --- Media Queries for Components --- */
+@media (min-width: 768px) {
+    .card { padding: 40px 45px; }
+    button { padding: 16px 32px; font-size: 1.1rem; }
+    button.secondary { padding: 14px 30px; }
+
+    #assessmentListContainer {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Larger min size */
+        gap: 20px;
+    }
+
+    .assessment-card { padding: 25px; min-height: 200px; }
+    .assessment-card h3 { font-size: 1.3rem; }
+    .assessment-card p { font-size: 0.95rem; }
+
+
+    .likert-scale {
+        /* Can switch back to row if desired, but column often works well on tablet too */
+        /* flex-direction: row; */
+        /* justify-content: space-around; */
+        /* flex-wrap: wrap; */
+        gap: 15px;
+        align-items: stretch; /* Ensure labels stretch */
+    }
+
+    .multiple-choice-options {
+         /* Change to 2 columns on larger screens */
+         grid-template-columns: repeat(2, 1fr);
+         gap: 15px;
+    }
+
+     .option-button {
+        padding: 18px 25px;
+    }
+
+    #assessmentView .question-text {
+        font-size: 1.4rem; /* Larger question text */
+    }
+
+    #assessmentView .navigation-buttons button {
+        min-width: 120px; /* Wider buttons */
+    }
+}
