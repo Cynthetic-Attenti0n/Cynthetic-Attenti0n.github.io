@@ -1,1 +1,116 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Psyched</title>
+    <link rel="stylesheet" href="base.css">
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="layout.css">
+    <link rel="stylesheet" href="components.css">
+    <link rel="stylesheet" href="animations.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <script type="importmap">
+      {
+        "imports": {
+          "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/index.js",
+          "gsap/ScrollTrigger": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/ScrollTrigger.js",
+          "gsap/Flip": "https://cdn.jsdelivr.net/npm/gsap@3.12.5/Flip.js",
+          "./config.js": "./config.js",
+          "./state.js": "./state.js",
+          "./ui.js": "./ui.js",
+          "./animations.js": "./animations.js",
+          "./data.js": "./data.js"
+        }
+      }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <header>
+            <div class="header-content">
+                <h1>Psyched</h1>
+                <p>Explore your mind.</p>
+            </div>
+            <div class="theme-switcher">
+                <label for="themeToggle" class="switch-label">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="slider">
+                        <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.106a.75.75 0 0 1 1.06-1.06l1.591 1.591a.75.75 0 1 1-1.06 1.06l-1.591-1.591ZM21.75 12a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75ZM17.894 18.894a.75.75 0 0 1 1.06 1.06l-1.591 1.591a.75.75 0 1 1-1.06-1.06l1.591-1.591ZM12 17.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75ZM6.106 18.894a.75.75 0 0 1 1.06 1.06l-1.591 1.591a.75.75 0 0 1-1.06-1.06l1.591-1.591ZM2.25 12a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0v-2.25a.75.75 0 0 1 .75-.75ZM6.106 6.106a.75.75 0 0 1 1.06-1.06l1.591 1.591a.75.75 0 1 1-1.06 1.06L6.106 6.106Z"/></svg>
+                         <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69a.75.75 0 0 1 .981.981A10.503 10.503 0 0 1 18 19.5a10.5 10.5 0 0 1-10.5-10.5A10.503 10.503 0 0 1 9.528 1.718Z" clip-rule="evenodd"/></svg>
+                    </span>
+                </label>
+            </div>
+        </header>
+        <main>
+            <section id="login" class="card">
+                <h2>Login</h2>
+                <p>Enter credentials to access Psyched.</p>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <p id="loginError" class="error-message hidden">Invalid username or password.</p>
+                <button id="loginButton">Login</button>
+            </section>
 
+            <section id="intro" class="card hidden">
+                <h2>Welcome</h2>
+                <p>Discover insights about yourself through beautifully crafted psychometric assessments.</p>
+                <button id="startButton">Get Started</button>
+            </section>
+            <section id="assessments" class="card hidden">
+                <h2>Assessments</h2>
+                 <p>Select an assessment to begin your journey of self-discovery.</p>
+                <div id="assessmentListContainer">
+                    <!-- Assessments will be loaded here dynamically -->
+                </div>
+                 <button id="backToIntroButton" class="secondary">Back</button>
+            </section>
+             <section id="assessmentView" class="card hidden">
+                <h2 id="assessmentTitle">Assessment Title</h2>
+                <div id="assessmentProgressContainer">
+                    <div id="progressBar"></div>
+                </div>
+                <div id="assessmentContent">
+                    <!-- Assessment content will load here -->
+                </div>
+                <div class="navigation-buttons">
+                    <button id="backButton" class="secondary">Back</button>
+                    <button id="nextButton">Next</button>
+                 </div>
+            </section>
+            <section id="results" class="card hidden">
+                 <h2>Results</h2>
+                 <div id="resultsContent">
+                     <!-- Results will load here -->
+                 </div>
+                 <button id="restartButton">Take Another Assessment</button>
+             </section>
+        </main>
+
+        <!-- Modal for "Coming Soon" -->
+        <div id="modal" class="modal hidden">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <h3 id="modalTitle">Coming Soon!</h3>
+                <p id="modalMessage">This assessment is under development. Check back later!</p>
+                <svg class="modal-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="48" height="48">
+                  <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25ZM12.75 6a.75.75 0 0 0-1.5 0v6c0 .414.336.75.75.75h4.5a.75.75 0 0 0 0-1.5h-3.75V6ZM12 15.75a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z" clip-rule="evenodd" />
+                </svg>
+            </div>
+        </div>
+
+
+        <footer>
+            <p>&copy; 2024 Psyched</p>
+        </footer>
+    </div>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
