@@ -1,1 +1,53 @@
-
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Goon of Fortune</title>
+  <link rel="stylesheet" href="styles.css">
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/nipplejs@0.10.1/dist/nipplejs.min.js"></script>
+</head>
+<body>
+  <div id="game-container">
+    <div class="crosshair"></div>
+    <div id="ui-container">
+      <div id="score-display">Tribute Points: <span id="points">0</span></div>
+      <div id="message-display"></div>
+      <div id="puzzle-controls">
+        <button id="guess-letter">GUESS LETTER</button>
+        <button id="solve-puzzle">SOLVE PUZZLE</button>
+      </div>
+    </div>
+    <div id="character-selection">
+      <h2>Choose Your Character</h2>
+      <div class="character-options">
+        <div class="character-option" data-model="default">
+          <div class="character-preview default-preview"></div>
+          <span>Default</span>
+        </div>
+        <div class="character-option" data-model="spongebob">
+          <div class="character-preview spongebob-preview"></div>
+          <span>SpongeBob</span>
+        </div>
+        <div class="character-option" data-model="patrick">
+          <div class="character-preview patrick-preview"></div>
+          <span>Patrick</span>
+        </div>
+        <div class="character-option" data-model="steve">
+          <div class="character-preview steve-preview"></div>
+          <span>Steve</span>
+        </div>
+      </div>
+      <button id="start-game">START GAME</button>
+    </div>
+  </div>
+  <script src="app.js" type="module"></script>
+</body>
+</html>
