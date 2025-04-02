@@ -1,1 +1,63 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>John Lemon</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: #f0f0f0;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+    }
+    canvas {
+      width: 100vw;
+      height: 100vh;
+    }
+    .controls {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 100;
+      display: flex;
+      gap: 10px;
+    }
 
+    .controls button {
+      padding: 8px 16px;
+      background: #2c3e50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .controls button:hover {
+      background: #34495e;
+    }
+
+    #imageInput {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="controls">
+    <button id="uploadBtn">Upload Image</button>
+    <button id="spinBtn">Spin!</button>
+    <input type="file" id="imageInput" accept="image/*">
+  </div>
+  <script type="importmap">
+    {
+      "imports": {
+        "matter-js": "https://cdn.skypack.dev/matter-js"
+      }
+    }
+  </script>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
