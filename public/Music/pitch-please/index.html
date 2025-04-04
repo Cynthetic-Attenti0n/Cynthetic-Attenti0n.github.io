@@ -1,1 +1,151 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitch Please - Music Player</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="importmap">
+        {
+            "imports": {
+                "gsap": "https://cdn.jsdelivr.net/npm/gsap@3.12.2/+esm",
+                "wavesurfer": "https://unpkg.com/wavesurfer.js@7.3.2/dist/wavesurfer.esm.js",
+                "lottie": "https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/+esm"
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="theme-toggle">
+                <div class="toggle-moon">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M12.3 3.9c.4-.2.6-.7.5-1.1s-.6-.8-1.1-.8C6.8 2.1 2.6 6 2 11.1c-.4 3.8.9 7.3 3.6 9.9 2.7 2.6 6.3 3.8 9.9 3.4h.8c.4-.1.7-.4.8-.8.1-.4 0-.8-.3-1.1-.2-.2-.4-.3-.7-.4-3-.3-5.7-2-7.1-4.5-1.3-2.5-1.3-5.4-.1-8 1.2-2.5 3.6-4.3 6.4-4.7zM8.3 14.2c-.5.9-.2 2.1.7 2.6.9.5 2.1.2 2.6-.7.5-.9.2-2.1-.7-2.6s-2.1-.2-2.6.7z"/>
+                    </svg>
+                </div>
+                <div class="toggle-sun">
+                    <svg viewBox="0 0 24 24" width="24" height="24">
+                        <path d="M12 7c-2.8 0-5 2.2-5 5s2.2 5 5 5 5-2.2 5-5-2.2-5-5-5zM2 13h2c.6 0 1-.4 1-1s-.4-1-1-1H2c-.6 0-1 .4-1 1s.4 1 1 1zM20 13h2c.6 0 1-.4 1-1s-.4-1-1-1h-2c-.6 0-1 .4-1 1s.4 1 1 1zM11 2v2c0 .6.4 1 1 1s1-.4 1-1V2c0-.6-.4-1-1-1s-1 .4-1 1zM11 20v2c0 .6.4 1 1 1s1-.4 1-1v-2c0-.6-.4-1-1-1s-1 .4-1 1zM5.6 7.6l-1.4-1.4c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l1.4 1.4c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4zM19.8 19.8l-1.4-1.4c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l1.4 1.4c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4zM19.8 5.6c.4-.4.4-1 0-1.4s-1-.4-1.4 0l-1.4 1.4c-.4.4-.4 1 0 1.4.2.2.5.3.7.3s.5-.1.7-.3l1.4-1.4zM5.6 19.8l1.4-1.4c.4-.4.4-1 0-1.4s-1-.4-1.4 0l-1.4 1.4c-.4.4-.4 1 0 1.4.2.2.5.3.7.3s.5-.1.7-.3z"/>
+                    </svg>
+                </div>
+            </div>
+            <h1>Pitch Please</h1>
+            <div class="upload-button">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z"></path>
+                </svg>
+            </div>
+            <input type="file" id="upload-input" accept="audio/*" multiple hidden>
+        </header>
 
+        <main class="player-container">
+            <div class="now-playing-view">
+                <div class="album-art-container">
+                    <div class="album-art">
+                        <svg viewBox="0 0 200 200" width="100%" height="100%">
+                            <defs>
+                                <linearGradient id="album-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#8a2be2" />
+                                    <stop offset="100%" stop-color="#4169e1" />
+                                </linearGradient>
+                            </defs>
+                            <rect width="200" height="200" fill="url(#album-gradient)" />
+                            <circle cx="100" cy="100" r="30" fill="#fff" opacity="0.2" />
+                            <circle cx="100" cy="100" r="10" fill="#fff" opacity="0.3" />
+                        </svg>
+                    </div>
+                    <div class="equalizer-animation" id="equalizer-container"></div>
+                </div>
+                <div class="track-info">
+                    <h2 class="track-title">Midnight Serenade</h2>
+                    <p class="artist-name">Lunar Echoes</p>
+                </div>
+                <div class="waveform-container">
+                    <div id="waveform"></div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                        <div class="progress-handle"></div>
+                    </div>
+                    <div class="time-info">
+                        <span class="current-time">1:23</span>
+                        <span class="total-time">3:45</span>
+                    </div>
+                </div>
+                <div class="controls">
+                    <button class="control-btn shuffle-btn">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm0 10L20 19.5V14h-5.5l2.04 2.04L14.5 14z"></path>
+                        </svg>
+                    </button>
+                    <button class="control-btn prev-btn">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M6 6h2v12H6zm3.5 6l8.5 6V6l-8.5 6z"></path>
+                        </svg>
+                    </button>
+                    <button class="control-btn play-btn">
+                        <svg class="play-icon" viewBox="0 0 24 24" width="36" height="36">
+                            <path d="M8 5v14l11-7L8 5z"></path>
+                        </svg>
+                        <svg class="pause-icon" viewBox="0 0 24 24" width="36" height="36">
+                            <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+                        </svg>
+                    </button>
+                    <button class="control-btn next-btn">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"></path>
+                        </svg>
+                    </button>
+                    <button class="control-btn repeat-btn">
+                        <svg viewBox="0 0 24 24" width="24" height="24">
+                            <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="playlist-view">
+                <div class="playlist-header">
+                    <h3>Your Playlist</h3>
+                    <div class="playlist-controls">
+                        <button class="scan-button">Scan Local Music</button>
+                    </div>
+                </div>
+                <ul class="track-list">
+                    <!-- Tracks will be dynamically loaded here -->
+                </ul>
+                <div class="no-tracks-message">
+                    <div id="upload-animation"></div>
+                    <p>No tracks found. Upload some music or scan for local files.</p>
+                </div>
+            </div>
+        </main>
+
+        <nav class="bottom-nav">
+            <button class="nav-btn now-playing-btn active">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"></path>
+                </svg>
+                <span>Now Playing</span>
+            </button>
+            <button class="nav-btn playlist-btn">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M4 10h12v2H4zm0-4h12v2H4zm0 8h8v2H4zm10 0v6l5-3z"></path>
+                </svg>
+                <span>Playlist</span>
+            </button>
+        </nav>
+    </div>
+    
+    <div class="loader-overlay">
+        <div class="loader-container">
+            <div class="loader"></div>
+            <p>Loading your music...</p>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+</body>
+</html>
