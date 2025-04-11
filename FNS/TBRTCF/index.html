@@ -1,1 +1,229 @@
+<html>
+<head>
+  <title>FNS - Raids the Chicken Factory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #000;
+      position: fixed;
+      font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+    }
+    
+    canvas {
+      touch-action: none;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+    }
+    
+    #loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ff9d00;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      z-index: 100;
+      transition: opacity 0.5s ease-out;
+    }
+    
+    #loading h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      text-shadow: 3px 3px 0 #d43a12;
+    }
+    
+    #loading p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    #title-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to bottom, #ff9d00, #d43a12);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease-out;
+    }
+    
+    #title-screen.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    
+    #title-screen h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1rem;
+      text-align: center;
+      text-shadow: 4px 4px 0 #802409;
+    }
+    
+    #title-screen p {
+      font-size: 1.8rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      max-width: 80%;
+    }
+    
+    #start-button {
+      padding: 15px 40px;
+      font-size: 1.8rem;
+      background: #ffcc00;
+      color: #d43a12;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 4px 0 #d43a12;
+      transition: transform 0.1s;
+    }
+    
+    #start-button:active {
+      transform: translateY(4px);
+      box-shadow: 0 0 0 #d43a12;
+    }
+    
+    /* Fried chicken animation in the title screen */
+    .floating-chicken {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      animation: float 4s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <h1>FNS - Raids the Chicken Factory</h1>
+    <p>Loading game assets...</p>
+    <div class="spinner"></div>
+  </div>
+  
+  <div id="title-screen">
+    <h1>FNS<br>RAIDS THE CHICKEN FACTORY</h1>
+    <p>Collect fried chicken to grow bigger and stronger! Watch out for fryers!</p>
+    <button id="start-button">PLAY</button>
+  </div>
+  
+  <canvas id="gameCanvas"></canvas>
 
+  <script type="importmap">
+  {
+    "imports": {
+      "pixi.js": "https://cdn.jsdelivr.net/npm/pixi.js@7.3.2/dist/pixi.min.js",
+      "howler": "https://cdn.jsdelivr.net/npm/howler@2.2.3/dist/howler.min.js"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import { Game } from './game.js';
+    
+    const canvas = document.getElementById('gameCanvas');
+    const loadingScreen = document.getElementById('loading');
+    const titleScreen = document.getElementById('title-screen');
+    const startButton = document.getElementById('start-button');
+    
+    // Create floating fried chicken in the background of title screen
+    for (let i = 0; i < 8; i++) {
+      const chicken = document.createElement('div');
+      chicken.className = 'floating-chicken';
+      chicken.style.left = Math.random() * 100 + '%';
+      chicken.style.top = Math.random() * 100 + '%';
+      chicken.style.animationDelay = (Math.random() * 2) + 's';
+      
+      // Create the chicken SVG
+      chicken.innerHTML = `
+        <svg viewBox="0 0 100 100">
+          <ellipse cx="50" cy="50" rx="40" ry="30" fill="#e8a238" stroke="#c17a2f" stroke-width="5"/>
+          <ellipse cx="35" cy="40" rx="12" ry="10" fill="#ffebb3"/>
+        </svg>
+      `;
+      
+      titleScreen.appendChild(chicken);
+    }
+    
+    // Initialize game
+    const game = new Game(canvas);
+    
+    // Start the game after assets are loaded
+    game.preload().then(() => {
+      // Hide loading screen
+      loadingScreen.style.opacity = 0;
+      setTimeout(() => {
+        loadingScreen.style.display = 'none';
+        
+        // Show title screen
+        titleScreen.classList.add('active');
+      }, 500);
+    });
+    
+    // Handle start button click
+    startButton.addEventListener('click', () => {
+      titleScreen.classList.remove('active');
+      
+      // Start the game after title screen fades out
+      setTimeout(() => {
+        game.start();
+      }, 500);
+    });
+    
+    // Add special animation for the start button
+    startButton.addEventListener('mouseover', () => {
+      startButton.style.transform = 'scale(1.05)';
+    });
+    
+    startButton.addEventListener('mouseout', () => {
+      startButton.style.transform = 'scale(1)';
+    });
+  </script>
+  
+  <style>
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-20px) rotate(10deg);
+      }
+    }
+  </style>
+</body>
+</html>
