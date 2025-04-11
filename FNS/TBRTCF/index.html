@@ -127,6 +127,25 @@
       height: 60px;
       animation: float 4s ease-in-out infinite;
     }
+    
+    /* Level complete overlay */
+    #level-complete {
+      opacity: 0;
+      transition: opacity 0.5s ease-in;
+    }
+    
+    /* Level indicator */
+    #level-indicator {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      padding: 10px 15px;
+      border-radius: 20px;
+      font-size: 1.2rem;
+      z-index: 80;
+    }
   </style>
 </head>
 <body>
@@ -138,9 +157,11 @@
   
   <div id="title-screen">
     <h1>FNS<br>RAIDS THE CHICKEN FACTORY</h1>
-    <p>Collect fried chicken to grow bigger and stronger! Watch out for fryers!</p>
+    <p>Collect fried chicken to grow bigger and stronger! Make your way through the factory to the exit door!</p>
     <button id="start-button">PLAY</button>
   </div>
+  
+  <div id="level-indicator">LEVEL 1</div>
   
   <canvas id="gameCanvas"></canvas>
 
@@ -160,6 +181,7 @@
     const loadingScreen = document.getElementById('loading');
     const titleScreen = document.getElementById('title-screen');
     const startButton = document.getElementById('start-button');
+    const levelIndicator = document.getElementById('level-indicator');
     
     // Create floating fried chicken in the background of title screen
     for (let i = 0; i < 8; i++) {
@@ -198,6 +220,9 @@
     // Handle start button click
     startButton.addEventListener('click', () => {
       titleScreen.classList.remove('active');
+      
+      // Update level indicator
+      levelIndicator.textContent = `LEVEL ${game.level}`;
       
       // Start the game after title screen fades out
       setTimeout(() => {
