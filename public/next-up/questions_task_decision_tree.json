@@ -1,0 +1,210 @@
+{
+  "name": "Task Selection Adventure",
+  "questions": [
+    {
+      "id": "engagement",
+      "text": "The Three Paths of Engagement: At the journey’s outset, you find yourself before three distinct trails: The Tower of Knowledge shimmers with ancient wisdom. The Enchanted Forest of Ideas murmurs secrets of innovation. The Bustling Market of Deeds pulses with the promise of action. Do you seek to:",
+      "options": [
+        {
+          "value": "learn",
+          "text": "Learn: “I wish to unravel mysteries and gain wisdom by scaling the Tower.”"
+        },
+        {
+          "value": "think",
+          "text": "Think: “I want to wander the forest and let my ideas sprout like enchanted flora.”"
+        },
+        {
+          "value": "do",
+          "text": "Do: “I will stride into the Market, where every deed is a step toward conquest.”"
+        }
+      ],
+      "use": "Filters out tasks that don't match the desired approach (e.g., pure execution vs. ideation vs. learning)"
+    },
+    {
+      "id": "work_area",
+      "text": "The Four Realms of Endeavor: As you proceed, you encounter four magnificent realms, each brimming with its own challenges and rewards: The Library of Learning offers timeless texts and tutorials. The Gallery of Design dazzles with artistic visions and detailed blueprints. The Workshop of Tools hums with the ingenuity of crafted devices. The Forge of Build roars with the heat of creation, where ideas become reality. Which realm calls out to you today?",
+      "options": [
+        {
+          "value": "learn",
+          "text": "Learn: “I shall journey to the Library of Learning.”"
+        },
+        {
+          "value": "design",
+          "text": "Design: “I will enter the Gallery of Design to shape visions and art.”"
+        },
+        {
+          "value": "tools",
+          "text": "Tools: “I head toward the Workshop of Tools to master clever devices.”"
+        },
+        {
+          "value": "build",
+          "text": "Build: “I advance to the Forge of Build to fashion my creations.”"
+        }
+      ],
+      "use": "Narrows tasks to one of your defined sections"
+    },
+    {
+      "id": "time",
+      "text": "The Sundial’s Whisper: Before you, a grand sundial stretches its timeless shadow across the land, its shifting light a gentle reminder of the hours slipping by. How long do you envision your quest taking today?",
+      "options": [
+        {
+          "value": "short",
+          "text": "30 minutes: “I seek a brief, but meaningful, encounter—a flash of insight.”"
+        },
+        {
+          "value": "medium",
+          "text": "2 hours: “I have time enough for a measured exploration into these mysteries.”"
+        },
+        {
+          "value": "long",
+          "text": "4+ hours: “I am ready for a lengthy odyssey that will test my resolve and skill.”"
+        }
+      ],
+      "use": "Helps match tasks to the commitment duration\u2014short, medium, or deep dives"
+    },
+    {
+      "id": "mood",
+      "text": "The Portal of Moods: You soon arrive at a fork lined with ancient stones, each inscribed with symbols reflecting the traveler’s inner state. As you pause, you sense the subtle energies in the air:",
+      "options": [
+        {
+          "value": "focused",
+          "text": "I feel focused: “My mind is as sharp as a knight’s blade—I desire clarity and precision.”"
+        },
+        {
+          "value": "creative",
+          "text": "I feel creative: “I sense the stirring of a mighty wizard’s power within me, ready to conjure wonders.”"
+        },
+        {
+          "value": "foggy",
+          "text": "I feel foggy: “A shroud of mist envelops me—I need a gentle guide through these twilight moments.”"
+        },
+        {
+          "value": "productive",
+          "text": "I feel productive: “I brim with determination, like an unstoppable force surging forward.”"
+        }
+      ],
+      "use": "Aligns the task's nature with the employee's immediate mindset and energy"
+    },
+    {
+      "id": "impact",
+      "text": "The Vision Beyond the Horizon: High atop a gentle rise, you peer over the land and ask yourself: what lasting impact should my journey leave on this realm?",
+      "options": [
+        {
+          "value": "improve",
+          "text": "Improve our current work: “I choose to mend and refine the wonders already built.”"
+        },
+        {
+          "value": "innovate",
+          "text": "Innovate and create something new: “I long to spark fresh ideas that will redefine the future.”"
+        },
+        {
+          "value": "solve",
+          "text": "Solve technical challenges: “I am drawn to solve the intricate puzzles that hinder progress.”"
+        }
+      ],
+      "use": "Directs the user toward tasks that either refine, innovate, or troubleshoot based on immediate project needs"
+    },
+    {
+      "id": "energy",
+      "text": "The Flame Within: In a quiet glen, you pause to check the flicker of your inner flame—your energy for the road ahead.",
+      "options": [
+        {
+          "value": "low",
+          "text": "Low: “My flame is but a gentle glow; I must tread with care.”"
+        },
+        {
+          "value": "moderate",
+          "text": "Moderate: “My fire burns steadily, sufficient to light my way.”"
+        },
+        {
+          "value": "high",
+          "text": "High: “I blaze with an unquenchable inferno, ready to confront the fiercest trials.”"
+        }
+      ],
+      "use": "Further filters tasks by ensuring the challenge or intensity matches the employee's available energy"
+    },
+    {
+      "id": "familiarity",
+      "text": "Familiar Footpaths or Uncharted Trails: Standing at a weathered signpost, you ponder whether to follow paths you know or to venture into new wilderness:",
+      "options": [
+        {
+          "value": "known",
+          "text": "Doing something I know: “I choose the well-worn path where each step is familiar.”"
+        },
+        {
+          "value": "improve",
+          "text": "Improving something I know: “I will refine and polish the routes I have traveled before.”"
+        },
+        {
+          "value": "new",
+          "text": "Trying something new: “I venture into uncharted territory, hungry for fresh experiences.”"
+        }
+      ],
+      "use": "Targets tasks based on the employee's comfort level and desire for challenge"
+    },
+    {
+      "id": "structure",
+      "text": "The Blueprint of the Journey: Ahead lie two divergent trails: one is a cobblestone road, clearly marked and steady; the other, a winding, mysterious path that promises freedom and unexpected wonders.",
+      "options": [
+        {
+          "value": "structured",
+          "text": "Structured & Clear: “I prefer the predictability of a well-laid path, marked by clear signposts.”"
+        },
+        {
+          "value": "open",
+          "text": "Open-Ended & Creative: “I embrace the unknown, where creativity and spontaneity guide my steps.”"
+        }
+      ],
+      "use": "Helps determine if the employee should receive a highly guided task or one that allows for creative exploration"
+    },
+    {
+      "id": "outcome",
+      "text": "The Heart of the Quest: Deep within, you sense the true treasure of your expedition—a prize that inspires your very soul:",
+      "options": [
+        {
+          "value": "creativity",
+          "text": "Creativity: “I pursue the brilliance of imaginative discoveries and bold new creations.”"
+        },
+        {
+          "value": "efficiency",
+          "text": "Efficiency: “I seek the art of refinement and the elegance of smooth operation.”"
+        },
+        {
+          "value": "technical",
+          "text": "Technical Excellence: “I yearn to conquer complex puzzles and unveil the secrets of mastery.”"
+        }
+      ],
+      "use": "Aligns the employee's desired outcome with tasks that either foster creativity, boost efficiency, or leverage technical skills"
+    },
+    {
+      "id": "setting",
+      "text": "The Setting of Your Saga: Surveying your surroundings, you determine the environment that will best support your quest:",
+      "options": [
+        {
+          "value": "quiet",
+          "text": "Quiet & Focused: “I choose the serenity of a secluded glen, perfect for deep reflection.”"
+        },
+        {
+          "value": "dynamic",
+          "text": "Dynamic & Social: “I long for the energy of a bustling bazaar, where collaboration thrives.”"
+        }
+      ],
+      "use": "Can be used to assign tasks that might either involve solo work or encourage teamwork/collaboration"
+    },
+    {
+      "id": "chunk_size",
+      "text": "The Final Challenge: At last, you arrive at a looming stronghold where your final trial awaits—a decision that will test the scale of your ambition today:",
+      "options": [
+        {
+          "value": "small",
+          "text": "Small Chunks: “I will rally a skilled unit of brave soldiers to take on a series of swift encounters.”"
+        },
+        {
+          "value": "big",
+          "text": "Big Chunks: “I stand ready to face one giant, formidable troll—a towering ogre whose defeat will echo through the ages.”"
+        }
+      ],
+      "use": "Ensures that the task matches the employee's willingness to engage in either short bursts or longer, involved work sessions"
+    }
+  ]
+}

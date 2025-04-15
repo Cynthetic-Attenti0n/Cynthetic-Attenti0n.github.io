@@ -1,0 +1,2151 @@
+{
+  "tasks": [
+    {
+      "id": "learn_edit_assets",
+      "name": "Learning How to Edit Assets",
+      "path": [
+        "Learn"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "learn",
+          "think"
+        ],
+        "work_area": [
+          "learn"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "foggy",
+          "focused"
+        ],
+        "impact": [
+          "improve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "learn_plugins",
+      "name": "Learning How to Use specific plugins",
+      "path": [
+        "Learn"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "learn",
+          "think"
+        ],
+        "work_area": [
+          "learn"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "foggy",
+          "focused"
+        ],
+        "impact": [
+          "improve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "learn_godot_packaging",
+      "name": "Learning how to package and submit projects in Godot 4.4",
+      "path": [
+        "Learn"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "learn",
+          "think"
+        ],
+        "work_area": [
+          "learn"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "foggy",
+          "focused"
+        ],
+        "impact": [
+          "improve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "github_basics",
+      "name": "How to basics for contributing to an open source repo",
+      "path": [
+        "Learn",
+        "Github"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "learn",
+          "think"
+        ],
+        "work_area": [
+          "build",
+          "learn",
+          "tools"
+        ],
+        "time": [
+          "medium",
+          "long"
+        ],
+        "mood": [
+          "foggy",
+          "focused"
+        ],
+        "impact": [
+          "improve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "new"
+        ],
+        "structure": [
+          "structured"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "github_best_practices",
+      "name": "Best Practice for shared repo game development with github, vs code/godot 4.4",
+      "path": [
+        "Learn",
+        "Github"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "learn",
+          "think"
+        ],
+        "work_area": [
+          "build",
+          "learn",
+          "tools"
+        ],
+        "time": [
+          "medium",
+          "long"
+        ],
+        "mood": [
+          "foggy",
+          "focused"
+        ],
+        "impact": [
+          "improve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "learn_itch_io",
+      "name": "Understanding itch.io submission requirements/uploading",
+      "path": [
+        "Learn"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "learn",
+          "think"
+        ],
+        "work_area": [
+          "learn"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "foggy",
+          "focused"
+        ],
+        "impact": [
+          "improve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "watch_game_jam",
+      "name": "Watch a game dev in Godot for a game jam",
+      "path": [
+        "Learn",
+        "Best Practice Game Design"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "learn",
+          "think"
+        ],
+        "work_area": [
+          "learn"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "foggy",
+          "focused"
+        ],
+        "impact": [
+          "improve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "game_design_planning",
+      "name": "Best practice for Game Design Planning",
+      "path": [
+        "Learn",
+        "Best Practice Game Design"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "learn",
+          "think"
+        ],
+        "work_area": [
+          "learn"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "foggy",
+          "focused"
+        ],
+        "impact": [
+          "improve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "game_design_documentation",
+      "name": "Best Practice for Game Design Documentation",
+      "path": [
+        "Learn",
+        "Best Practice Game Design"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "learn",
+          "think"
+        ],
+        "work_area": [
+          "learn"
+        ],
+        "time": [
+          "short"
+        ],
+        "mood": [
+          "foggy",
+          "focused"
+        ],
+        "impact": [
+          "improve"
+        ],
+        "energy": [
+          "high",
+          "moderate",
+          "low"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small"
+        ]
+      }
+    },
+    {
+      "id": "mockup_drawings",
+      "name": "Mockup Drawings",
+      "path": [
+        "Design"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "breaking_down_cards",
+      "name": "Breaking Down Notion Cards",
+      "path": [
+        "Design"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "finding_assets",
+      "name": "Finding New Assets",
+      "path": [
+        "Design",
+        "Art"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "edit_assets",
+      "name": "Learning How to Edit Assets",
+      "path": [
+        "Design",
+        "Art"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "animation_tweens",
+      "name": "Tweens",
+      "path": [
+        "Design",
+        "Art",
+        "Learning animation in Godot 4.4"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "animation_anima",
+      "name": "Anima Plugin",
+      "path": [
+        "Design",
+        "Art",
+        "Learning animation in Godot 4.4"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "document_resources",
+      "name": "Documenting art/model resource options/locations for each game asset/object",
+      "path": [
+        "Design",
+        "Art"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "list_units",
+      "name": "List Units needed",
+      "path": [
+        "Design",
+        "Art",
+        "Asset Listing"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "short",
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small"
+        ]
+      }
+    },
+    {
+      "id": "list_buildings",
+      "name": "List Buildings needed",
+      "path": [
+        "Design",
+        "Art",
+        "Asset Listing"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "short",
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small"
+        ]
+      }
+    },
+    {
+      "id": "list_backgrounds",
+      "name": "List Backgrounds needed",
+      "path": [
+        "Design",
+        "Art",
+        "Asset Listing",
+        "Images"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "short",
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small"
+        ]
+      }
+    },
+    {
+      "id": "list_tutorials",
+      "name": "List Tutorials needed",
+      "path": [
+        "Design",
+        "Art",
+        "Asset Listing",
+        "Images"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "short",
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small"
+        ]
+      }
+    },
+    {
+      "id": "list_logos",
+      "name": "List Logos needed",
+      "path": [
+        "Design",
+        "Art",
+        "Asset Listing",
+        "Images"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "short",
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small"
+        ]
+      }
+    },
+    {
+      "id": "list_animations",
+      "name": "List Animations needed",
+      "path": [
+        "Design",
+        "Art",
+        "Asset Listing"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design",
+          "build"
+        ],
+        "time": [
+          "short",
+          "medium",
+          "long"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "list_sfx",
+      "name": "List SFX needed",
+      "path": [
+        "Design",
+        "Art",
+        "Asset Listing",
+        "Sounds"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "short",
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small"
+        ]
+      }
+    },
+    {
+      "id": "list_music",
+      "name": "List Music needed",
+      "path": [
+        "Design",
+        "Art",
+        "Asset Listing",
+        "Sounds"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "short",
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [
+          "innovate"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured"
+        ],
+        "outcome": [
+          "creativity"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small"
+        ]
+      }
+    },
+    {
+      "id": "add_notion_questions",
+      "name": "Adding more notion questions",
+      "path": [
+        "Design",
+        "Details"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "answer_notion_questions",
+      "name": "Answering notion questions",
+      "path": [
+        "Design",
+        "Details"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "breakdown_notion_cards",
+      "name": "Breaking Down Notion Cards",
+      "path": [
+        "Design",
+        "Details"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "learn_packaging",
+      "name": "Learning how to package and submit projects in Godot 4.4",
+      "path": [
+        "Design",
+        "Details"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "brainstorm_mechanics",
+      "name": "Brainstorm new gameplay mechanics or level design ideas",
+      "path": [
+        "Design",
+        "Ideation & Brainstorming"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "develop_story",
+      "name": "Draft and refine storyline concepts, character backstories, or world-building notes",
+      "path": [
+        "Design",
+        "Narrative/Story/Lore"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "think"
+        ],
+        "work_area": [
+          "design"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "creative"
+        ],
+        "impact": [],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "find_godot_plugins",
+      "name": "Finding useful Godot 4.4 Editor Plugins",
+      "path": [
+        "Tools"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "learn"
+        ],
+        "work_area": [
+          "build",
+          "tools"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "learn_anima",
+      "name": "Learn Anima Plugin",
+      "path": [
+        "Tools",
+        "Plugin Learning"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "learn"
+        ],
+        "work_area": [
+          "build",
+          "tools"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "learn_other_plugins",
+      "name": "Learn other plugins from Notion Resources",
+      "path": [
+        "Tools",
+        "Plugin Learning"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "learn"
+        ],
+        "work_area": [
+          "build",
+          "tools"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "understand_itch_io",
+      "name": "Understanding itch.io",
+      "path": [
+        "Tools"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "learn"
+        ],
+        "work_area": [
+          "build",
+          "tools"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "edit_in_blender",
+      "name": "Learn to edit assets in Blender",
+      "path": [
+        "Tools",
+        "Asset Editing"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "learn"
+        ],
+        "work_area": [
+          "build",
+          "tools"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "edit_in_godot",
+      "name": "Learn to edit assets in Godot 4.4",
+      "path": [
+        "Tools",
+        "Asset Editing"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do",
+          "learn"
+        ],
+        "work_area": [
+          "build",
+          "tools"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "code_modules",
+      "name": "Code Modules for the Game",
+      "path": [
+        "Build",
+        "Code"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do"
+        ],
+        "work_area": [
+          "build"
+        ],
+        "time": [
+          "medium",
+          "long"
+        ],
+        "mood": [
+          "focused",
+          "productive"
+        ],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "quiet"
+        ],
+        "chunk_size": [
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "create_minigames",
+      "name": "Create basic minigame versions of parts of the game",
+      "path": [
+        "Build",
+        "Code"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do"
+        ],
+        "work_area": [
+          "build"
+        ],
+        "time": [
+          "medium",
+          "long"
+        ],
+        "mood": [
+          "focused",
+          "productive"
+        ],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "new"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [
+          "technical"
+        ],
+        "setting": [
+          "quiet"
+        ],
+        "chunk_size": [
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "combat_animations",
+      "name": "Combat Animations",
+      "path": [
+        "Build",
+        "Animations"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do"
+        ],
+        "work_area": [
+          "build"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "productive"
+        ],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "resource_animations",
+      "name": "Resource gathering animations (rail cart)",
+      "path": [
+        "Build",
+        "Animations"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do"
+        ],
+        "work_area": [
+          "build"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "productive"
+        ],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "build_ui_menus",
+      "name": "Build out UI Menu's",
+      "path": [
+        "Build",
+        "UI/Settings"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do"
+        ],
+        "work_area": [
+          "build"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "productive"
+        ],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "keybindings_menu",
+      "name": "Keybindings Menu",
+      "path": [
+        "Build",
+        "UI/Settings"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do"
+        ],
+        "work_area": [
+          "build"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "productive"
+        ],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    },
+    {
+      "id": "settings_menu",
+      "name": "Sound/Graphics Settings",
+      "path": [
+        "Build",
+        "UI/Settings"
+      ],
+      "type": "task",
+      "compatible_answers": {
+        "engagement": [
+          "do"
+        ],
+        "work_area": [
+          "build"
+        ],
+        "time": [
+          "medium"
+        ],
+        "mood": [
+          "focused",
+          "productive"
+        ],
+        "impact": [
+          "improve",
+          "solve"
+        ],
+        "energy": [
+          "high",
+          "moderate"
+        ],
+        "familiarity": [
+          "known",
+          "improve"
+        ],
+        "structure": [
+          "structured",
+          "open"
+        ],
+        "outcome": [],
+        "setting": [
+          "dynamic",
+          "quiet"
+        ],
+        "chunk_size": [
+          "small",
+          "big"
+        ]
+      }
+    }
+  ]
+}
