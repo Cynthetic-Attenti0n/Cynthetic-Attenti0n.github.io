@@ -1,1 +1,469 @@
-asd
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextUp - Your Adventure Awaits</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <script type="module" src="main.js" defer></script>
+</head>
+<body>
+    <div class="geometric-background">
+        <svg class="bg-pattern" viewBox="0 0 100 115" preserveAspectRatio="xMidYMin slice">
+            <polygon class="shape-1" points="50 57.5, 50 57.5, 50 57.5" 
+                    fill="none" 
+                    stroke="var(--color-secondary)" 
+                    stroke-width="0.5"
+                    opacity="0.1">
+                <animate attributeName="points"
+                        repeatCount="indefinite"
+                        dur="8s"
+                        begin="0s"
+                        from="50 57.5, 50 57.5, 50 57.5"
+                        to="50 -75, 175 126, -75 126"/>
+            </polygon>
+            <polygon class="shape-2" points="50 57.5, 50 57.5, 50 57.5" 
+                    fill="none" 
+                    stroke="var(--color-primary)" 
+                    stroke-width="0.5"
+                    opacity="0.1">
+                <animate attributeName="points"
+                        repeatCount="indefinite"
+                        dur="8s"
+                        begin="2s"
+                        from="50 57.5, 50 57.5, 50 57.5"
+                        to="50 -75, 175 126, -75 126"/>
+            </polygon>
+            <polygon class="shape-3" points="50 57.5, 50 57.5, 50 57.5" 
+                    fill="none" 
+                    stroke="var(--color-accent)" 
+                    stroke-width="0.5"
+                    opacity="0.1">
+                <animate attributeName="points"
+                        repeatCount="indefinite"
+                        dur="8s"
+                        begin="4s"
+                        from="50 57.5, 50 57.5, 50 57.5"
+                        to="50 -75, 175 126, -75 126"/>
+            </polygon>
+        </svg>
+    </div>
+    <div class="background-animation" id="backgroundAnimation"></div>
+    <div id="app" x-data="nextUpApp">
+        <!-- Header with logo -->
+        <header>
+            <div class="logo-container">
+                <svg class="logo" viewBox="0 0 100 100" width="60" height="60">
+                    <circle cx="50" cy="50" r="45" fill="#f8f0e3" stroke="#8a6e4b" stroke-width="2"/>
+                    <path d="M25,50 L50,25 L75,50 L50,75 Z" fill="#8a6e4b"/>
+                    <circle cx="50" cy="50" r="8" fill="#4a7c59"/>
+                    <path d="M50,25 L52,50 L50,75 M25,50 L50,48 L75,50" stroke="#4a7c59" stroke-width="2"/>
+                </svg>
+                <h1 class="app-title">NextUp</h1>
+            </div>
+            <div class="menu-toggle" @click="toggleMenu">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                    <path fill="#8a6e4b" d="M3,6 L21,6 M3,12 L21,12 M3,18 L21,18" stroke="#8a6e4b" stroke-width="2"/>
+                </svg>
+            </div>
+        </header>
+        <div class="menu-overlay" id="menuOverlay">
+          <div class="menu-panel">
+            <button class="menu-close" @click="toggleMenu">&times;</button>
+            <div class="construction-badge">
+              <svg class="construction-icon" viewBox="0 0 24 24" width="24" height="24">
+                <path fill="#4a7c59" d="M12,2 L1,21 L23,21 L12,2 Z M12,6 L19.5,19 L4.5,19 L12,6 Z M11,10 L13,10 L13,15 L11,15 Z M11,16 L13,16 L13,18 L11,18 Z"/>
+              </svg>
+              Under Construction
+            </div>
+            <div class="menu-items">
+              <div class="menu-item">Settings</div>
+              <div class="menu-item">About NextUp</div>
+              <div class="menu-item">Help & Support</div>
+              <div class="menu-item">Feedback</div>
+            </div>
+          </div>
+        </div>
+
+        <main>
+            <!-- Welcome screen -->
+            <div class="welcome-screen" x-show="!taskListLoaded" x-transition>
+                <div class="welcome-content">
+                    <h2>Your Next Adventure Awaits</h2>
+                    <p>Transform your tasks into quests and navigate your day with clarity and purpose.</p>
+                    <button class="btn-primary" @click="startAdventure">Begin Your Journey</button>
+                </div>
+                <svg class="welcome-decoration" viewBox="0 0 100 100" width="100%" height="120">
+                    <path d="M0,50 Q25,30 50,50 T100,50" fill="none" stroke="#8a6e4b" stroke-width="2"/>
+                    <circle cx="50" cy="50" r="5" fill="#4a7c59"/>
+                    <circle cx="25" cy="40" r="3" fill="#8a6e4b"/>
+                    <circle cx="75" cy="40" r="3" fill="#8a6e4b"/>
+                </svg>
+            </div>
+
+            <!-- Main Card Selection -->
+            <div class="card-selection" x-show="taskListLoaded && !activeCard" x-transition>
+                <div class="card-container">
+                    <!-- What Now? Card -->
+                    <div class="card" @click="selectCard('whatNow')">
+                        <div class="card-inner">
+                            <svg class="card-icon" viewBox="0 0 24 24" width="48" height="48">
+                                <path fill="#4a7c59" d="M12,2 A10,10 0 0,1 22,12 A10,10 0 0,1 12,22 A10,10 0 0,1 2,12 A10,10 0 0,1 12,2 Z M12,4 A8,8 0 0,0 4,12 A8,8 0 0,0 12,20 A8,8 0 0,0 20,12 A8,8 0 0,0 12,4 Z M11,7 L13,7 L13,13 L11,13 Z M11,15 L13,15 L13,17 L11,17 Z"/>
+                            </svg>
+                            <h3>What Now?</h3>
+                            <p>Answer questions to narrow down your next task.</p>
+                        </div>
+                    </div>
+
+                    <!-- Compass Card -->
+                    <div class="card" @click="selectCard('compass')">
+                        <div class="card-inner">
+                            <div class="alpha-banner">Alpha</div>
+                            <svg class="card-icon" viewBox="0 0 24 24" width="48" height="48">
+                                <path fill="#8a6e4b" d="M12,2 A10,10 0 0,1 22,12 A10,10 0 0,1 12,22 A10,10 0 0,1 2,12 A10,10 0 0,1 12,2 Z M12,4 A8,8 0 0,0 4,12 A8,8 0 0,0 12,20 A8,8 0 0,0 20,12 A8,8 0 0,0 12,4 Z M8.4,8.4 L10.5,15.5 L15.5,10.5 L8.4,8.4 Z"/>
+                            </svg>
+                            <h3>Compass</h3>
+                            <p>Find direction with a variety of suitable tasks.</p>
+                        </div>
+                    </div>
+
+                    <!-- Questlog Card -->
+                    <div class="card" @click="selectCard('questlog')">
+                        <div class="card-inner">
+                            <svg class="card-icon" viewBox="0 0 24 24" width="48" height="48">
+                                <path fill="#a67c52" d="M6,2 H18 A2,2 0 0,1 20,4 V20 A2,2 0 0,1 18,22 H6 A2,2 0 0,1 4,20 V4 A2,2 0 0,1 6,2 Z M6,4 V20 H18 V4 H6 Z M8,8 H16 V10 H8 V8 Z M8,12 H16 V14 H8 V12 Z M8,16 H13 V18 H8 V16 Z"/>
+                            </svg>
+                            <h3>Questlog</h3>
+                            <p>Manage all your tasks and create new quests.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- What Now? Screen -->
+            <div class="what-now-screen" x-show="activeCard === 'whatNow'" x-transition>
+                <div class="card-header">
+                    <button class="btn-back" @click="goBack">&larr; Back</button>
+                    <h2>What Now?</h2>
+                </div>
+                <div class="questions-container">
+                    <div class="what-now-welcome" x-show="!startedQuestions">
+                        <img src="what_now.png" alt="A traveler contemplating their path">
+                        <h3>Take a Moment to Center Yourself</h3>
+                        <p>Before we begin our journey together, let's take a calming breath. Watch the circle and breathe with it - in as it grows, out as it shrinks.</p>
+                        <div class="breathing-circle"></div>
+                        <p>Remember, there are no wrong paths - only different adventures waiting to unfold.</p>
+                        <button class="btn-primary" @click="startedQuestions = true">
+                            I'm Ready to Begin
+                        </button>
+                    </div>
+
+                    <template x-if="startedQuestions && !showingResults">
+                        <div class="question-card">
+                            <template x-if="currentQuestion">
+                                <div>
+                                    <div class="question-progress">
+                                        <div class="progress-bar" :style="'width: ' + ((currentQuestionIndex + 1) / questions.length * 100) + '%'"></div>
+                                    </div>
+                                    <div class="question-counter" x-text="'Question ' + (currentQuestionIndex + 1) + ' of ' + questions.length"></div>
+                                    <img :src="currentQuestion.id + '.png'" :alt="currentQuestion.text" class="question-image">
+                                    <h3>
+                                        <span class="question-text-bold" x-text="currentQuestion.text.split(':')[0] + ':'"></span>
+                                        <span x-text="currentQuestion.text.split(':').slice(1).join(':')"></span>
+                                    </h3>
+                                    <div class="options-container">
+                                        <template x-for="option in currentQuestion.options" :key="option.value">
+                                            <button class="option-btn" @click="selectOption(currentQuestion.id, option.value)">
+                                                <p class="option-text">
+                                                    <span class="option-emoji" x-text="getOptionEmoji(option.value)"></span>
+                                                    <span>
+                                                        <span class="bold-prefix" x-text="option.text.split(':')[0] + ':'"></span>
+                                                        <span x-text="option.text.split(':').slice(1).join(':')"></span>
+                                                    </span>
+                                                </p>
+                                            </button>
+                                        </template>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+
+                    <template x-if="showingResults">
+                        <div class="recommended-tasks">
+                            <h3>Available Quests</h3>
+                            <p>Here are all tasks that match your chosen path:</p>
+                            <div class="quest-filters">
+                                <div class="filter-group" x-show="Object.keys(userAnswers).length > 0">
+                                    <h4>Your Chosen Path:</h4>
+                                    <div class="selected-filters">
+                                        <template x-for="(value, key) in userAnswers" :key="key">
+                                            <span class="filter-tag">
+                                                <span x-text="key + ': ' + value"></span>
+                                                <button @click="removeFilter(key)">&times;</button>
+                                            </span>
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="task-list">
+                                <template x-if="filteredTasks.length === 0">
+                                    <div class="no-tasks">
+                                        <p>No matching tasks found. Try different answers or add new tasks in the Questlog.</p>
+                                    </div>
+                                </template>
+                                <template x-if="filteredTasks.length > 0">
+                                    <div>
+                                        <div class="match-indicator" x-show="Object.keys(userAnswers).length > 0">
+                                            <template x-if="filteredTasks.every(task => 
+                                                Object.entries(userAnswers).every(([category, value]) => 
+                                                    task.tags[category] && task.tags[category].includes(value)
+                                                ))">
+                                                <p>Perfect matches found! 🎯</p>
+                                            </template>
+                                            <template x-if="!filteredTasks.every(task => 
+                                                Object.entries(userAnswers).every(([category, value]) => 
+                                                    task.tags[category] && task.tags[category].includes(value)
+                                                ))">
+                                                <p>Showing closest matches based on your preferences ✨</p>
+                                            </template>
+                                        </div>
+                                        <template x-for="task in filteredTasks" :key="task.id">
+                                            <div class="task-item">
+                                                <div class="task-checkbox" @click="toggleTaskComplete(task)">
+                                                    <div class="checkbox" :class="{'checked': task.completed}"></div>
+                                                </div>
+                                                <div class="task-content">
+                                                    <h4 x-text="task.title"></h4>
+                                                    <p x-text="task.description"></p>
+                                                    <div class="task-tags">
+                                                        <template x-for="(values, category) in task.tags" :key="category">
+                                                            <template x-for="value in [...new Set(values)]" :key="value">
+                                                                <span class="tag" :class="category" x-text="value"></span>
+                                                            </template>
+                                                        </template>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                            
+                            <button class="btn-secondary" @click="resetQuestions">Start Over</button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Compass Screen -->
+            <div class="compass-screen" x-show="activeCard === 'compass'" x-transition>
+                <div class="card-header">
+                    <button class="btn-back" @click="goBack">&larr; Back</button>
+                    <h2>Compass</h2>
+                </div>
+                <div class="compass-container">
+                    <div class="compass-intro" x-show="!compassQuestionStarted">
+                        <p>The Compass helps you find your way even when the path seems unclear.</p>
+                        <button class="btn-primary" @click="startCompassQuestions">Find My Direction</button>
+                    </div>
+                    
+                    <div class="compass-questions" x-show="compassQuestionStarted && !compassResultsReady">
+                        <template x-if="compassQuestion === 1">
+                            <div class="compass-question">
+                                <h3>What do you need most right now?</h3>
+                                <div class="compass-options">
+                                    <button @click="answerCompassQuestion('need', 'accomplishment')">A sense of accomplishment</button>
+                                    <button @click="answerCompassQuestion('need', 'progress')">Forward progress</button>
+                                    <button @click="answerCompassQuestion('need', 'clarity')">Mental clarity</button>
+                                    <button @click="answerCompassQuestion('need', 'rest')">Rest and recovery</button>
+                                </div>
+                            </div>
+                        </template>
+                        
+                        <template x-if="compassQuestion === 2">
+                            <div class="compass-question">
+                                <h3>How much time do you have?</h3>
+                                <div class="compass-options">
+                                    <button @click="answerCompassQuestion('time', 'quick')">Just a few minutes</button>
+                                    <button @click="answerCompassQuestion('time', 'short')">15-30 minutes</button>
+                                    <button @click="answerCompassQuestion('time', 'medium')">30-60 minutes</button>
+                                    <button @click="answerCompassQuestion('time', 'long')">More than an hour</button>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <div class="compass-results" x-show="compassResultsReady">
+                        <h3>Your Path Reveals Itself</h3>
+                        <p x-text="compassMessage"></p>
+                        
+                        <div class="direction-container">
+                            <svg class="compass-svg" viewBox="0 0 200 200" width="200" height="200">
+                                <circle cx="100" cy="100" r="90" fill="#f8f0e3" stroke="#8a6e4b" stroke-width="2"/>
+                                <path class="compass-needle" d="M100,20 L110,100 L100,180 L90,100 Z" fill="#a67c52"/>
+                                <circle cx="100" cy="100" r="10" fill="#4a7c59"/>
+                            </svg>
+                        </div>
+                        
+                        <div class="task-suggestions">
+                            <h4>Suggested Quests</h4>
+                            <div class="suggestion-list">
+                                <template x-for="task in compassTasks" :key="task.id">
+                                    <div class="suggestion-item">
+                                        <div class="task-checkbox" @click="toggleTaskComplete(task)">
+                                            <div class="checkbox" :class="{'checked': task.completed}"></div>
+                                        </div>
+                                        <div class="suggestion-content">
+                                            <h5 x-text="task.title"></h5>
+                                            <p x-text="task.description"></p>
+                                        </div>
+                                    </div>
+                                </template>
+                            </div>
+                            <button class="btn-secondary" @click="resetCompass">Find Another Path</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Questlog Screen -->
+            <div class="questlog-screen" x-show="activeCard === 'questlog'" x-transition>
+                <div class="card-header">
+                    <button class="btn-back" @click="goBack">&larr; Back</button>
+                    <h2>Questlog</h2>
+                </div>
+                <div class="questlog-container">
+                    <div class="questlog-header">
+                        <h3>Your Active Quests</h3>
+                        <button class="btn-add" @click="showAddTaskForm = true">+ New Quest</button>
+                    </div>
+                    
+                    <div class="questlog-list">
+                        <template x-for="(group, groupName) in groupedTasks" :key="groupName">
+                            <div class="quest-group" :data-group="groupName" :data-expanded="isGroupExpanded(groupName)">
+                                <div class="quest-group-header" @click="toggleGroup(groupName)">
+                                    <svg class="group-icon" viewBox="0 0 24 24" width="24" height="24">
+                                        <path fill="var(--color-secondary)" d="M7,10L12,15L17,10H7Z"/>
+                                    </svg>
+                                    <h4 x-text="groupName"></h4>
+                                </div>
+                                
+                                <div class="quest-group-content">
+                                    <!-- Direct tasks in this group -->
+                                    <template x-for="task in group.tasks" :key="task.id">
+                                        <div class="questlog-item" :class="{'completed': task.completed}">
+                                            <div class="task-checkbox" @click="toggleTaskComplete(task)">
+                                                <div class="checkbox" :class="{'checked': task.completed}"></div>
+                                            </div>
+                                            <div class="questlog-content" @click="selectTaskForEdit(task)">
+                                                <h4 x-text="task.title"></h4>
+                                                <p class="task-path" x-text="task.description"></p>
+                                                <div class="task-tags">
+                                                    <template x-for="(values, category) in task.tags" :key="category">
+                                                        <template x-for="value in values" :key="value">
+                                                            <span class="tag" :class="category" x-text="value"></span>
+                                                        </template>
+                                                    </template>
+                                                </div>
+                                            </div>
+                                            <button class="btn-delete" @click.stop="deleteTask(task.id)">×</button>
+                                        </div>
+                                    </template>
+                                    
+                                    <!-- Subgroups -->
+                                    <template x-for="(subgroup, subgroupName) in group.subgroups" :key="subgroupName">
+                                        <div class="quest-subgroup">
+                                            <div class="quest-group-header" @click="toggleGroup(subgroupName)">
+                                                <svg class="group-icon" viewBox="0 0 24 24" width="24" height="24">
+                                                    <path fill="var(--color-secondary)" d="M7,10L12,15L17,10H7Z"/>
+                                                </svg>
+                                                <h5 x-text="subgroupName"></h5>
+                                            </div>
+                                            
+                                            <div class="quest-group-content">
+                                                <template x-for="task in subgroup.tasks" :key="task.id">
+                                                    <div class="questlog-item" :class="{'completed': task.completed}">
+                                                        <div class="task-checkbox" @click="toggleTaskComplete(task)">
+                                                            <div class="checkbox" :class="{'checked': task.completed}"></div>
+                                                        </div>
+                                                        <div class="questlog-content" @click="selectTaskForEdit(task)">
+                                                            <h4 x-text="task.title"></h4>
+                                                            <p class="task-path" x-text="task.description"></p>
+                                                            <div class="task-tags">
+                                                                <template x-for="(values, category) in task.tags" :key="category">
+                                                                    <template x-for="value in values" :key="value">
+                                                                        <span class="tag" :class="category" x-text="value"></span>
+                                                                    </template>
+                                                                </template>
+                                                            </div>
+                                                        </div>
+                                                        <button class="btn-delete" @click.stop="deleteTask(task.id)">×</button>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                    
+                    <div class="no-tasks-message" x-show="tasks.length === 0">
+                        <p>Your questlog is empty. Add some tasks to begin your adventure!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add/Edit Task Form -->
+            <div class="task-form-overlay" x-show="showAddTaskForm" x-transition @click="showAddTaskForm = false">
+                <div class="task-form" @click.stop>
+                    <h3 x-text="editingTask ? 'Edit Quest' : 'New Quest'"></h3>
+                    <form @submit.prevent="saveTask">
+                        <div class="form-group">
+                            <label for="taskTitle">Quest Title</label>
+                            <input type="text" id="taskTitle" x-model="taskForm.title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="taskDescription">Description</label>
+                            <textarea id="taskDescription" x-model="taskForm.description" rows="3"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Energy Level Required</label>
+                            <div class="option-buttons">
+                                <button type="button" :class="{'selected': taskForm.energy === 'high'}" @click="taskForm.energy = 'high'">High</button>
+                                <button type="button" :class="{'selected': taskForm.energy === 'medium'}" @click="taskForm.energy = 'medium'">Medium</button>
+                                <button type="button" :class="{'selected': taskForm.energy === 'low'}" @click="taskForm.energy = 'low'">Low</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Focus Required</label>
+                            <div class="option-buttons">
+                                <button type="button" :class="{'selected': taskForm.focus === 'sharp'}" @click="taskForm.focus = 'sharp'">Sharp</button>
+                                <button type="button" :class="{'selected': taskForm.focus === 'decent'}" @click="taskForm.focus = 'decent'">Decent</button>
+                                <button type="button" :class="{'selected': taskForm.focus === 'scattered'}" @click="taskForm.focus = 'scattered'">Scattered</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Creativity Required</label>
+                            <div class="option-buttons">
+                                <button type="button" :class="{'selected': taskForm.creativity === 'flowing'}" @click="taskForm.creativity = 'flowing'">Flowing</button>
+                                <button type="button" :class="{'selected': taskForm.creativity === 'moderate'}" @click="taskForm.creativity = 'moderate'">Moderate</button>
+                                <button type="button" :class="{'selected': taskForm.creativity === 'blocked'}" @click="taskForm.creativity = 'blocked'">Blocked</button>
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn-secondary" @click="showAddTaskForm = false">Cancel</button>
+                            <button type="submit" class="btn-primary">Save Quest</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
