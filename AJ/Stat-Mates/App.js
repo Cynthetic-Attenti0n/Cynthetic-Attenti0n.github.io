@@ -303,7 +303,7 @@ const App = () => {
       
       <footer className="bg-white py-4 border-t border-gray-200">
         <div className="container mx-auto px-6 text-center text-gray-600 text-sm">
-          <p> 2023 StatMates - Making statistics a friendly roommate for your data!</p>
+          <p> 2025 Cynthetic-Attenti0n </p>
           <div className="mt-2">
             <a href="#" className="text-primary hover:underline mx-2">Tutorials</a>
             <a href="#" className="text-primary hover:underline mx-2">Contact Support</a>
