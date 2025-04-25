@@ -132,11 +132,11 @@ const App = () => {
                 />
                 
                 <h1 className="text-5xl font-bold mb-6 text-gray-800">
-                  Welcome to StatMates!
+                  Welcome to StatMates
                 </h1>
                 
                 <p className="text-xl text-gray-600 mb-8">
-                  Your friendly companion for statistical analysis. No PhD required!
+                  When your flatmates just cant seem to get their stats in on time... try StatMates!
                 </p>
                 
                 <div className="space-y-6">
