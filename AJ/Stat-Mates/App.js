@@ -126,7 +126,7 @@ const App = () => {
             {showLandingPage ? (
               <div className="animate-fadeIn max-w-4xl mx-auto text-center py-12">
                 <img 
-                  src="/PlainLogo.png" 
+                  src="./PlainLogo.png" 
                   alt="StatMates Logo" 
                   className="w-24 h-24 mx-auto mb-8 rounded"
                 />
