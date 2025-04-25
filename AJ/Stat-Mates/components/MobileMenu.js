@@ -12,7 +12,7 @@ const MobileMenu = ({ isOpen, onClose, toggleHelp, onAnalysis, onHome, onThemeTo
               <div className="flex items-center justify-between px-4 py-6 border-b border-gray-200">
                 <div className="flex items-center">
                   <img 
-                    src="/StatMatesLogoGif.gif" 
+                    src="./StatMatesLogoGif.gif" 
                     alt="StatMates Logo" 
                     className="w-8 h-8 object-cover rounded"
                     style={{ WebkitAnimationPlayState: 'paused', animationPlayState: 'paused' }}
