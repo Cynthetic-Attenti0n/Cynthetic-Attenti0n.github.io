@@ -5,7 +5,7 @@ const Header = ({ toggleHelp, toggleMenu }) => {
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <img 
-              src="/StatMatesLogoGif.gif" 
+              src="./StatMatesLogoGif.gif" 
               alt="StatMates Logo" 
               className="w-10 h-10 object-cover rounded"
               style={{ WebkitAnimationPlayState: 'paused', animationPlayState: 'paused' }}
